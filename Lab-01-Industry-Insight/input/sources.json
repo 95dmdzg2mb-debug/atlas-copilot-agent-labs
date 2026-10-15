@@ -1,0 +1,14 @@
+{
+  "_说明": "行业媒体 RSS 源。topic 必须和 focus.md 里的 ## 行业标题一字不差；标题改了、这里没改，这些源就不会被抓取。signal_level：S 一手权威 / A 主流行业媒体 / B 一般。2026-10-16 实测均可访问。",
+  "sources": [
+    { "name": "CnEVPost", "topic": "新能源汽车", "url": "https://cnevpost.com/feed/", "signal_level": "A" },
+    { "name": "CarNewsChina", "topic": "新能源汽车", "url": "https://carnewschina.com/feed/", "signal_level": "A" },
+    { "name": "electrive", "topic": "新能源汽车", "url": "https://www.electrive.com/feed/", "signal_level": "A" },
+    { "name": "Electrek", "topic": "新能源汽车", "url": "https://electrek.co/feed/", "signal_level": "B" },
+    { "name": "Energy-Storage.news", "topic": "锂电", "url": "https://www.energy-storage.news/feed/", "signal_level": "A" },
+    { "name": "SemiEngineering", "topic": "半导体", "url": "https://semiengineering.com/feed/", "signal_level": "A" },
+    { "name": "EE Times", "topic": "半导体", "url": "https://www.eetimes.com/feed/", "signal_level": "A" },
+    { "name": "Semiconductor Today", "topic": "半导体", "url": "https://www.semiconductor-today.com/rss/news.xml", "signal_level": "B" },
+    { "name": "Compressed Air Best Practices", "topic": "压缩空气与真空竞品", "url": "https://www.airbestpractices.com/rss.xml", "signal_level": "A" }
+  ]
+}

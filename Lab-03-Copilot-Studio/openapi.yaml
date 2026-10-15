@@ -1,0 +1,239 @@
+# Copilot Studio 自定义连接器定义（OpenAPI 2.0 / Swagger）。
+# Power Platform 自定义连接器只接受 2.0 格式，不要改成 3.x。
+#
+# 导入前只改一处：把 host 换成你自己的 Codespace 公网地址（不带 https://），
+# 例如 fluffy-space-robot-x5g7-3000.app.github.dev。
+# 在 Codespace 终端运行 bash Lab-03-Copilot-Studio/smoke-test.sh 会打印你的 host。
+swagger: "2.0"
+info:
+  title: Atlas Agent Labs
+  description: 行业洞察智能体（读本周行业洞察周报）与知识总结智能体（把网页或周报生成汇报 PPT）。
+  version: "1.0"
+host: YOUR-CODESPACE-NAME-3000.app.github.dev
+basePath: /
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  api_key:
+    type: apiKey
+    in: header
+    name: x-api-key
+security:
+  - api_key: []
+paths:
+  /api/insight/latest:
+    get:
+      operationId: GetIndustryInsight
+      summary: 查询本周行业洞察
+      description: >-
+        读取最新一期行业洞察周报。用户问某个行业（新能源汽车、锂电、半导体、压缩空气与真空竞品、节能降碳政策）
+        本周有什么变化、对业务有什么影响时调用。返回本周摘要、各行业热点（含对业务的影响和来源链接）、行动建议，
+        以及周报网页链接 reportPageUrl。
+      parameters:
+        - name: topic
+          in: query
+          required: false
+          type: string
+          x-ms-summary: 行业
+          description: 只看某个行业，例如「新能源汽车」。用户的说法更长也没关系（如「新能源汽车装配」），留空返回整份周报。
+      responses:
+        "200":
+          description: 周报内容
+          schema:
+            $ref: "#/definitions/InsightReport"
+        "401":
+          description: 缺少或错误的 x-api-key
+        "404":
+          description: 还没有生成周报
+  /api/jobs:
+    post:
+      operationId: CreatePresentationJob
+      summary: 生成汇报 PPT
+      description: >-
+        提交一个生成汇报 PPT 的任务，立即返回任务号和进度页链接，PPT 在后台生成（通常 2~5 分钟）。
+        把本周行业洞察做成汇报时 sourceType 用 insight 并填 topic；把某篇网页文章做成汇报时 sourceType 用 url 并填 url。
+        调用成功后，把 progressPageUrl 发给用户，告诉用户在这个页面查看进度并下载 PPT。
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/CreateJobRequest"
+      responses:
+        "202":
+          description: 任务已提交
+          schema:
+            $ref: "#/definitions/CreateJobResponse"
+        "400":
+          description: 参数错误
+        "401":
+          description: 缺少或错误的 x-api-key
+  /api/jobs/{id}:
+    get:
+      operationId: GetPresentationJob
+      summary: 查询 PPT 生成进度
+      description: 用户问 PPT 做好了没有时调用。status 为 succeeded 时返回 downloadUrl。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          x-ms-summary: 任务号
+          description: CreatePresentationJob 返回的 jobId
+      responses:
+        "200":
+          description: 任务状态
+          schema:
+            $ref: "#/definitions/JobStatus"
+        "401":
+          description: 缺少或错误的 x-api-key
+        "404":
+          description: 找不到任务
+definitions:
+  Source:
+    type: object
+    properties:
+      title:
+        type: string
+      url:
+        type: string
+      source:
+        type: string
+  Hotspot:
+    type: object
+    properties:
+      title:
+        type: string
+        description: 事件
+      whatHappened:
+        type: string
+        description: 发生了什么
+      impact:
+        type: string
+        description: 对我们业务的影响
+      impactArea:
+        type: string
+        description: 影响方向：销售机会 / 产品 / 市场 / 风险
+      level:
+        type: string
+        description: 影响等级：高 / 中 / 低
+      sources:
+        type: array
+        items:
+          $ref: "#/definitions/Source"
+  Topic:
+    type: object
+    properties:
+      name:
+        type: string
+      hotspots:
+        type: array
+        items:
+          $ref: "#/definitions/Hotspot"
+  Action:
+    type: object
+    properties:
+      owner:
+        type: string
+        description: 负责团队
+      action:
+        type: string
+        description: 建议动作
+      basis:
+        type: string
+        description: 依据
+  InsightReport:
+    type: object
+    properties:
+      title:
+        type: string
+      mode:
+        type: string
+        description: llm 为智能体研判；fallback 为兜底结果（未经研判）
+      availableTopics:
+        type: array
+        items:
+          type: string
+      matchedTopic:
+        type: array
+        items:
+          type: string
+      summary:
+        type: array
+        items:
+          type: string
+      topics:
+        type: array
+        items:
+          $ref: "#/definitions/Topic"
+      actions:
+        type: array
+        items:
+          $ref: "#/definitions/Action"
+      reportPageUrl:
+        type: string
+        description: 周报网页链接，可直接发给用户
+  CreateJobRequest:
+    type: object
+    required:
+      - sourceType
+    properties:
+      sourceType:
+        type: string
+        enum: [insight, url]
+        x-ms-summary: 素材类型
+        description: insight = 本周行业洞察周报；url = 一篇网页
+      topic:
+        type: string
+        x-ms-summary: 行业
+        description: sourceType 为 insight 时可选，只用某个行业的部分，例如「新能源汽车」
+      url:
+        type: string
+        x-ms-summary: 网页地址
+        description: sourceType 为 url 时必填
+      pages:
+        type: integer
+        default: 6
+        x-ms-summary: 页数
+        description: PPT 总页数，1~30，默认 6
+      style:
+        type: string
+        enum: [consulting, geek, magazine]
+        default: consulting
+        x-ms-summary: 风格
+        description: consulting 咨询风（默认）/ geek 极客风 / magazine 杂志风
+  CreateJobResponse:
+    type: object
+    properties:
+      jobId:
+        type: string
+      status:
+        type: string
+      message:
+        type: string
+      statusUrl:
+        type: string
+      progressPageUrl:
+        type: string
+        description: 进度页链接，发给用户在网页里查看进度并下载 PPT
+  JobStatus:
+    type: object
+    properties:
+      jobId:
+        type: string
+      status:
+        type: string
+        description: queued / running / succeeded / failed
+      message:
+        type: string
+      fileName:
+        type: string
+      downloadUrl:
+        type: string
+        description: 生成成功后的 PPT 下载链接
+      progressPageUrl:
+        type: string

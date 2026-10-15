@@ -1,0 +1,11 @@
+{
+  // 行业洞察 MCP 服务器（Lab-01）。Copilot Chat 切到 Agent 模式后，工具列表里会出现 industry-insight。
+  // .venv 由 Codespace 创建时的 .devcontainer/on-create.sh 建好；本地运行请先按 README 建同名虚拟环境。
+  "servers": {
+    "industry-insight": {
+      "type": "stdio",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": ["${workspaceFolder}/Lab-01-Industry-Insight/mcp_server/server.py"]
+    }
+  }
+}
