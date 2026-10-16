@@ -11,7 +11,10 @@ permissions:
 tools:
   bash: [":*"]
   edit:
-engine: copilot
+engine:
+  id: copilot
+  # 固定模型：gh-aw 默认的 claude-sonnet-4.6 不在阿特拉斯企业开放的模型清单里，会报 transient_bad_request
+  model: claude-sonnet-5.5
 timeout-minutes: 30
 steps:
   - name: Set up Python
