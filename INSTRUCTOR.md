@@ -13,7 +13,7 @@
 
 ## T-7 天 · 只有你能推动的事
 
-1. **学员权限**：把学员加入 `ITD-NextDimension` 组织（或课程团队），给本仓库 **Read** 权限即可。
+1. **学员权限**：把学员加入 `atlascopco-Lab` 组织（或课程团队），给本仓库 **Read** 权限即可。学员的 Copilot 席位同样来自企业 `atlascopco-Lab`，策略统一在这里管。
    学员在本仓库上开 Codespace，不需要写权限。
 2. **Codespaces 计费与策略**（组织 Settings → Codespaces）：
    - 允许组织成员在本仓库创建 Codespace，费用由组织承担；

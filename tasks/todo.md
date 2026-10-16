@@ -5,7 +5,7 @@
 
 ## 已定决策
 
-- 仓库：`ITD-NextDimension/atlas-copilot-agent-labs`，私有；学员**直接在本仓库开 Codespace，不 fork**（吃 prebuild）。
+- 仓库：`atlascopco-Lab/atlas-copilot-agent-labs`，私有（2026-10-16 由 ITD-NextDimension 转移过来）；学员**直接在本仓库开 Codespace，不 fork**（吃 prebuild）。
 - Lab-01 学员路线：Codespace 内 VS Code Agent 模式 + 标准 MCP 服务器 + `prompt.md`；gh-aw 每周定时出周报由讲师仓库演示，两边共用同一个 MCP 服务器。
 - Lab-03（Copilot Studio）：指南 + OpenAPI 2.0 连接器 + 异步 API；Codespace 3000 端口设 Public 供 Studio 调用；讲师提供演示租户账号。
 - 数据源：行业媒体 RSS + Google News RSS 关键词兜底，先实测再定，缺口如实标注。
