@@ -87,3 +87,24 @@
 - 实测改动：openapi 每个字段补描述（否则向导卡住）；生成 PPT 拆成「周报→PPT」「网页→PPT」两个工具、参数全部必填
   （Studio 默认不带可选参数，条件必填会被误追问）；指令避开 `/`（会触发插入菜单吞字）；工具名直接用 openapi 的 summary。
 - 待确认：pages/style 改为必填后未在 Studio 重新导入验证（Swagger 校验通过）；回答里的 cite 标记已在指令中禁止，未复测。
+
+## 实操手册（2026-10-17 启动）
+
+目标：按教学设计 v2 出一份埃知风格 HTML 单页实操手册，每一步都有真实截图和「复盘三问」。
+
+### A. v2 落地（参考答案放在 answer/* 分支，main 保持题目状态）
+- [ ] 热身：周报网页「只看高影响」开关 → `answer/warmup`
+- [ ] Lab-01：MCP 工具「客户雷达」`search_signals` + 单测 → `answer/lab01`
+- [ ] Lab-02：网页新增「公司品牌风」 → `answer/lab02`
+- [ ] gh-aw 学员分支：确认在 `student/<名字>` 分支上手动触发能跑自己的 focus.md；规则保护 main
+- [ ] 各 Lab README 与 v2 对齐（题目、提示词、复盘三问）
+
+### B. 真实走一遍并截图（Codespace + Chrome；敏感信息打码）
+- [ ] 开场：仓库页 → 创建 Codespace → 环境就绪 → set-key
+- [ ] 热身：@workspace / /explain / Agent 模式改网页 / 自定义指令
+- [ ] Lab-01：/industry-insight → 改 focus.md → 客户雷达 → 推分支 + Actions 触发 → Issue 结果
+- [ ] Lab-02：Chat 用 Skill → 改 SKILL.md → 品牌风 → 网页生成 PPT
+- [ ] Lab-03：端口 Public → smoke-test → Studio 建智能体 / 挂工具 / 测试 / 改一处
+
+### C. 写手册
+- [ ] docs/manual/index.html + docs/manual/img/，每步：做什么 → 截图 → 应该看到 → 复盘三问；附排障表
