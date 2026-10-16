@@ -23,8 +23,8 @@
    没有预构建，每个学员开 Codespace 都要现装 Python/Node 依赖和 Chromium（5~8 分钟）。
 4. **Copilot 策略**（学员 Copilot 席位所在的组织或企业。学员用阿特拉斯的席位时，席位由企业 `atlascopco-Lab` 管理，
    只能由阿特拉斯的企业管理员改；每人可在 <https://github.com/settings/copilot/features> 自查以下各项是否为 Enabled）：
-   - **Copilot Agent Mode in IDE Chat** 和 **MCP servers in Copilot**（Lab-01；2026-10-16 查 atlascopco-Lab 席位：前者开、后者**关**）；
-   - **Copilot CLI**（Lab-02 的 Copilot SDK 依赖它；2026-10-16 查 atlascopco-Lab 席位为**关**）。没开时 SDK 调 `models.list` 返回 403
+   - **Copilot Agent Mode in IDE Chat** 和 **MCP servers in Copilot**（Lab-01；2026-10-16 已在企业 AI Controls → MCP 设为 Enabled everywhere）；
+   - **Copilot CLI**（Lab-02 的 Copilot SDK 依赖它；2026-10-16 已在企业 AI Controls → Copilot → Features & clients 设为 Enabled everywhere，SDK 实测生成 PPT 成功）。没开时 SDK 调 `models.list` 返回 403
      「not authorized to use this Copilot feature」，页面显示「无法列出模型」；
    - 确认允许学员创建 Fine-grained PAT 且不需审批（学员把 Resource owner 选为个人账号）。
 5. **Copilot Studio 演示租户**：
