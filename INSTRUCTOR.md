@@ -46,6 +46,10 @@
 - 工作流源文件：`.github/workflows/industry-insight.md`；改完必须 `gh aw compile industry-insight` 再提交 `.lock.yml`。
 - 需要仓库 Secret `COPILOT_GITHUB_TOKEN`（讲师的 Fine-grained PAT，Copilot Requests 权限）。
 - 仓库 Settings → Actions → General：勾选 **Allow GitHub Actions to create and approve pull requests**。
+  atlascopco-Lab 企业在 Policies → Actions 里锁住了这一项（2026-10-16），没放开时 gh-aw 会把周报推到分支并建一个 Issue，
+  由人点 Issue 里的「Create the pull request」链接建 PR，合并即可。
+- 模型固定为 `claude-sonnet-5.5`（frontmatter `engine.model`）。gh-aw 默认的 `claude-sonnet-4.6` 不在企业开放的模型里；
+  gh-aw 太旧时会报「model is retired or unsupported」，先 `gh extension upgrade gh-aw` 再编译（2026-10-16 用 v0.92.0 跑通）。
 - 仓库 Settings → Pages → Source 选 **GitHub Actions**。注意：私有仓库的 Pages 默认是**公开**可访问的
   （只有 Enterprise Cloud 能设为私有），周报内容里有面向阿特拉斯的业务分析，请确认可以公开，否则不要开 Pages，
   Lab-03 直接用学员 Codespace 里的周报即可。
