@@ -30,6 +30,10 @@
    ```
    **期望结果**：`✔ 已写入 COPILOT_GITHUB_TOKEN`，并打印一串 `LAB_API_KEY`（Lab-03 要用，先不用记）。
 
+   > 另一种方式：在 <https://github.com/settings/codespaces> → **Codespaces secrets → New secret** 新建
+   > `COPILOT_GITHUB_TOKEN`（Value 填令牌，Repository access 选课程仓库），然后**重启 Codespace** 生效。
+   > 这样令牌不落盘、以后新建 Codespace 也自动带上。`set-key.sh` 仍要跑一次，用来生成 `LAB_API_KEY`（令牌那一步直接回车跳过）。
+
 4. 把空闲超时调长，免得 Lab-03 时 Codespace 自己停掉：打开 <https://github.com/settings/codespaces> →
    **Default idle timeout** 改成 **120** 分钟。
 

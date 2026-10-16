@@ -30,7 +30,8 @@
 5. **Copilot Studio 演示租户**：
    - 为每位学员开好 M365 账号 + Copilot Studio 授权（试用许可即可）；
    - Power Platform 管理中心的 **DLP 策略允许自定义连接器**访问 `*.app.github.dev`；
-   - 自己用一个学员账号把 Lab-03 完整走一遍（连接器导入、API 密钥认证、生成式编排三处最容易卡住）。
+   - 确认学员用哪个环境：2026-10-16 实测演示租户的 Default 环境新建智能体会一直转圈，**Trial 环境（Ontology-trial）正常**；
+   - 自己用一个学员账号把 Lab-03 完整走一遍（[Lab-03 README](Lab-03-Copilot-Studio/README.md) 已按实测写成，含所有坑）。
 6. **网络**：场地网络要能访问 `github.com`、`*.github.dev`、`*.githubcopilot.com`、`news.google.com`、
    `copilotstudio.microsoft.com`、`*.powerplatform.com`。企业网络做 SSL 解密的，提前备热点。
 

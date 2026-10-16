@@ -75,17 +75,19 @@
 
 | 接口 | 说明 |
 |---|---|
-| `GET /api/insight/latest?topic=新能源汽车` | 最新一期行业洞察，可按行业筛选 |
-| `POST /api/jobs` | 提交生成任务：`{"sourceType":"insight","topic":"锂电","pages":6}` 或 `{"sourceType":"url","url":"https://..."}`，立即返回 `jobId` 和进度页链接 |
+| `GET /api/insight/latest?topic=新能源汽车` | 最新一期行业洞察，可按行业筛选；`topic=全部` 返回整份 |
+| `POST /api/jobs/insight` | 把周报做成 PPT：`{"topic":"锂电","pages":6,"style":"consulting"}`，立即返回 `jobId` 和进度页链接 |
+| `POST /api/jobs/webpage` | 把网页做成 PPT：`{"url":"https://...","pages":6,"style":"consulting"}` |
+| `POST /api/jobs` | 通用版（用 `sourceType` 区分，curl 调试用） |
 | `GET /api/jobs/{jobId}` | 查进度，成功后返回 `downloadUrl` |
 | `/jobs/{jobId}` | 进度页（网页），完成后可直接下载 |
 
-`.env` 里设置了 `LAB_API_KEY` 时，前三个接口都要带请求头 `x-api-key`。本机调试示例：
+`.env` 里设置了 `LAB_API_KEY` 时，除进度页和下载链接外都要带请求头 `x-api-key`。本机调试示例：
 
 ```bash
 KEY=$(sed -n 's/^LAB_API_KEY=//p' Lab-02-Knowledge-Summary/.env)
-curl -s -X POST localhost:3000/api/jobs -H "x-api-key: $KEY" -H 'content-type: application/json' \
-  -d '{"sourceType":"insight","topic":"新能源汽车","pages":4}'
+curl -s -X POST localhost:3000/api/jobs/insight -H "x-api-key: $KEY" -H 'content-type: application/json' \
+  -d '{"topic":"新能源汽车","pages":4}'
 ```
 
 ## 遇到问题

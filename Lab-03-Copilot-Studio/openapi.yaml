@@ -241,6 +241,8 @@ definitions:
     type: object
     required:
     - topic
+    - pages
+    - style
     properties:
       topic:
         type: string
@@ -250,7 +252,7 @@ definitions:
         type: integer
         default: 6
         x-ms-summary: 页数
-        description: PPT 总页数，1~30，用户没说就不填（默认 6）
+        description: PPT 总页数，1~30；用户没说页数就填 6
       style: &id003
         type: string
         enum:
@@ -259,11 +261,13 @@ definitions:
         - magazine
         default: consulting
         x-ms-summary: 风格
-        description: consulting 咨询风（默认）/ geek 极客风 / magazine 杂志风，用户没说就不填
+        description: consulting 咨询风 / geek 极客风 / magazine 杂志风；用户没说风格就填 consulting
   CreateWebPagePresentationRequest:
     type: object
     required:
     - url
+    - pages
+    - style
     properties:
       url:
         type: string

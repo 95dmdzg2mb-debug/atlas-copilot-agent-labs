@@ -31,7 +31,7 @@
 - [x] 修 `lib/copilot.ts` 里的 skill 名
 - [x] 异步 API：`POST /api/jobs`、`GET /api/jobs/{id}`、进度页、下载；`x-api-key`
 - [x] `/api/insight/latest` + `/insight` 页面（读 Lab-01 周报）
-- [~] typecheck + build ✔；curl 走通鉴权/周报/任务失败路径 ✔；真实生成 .pptx ✘ 被 Copilot 策略挡住（见 Review）
+- [x] typecheck + build；真实生成 .pptx（企业开启 Copilot CLI 策略后，SDK 与 Studio 两条路都生成成功）
 
 ### 3. Lab-03 串起来 · Copilot Studio
 - [x] `openapi.yaml`（Swagger 2.0）
@@ -63,20 +63,27 @@
 分工：🤖 = Claude 做；👤 = 必须由用户做（登录/凭据/同意条款）
 
 ### A. 服务端（Codespace）
-- [ ] 👤 设 Codespaces 用户 Secret `COPILOT_GITHUB_TOKEN`（`gh secret set ... --user --app codespaces`），学员也可用这条路代替 set-key.sh
-- [ ] 🤖 建测试 Codespace（空闲超时 120 分钟），生成 `LAB_API_KEY`，`npm run dev` 后台常驻
-- [ ] 🤖 端口 3000 设 Public（`gh codespace ports visibility 3000:public`），跑 `smoke-test.sh` 全绿
-- [ ] 🤖 公网 curl 走一遍 `CreatePresentationJob` → 进度页 → 下载，确认从 Studio 视角可用
+- [x] 👤 设 Codespaces 用户 Secret `COPILOT_GITHUB_TOKEN`（`gh secret set ... --user --app codespaces`），学员也可用这条路代替 set-key.sh
+- [x] 🤖 建测试 Codespace（空闲超时 120 分钟），生成 `LAB_API_KEY`，`npm run dev` 后台常驻
+- [x] 🤖 端口 3000 设 Public（`gh codespace ports visibility 3000:public`），跑 `smoke-test.sh` 全绿
+- [x] 🤖 公网 curl 走一遍 `CreatePresentationJob` → 进度页 → 下载，确认从 Studio 视角可用
 
 ### B. Copilot Studio（演示租户，Chrome）
-- [ ] 👤 在 Chrome 登录 copilotstudio.microsoft.com，确认环境与授权
-- [ ] 🤖 新建智能体「业务汇报助手」，粘贴 README 里的智能体指令，确认生成式编排开启
-- [ ] 🤖 工具 → 新建 → REST API，上传填好 host 的 openapi.yaml；三个操作加为工具
-- [ ] 👤 建连接时粘贴 `LAB_API_KEY`（凭据由用户输入）
-- [ ] 🤖 测试窗格跑 4 段对话：洞察 / 洞察→PPT / 一句话串起来 / 网页→PPT；核对每次调用的参数与回复
+- [x] 👤 在 Chrome 登录 copilotstudio.microsoft.com，确认环境与授权
+- [x] 🤖 新建智能体「业务汇报助手」，粘贴 README 里的智能体指令，确认生成式编排开启
+- [x] 🤖 工具 → 新建 → REST API，上传填好 host 的 openapi.yaml；三个操作加为工具
+- [x] 👤 建连接时粘贴 `LAB_API_KEY`（凭据由用户输入）
+- [x] 🤖 测试窗格跑 4 段对话：洞察 / 洞察→PPT / 一句话串起来 / 网页→PPT；核对每次调用的参数与回复
 
 ### C. 收尾
-- [ ] 🤖 按真实界面改 Lab-03 README（菜单名、截图位置、坑），必要时调 openapi 描述或智能体指令
+- [x] 🤖 按真实界面改 Lab-03 README（菜单名、截图位置、坑），必要时调 openapi 描述或智能体指令
 - [ ] 🤖 删除测试 Codespace；Studio 智能体保留给讲师演示（或按用户要求删除）
 
 风险：租户 DLP 拦自定义连接器；组织策略不允许 Public 端口；Studio 连接器超时；REST API 工具界面与文档不一致。
+
+### Lab-03 实测结论（2026-10-16，演示租户 Ontology-trial 环境）
+
+- 5 段测试对话全部通过：洞察 / 洞察→PPT / 查进度 / 网页→PPT / 一句话串起来；Studio 发起的 3 个任务都生成了 PPT。
+- 实测改动：openapi 每个字段补描述（否则向导卡住）；生成 PPT 拆成「周报→PPT」「网页→PPT」两个工具、参数全部必填
+  （Studio 默认不带可选参数，条件必填会被误追问）；指令避开 `/`（会触发插入菜单吞字）；工具名直接用 openapi 的 summary。
+- 待确认：pages/style 改为必填后未在 Studio 重新导入验证（Swagger 校验通过）；回答里的 cite 标记已在指令中禁止，未复测。
