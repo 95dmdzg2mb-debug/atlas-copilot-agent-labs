@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>阿特拉斯中国 Copilot 智能体工作坊 · 教学设计（评审稿）</title>
+  <title>阿特拉斯中国 Copilot 智能体工作坊 · 教学设计（评审稿 v2）</title>
   <style>
 /* ============================================================================
    埃知科技 · 上海埃知科技有限公司 — Brand Tokens (aizhi-html)
@@ -328,7 +328,20 @@ body.theme-dark .az-footer { border-top-color: var(--az-night-border); color: va
     .az-table tr.us-row td { background: var(--az-orchid-mist); }
     .az-table td { vertical-align: top; line-height: 1.6; }
     .az-card.is-tint .card-desc, .az-card.is-tint .az-list li { color: var(--az-ink-2); }
-    @media (max-width: 900px) { .az-table td:first-child { white-space: normal; } }
+    .map { display:flex; align-items:stretch; gap:10px; flex-wrap:wrap; }
+    .map .node { flex:1 1 180px; background:var(--az-surface); border:1px solid var(--az-border); border-radius:10px; padding:16px 18px; box-shadow:var(--az-shadow); }
+    .map .node.lit { background:var(--az-orchid-tint); border-color:transparent; }
+    .map .node.lit2 { background:var(--az-orchid-deep); border-color:transparent; color:#fff; }
+    .map .node.lit2 .ds, .map .node.lit2 .lab { color:#F3DDEE; }
+    .map .lab { font-family:var(--font-mono); font-size:11px; letter-spacing:.18em; color:var(--az-orchid-deep); }
+    .map .nm { font-weight:700; font-size:17px; margin:6px 0; }
+    .map .ds { font-size:13px; color:var(--az-ink-2); line-height:1.6; }
+    .map .arrow { align-self:center; font-size:22px; color:var(--az-orchid); }
+    .recap { background:var(--az-surface); border:1px dashed var(--az-orchid); border-radius:10px; padding:22px 24px; }
+    .recap dl { margin:12px 0 0; display:grid; grid-template-columns:96px 1fr; gap:10px 14px; }
+    .recap dt { font-weight:700; font-size:13px; color:var(--az-orchid-deep); }
+    .recap dd { margin:0; font-size:13.5px; color:var(--az-ink-2); line-height:1.65; }
+    @media (max-width: 900px) { .az-table td:first-child { white-space: normal; } .map .arrow { display:none; } .recap dl { grid-template-columns:1fr; gap:4px; } .recap dd { margin-bottom:8px; } }
 
   </style>
 </head>
@@ -343,7 +356,7 @@ body.theme-dark .az-footer { border-top-color: var(--az-night-border); color: va
         <div class="sub">上海埃知科技有限公司</div>
       </span>
     </a>
-    <span class="deck-meta">评审稿 · 2026-10-16</span>
+    <span class="deck-meta">评审稿 v2 · 2026-10-16</span>
   </header>
 
   <!-- ===== Hero ===== -->
@@ -351,96 +364,165 @@ body.theme-dark .az-footer { border-top-color: var(--az-night-border); color: va
     <div class="az-ghost"></div>
     <div style="position:relative; z-index:1;">
       <div class="az-eyebrow">阿特拉斯中国 · Copilot 智能体工作坊 · 教学设计</div>
-      <h1 class="az-title">学员到底动手做什么</h1>
-      <h2 class="az-title tail">体验 → 改一份 Markdown → 让 Copilot 写一段代码</h2>
+      <h1 class="az-title">做完之后，说得清自己干了什么</h1>
+      <h2 class="az-title tail">学什么功能 → 动手 vibe coding → 这一步对项目意味着什么</h2>
       <div class="az-rule"></div>
-      <p class="lead">课程标题是「用 GitHub Copilot + VS Code 从零开发能干活的智能体」。现版本学员全程只改 Markdown、点界面，没有让 Copilot 写过一行代码。本稿把每个 Lab 改成「共建型」：保留改 Markdown，再加一道让 Copilot 写代码的小题，配基础 / 进阶两档和参考答案分支。</p>
+      <p class="lead">v1 从「我们要交付什么」出发，学员做完拿到周报和 PPT，却说不清用了 Copilot 的哪些功能、每一步在项目里起什么作用。v2 站到学员这边：开场先给功能地图和项目地图，加一段 vibe coding 热身，每个环节结束用一张复盘卡回答三个问题。</p>
       <div class="status-row">
         <span class="az-tag">状态：待评审</span>
         <span class="az-tag">学员：IT / 数字化混合</span>
         <span class="az-tag">时长：半天 3.5 小时</span>
-        <span class="az-tag">仓库：atlascopco-Lab/atlas-copilot-agent-labs</span>
+        <span class="az-tag">环境：GitHub Codespaces</span>
       </div>
     </div>
   </section>
 
-  <!-- ===== 已定决策 ===== -->
+  <!-- ===== 复盘三问 ===== -->
   <section class="section">
     <div class="section-head">
-      <div class="az-eyebrow">已定决策</div>
-      <h2 class="az-title">本稿的前提</h2>
+      <div class="az-eyebrow">贯穿全程的复盘三问</div>
+      <h2 class="az-title">每个环节结束，学员都要能回答</h2>
       <div class="az-rule"></div>
-      <p class="az-sub">2026-10-16 与 Tarry 讨论确认；评审时如要推翻，请在第 6 节标注</p>
+      <p class="az-sub">讲师按这三问收口；学员手上有一张复盘卡，每格写一句话</p>
     </div>
-    <div class="grid grid-4">
+    <div class="grid grid-3">
       <article class="az-card has-accent">
-        <div class="card-no">动手深度</div>
-        <h3 class="card-title">共建型</h3>
-        <p class="card-desc">每个 Lab：体验 → 改 Markdown → Copilot 写代码。代码题给现成提示词，不要求学员会写。</p>
+        <div class="card-no">问 1</div>
+        <h3 class="card-title">我用了 Copilot 的什么功能？</h3>
+        <p class="card-desc">说出功能名字：Agent 模式、Prompt 文件、MCP、Skill、gh-aw……不是「我点了一下」。</p>
       </article>
       <article class="az-card has-accent">
-        <div class="card-no">学员</div>
-        <h3 class="card-title">IT / 数字化混合</h3>
-        <p class="card-desc">基础题 15 分钟内必须人人做完；进阶题选做，给动手快的人。</p>
+        <div class="card-no">问 2</div>
+        <h3 class="card-title">它替我做了什么？</h3>
+        <p class="card-desc">说出机制：它读了哪些文件、调了哪个工具、改了哪几行、在哪里运行。</p>
       </article>
-      <article class="az-card has-accent">
-        <div class="card-no">Lab-03 后端</div>
-        <h3 class="card-title">每人连自己的</h3>
-        <p class="card-desc">Studio 里看到的是自己改过的行业和汇报规范，前两个 Lab 的成果一路带到最后。</p>
-      </article>
-      <article class="az-card has-accent">
-        <div class="card-no">Lab-03 连接器</div>
-        <h3 class="card-title">讲师事先建好</h3>
-        <p class="card-desc">学员不再从上传 openapi.yaml 开始，点击步骤从约 25 步降到约 10 步。</p>
+      <article class="az-card is-orchid">
+        <div class="card-no" style="color:#F3DDEE;">问 3</div>
+        <h3 class="card-title">这对我们的项目意味着什么？</h3>
+        <p class="card-desc" style="color:#fff;">说出价值：省了谁的时间、谁能自己维护、能不能复用到别的场景。</p>
       </article>
     </div>
   </section>
 
-  <!-- ===== 能力阶梯 ===== -->
+  <!-- ===== 项目地图 ===== -->
   <section class="section">
     <div class="section-head">
-      <div class="az-eyebrow">每个 Lab 的四层</div>
-      <h2 class="az-title">用起来 → 改成自己的 → 让 Copilot 写 → 接进业务</h2>
+      <div class="az-eyebrow">开场 · 项目地图</div>
+      <h2 class="az-title">我们一起搭的是什么</h2>
       <div class="az-rule"></div>
-      <p class="az-sub">越往下越接近真实生产；前三层在 Lab-01、Lab-02 各走一遍，第四层在 Lab-03 收口</p>
+      <p class="az-sub">开场投屏，每做完一个环节点亮一段；学员任何时候都知道自己在哪一块</p>
     </div>
-    <div class="az-tiers">
-      <div class="az-tier"><div><div class="name">用起来</div><div class="who">全员 · 10 分钟</div></div><div class="prod">跑通现成的智能体，看懂它在干什么</div></div>
-      <div class="az-tier"><div><div class="name">改成自己的</div><div class="who">全员 · 15 分钟</div></div><div class="prod">改 focus.md / SKILL.md，不碰代码换行业、换规范</div></div>
-      <div class="az-tier"><div><div class="name">让 Copilot 写</div><div class="who">基础题全员 · 进阶题选做</div></div><div class="prod">Agent 模式按提示词加一个 MCP 工具 / 一个服务能力</div></div>
-      <div class="az-tier"><div><div class="name">接进业务</div><div class="who">全员 · Lab-03</div></div><div class="prod">Copilot Studio 一句话调用自己的两个智能体</div></div>
-      <div class="trunk"></div>
+    <div class="map">
+      <div class="node"><div class="lab">数据</div><div class="nm">行业媒体 · Google News</div><div class="ds">新能源汽车、锂电、半导体、竞品、政策</div></div>
+      <div class="arrow">→</div>
+      <div class="node lit"><div class="lab">Lab-01</div><div class="nm">MCP 工具 + 周报</div><div class="ds">focus.md 决定看什么；VS Code 里按需跑，gh-aw 每周一自动跑</div></div>
+      <div class="arrow">→</div>
+      <div class="node lit"><div class="lab">Lab-02</div><div class="nm">Skill + SDK 服务</div><div class="ds">SKILL.md 决定怎么汇报；Copilot SDK 做成对外 API</div></div>
+      <div class="arrow">→</div>
+      <div class="node lit2"><div class="lab">Lab-03</div><div class="nm">Copilot Studio</div><div class="ds">业务同事一句话：洞察 + 汇报 PPT</div></div>
+    </div>
+    <p class="az-sub" style="margin-top:14px;">热身环节不在地图上：它只改周报网页，练的是 vibe coding 的手感，为后面三个 Lab 打底。</p>
+  </section>
+
+  <!-- ===== 功能地图 ===== -->
+  <section class="section">
+    <div class="section-head">
+      <div class="az-eyebrow">开场 · Copilot 功能地图</div>
+      <h2 class="az-title">半天里会用到的 12 个功能</h2>
+      <div class="az-rule"></div>
+      <p class="az-sub">开场 5 分钟过一遍名字；每个功能在哪一环节第一次出现，学员当场用一次</p>
+    </div>
+    <div class="az-card" style="padding:0; overflow:auto;">
+      <table class="az-table">
+        <thead><tr><th style="width:190px;">功能</th><th>一句话说明</th><th style="width:110px;">在哪学</th><th>学员用完应该能说出</th></tr></thead>
+        <tbody>
+          <tr><td>Codespaces</td><td>浏览器里的 VS Code，免安装、人人环境一致</td><td>开场</td><td>不装软件也能开发，环境由仓库里的配置决定</td></tr>
+          <tr><td>代码补全 · Inline Chat</td><td>边写边补全；选中代码按 Ctrl+I 直接对话改</td><td>热身</td><td>小改动不用离开编辑器</td></tr>
+          <tr><td>Chat 三种模式</td><td>Ask 问答 · Edit 改指定文件 · Agent 自己规划多步执行</td><td>热身起全程</td><td>什么时候用哪种模式</td></tr>
+          <tr><td>上下文引用</td><td><code>@workspace</code> 读整个项目、<code>#file</code> 指定文件</td><td>热身</td><td>给对上下文，回答才准</td></tr>
+          <tr><td>斜杠命令</td><td><code>/explain</code> 解释 · <code>/fix</code> 修错 · <code>/tests</code> 写测试</td><td>热身 · Lab-01</td><td>读不懂、跑不通、要测试时各用哪个</td></tr>
+          <tr><td>自定义指令</td><td><code>.github/copilot-instructions.md</code> 给 Copilot 定项目规矩</td><td>热身</td><td>团队约定写一次，所有人的 Copilot 都遵守</td></tr>
+          <tr><td>Prompt 文件</td><td>把常用指令存成斜杠命令，如 <code>/industry-insight</code></td><td>Lab-01</td><td>好用的提示词可以入库、共享、复用</td></tr>
+          <tr class="us-row"><td>MCP 服务器</td><td>给智能体装「手」：查数据、调接口</td><td>Lab-01</td><td>工具 = 一个函数 + 一段描述，描述决定何时被调用</td></tr>
+          <tr class="us-row"><td>gh-aw（GitHub Agentic Workflows）</td><td>用 Markdown 写一个在 GitHub Actions 里运行的智能体：定时触发、网络白名单、只能通过 PR / Issue 提交结果</td><td>Lab-01</td><td>从「我自己用」变成「每周自动为全组运行」，而且有安全边界</td></tr>
+          <tr class="us-row"><td>Agent Skills</td><td><code>SKILL.md</code> 把做事方法写成技能，Copilot 按场景自动套用</td><td>Lab-02</td><td>团队规范变成可执行的技能，而不是贴在墙上的文档</td></tr>
+          <tr class="us-row"><td>Copilot SDK</td><td>在自己的程序里调用 Copilot（同一套 Skills 和工具）</td><td>Lab-02</td><td>智能体可以嵌进任何业务系统</td></tr>
+          <tr><td>Copilot Studio</td><td>微软的低代码智能体平台（不是 GitHub Copilot）</td><td>Lab-03</td><td>开发者做能力，业务同事在 Studio 里一句话用</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="az-card is-tint" style="margin-top:20px;">
+      <h3 class="card-title" style="font-size:18px;">关于 GitHub Copilot app</h3>
+      <p class="card-desc">学员电脑由公司管控，多半装不了桌面应用，实验统一在 Codespaces 里做；Codespaces 里的 Copilot Chat Agent 模式和 app 是同一套核心能力。讲师在开场用 app 演示 3 分钟同一件事，告诉学员「回去在自己电脑上也可以这样用」。</p>
     </div>
   </section>
 
   <!-- ===== 节奏 ===== -->
   <section class="section">
     <div class="section-head">
-      <div class="az-eyebrow">01 · 半天节奏</div>
+      <div class="az-eyebrow">半天节奏</div>
       <h2 class="az-title">3.5 小时怎么分</h2>
       <div class="az-rule"></div>
-      <p class="az-sub">每个 Lab 结束前有硬指标，全员达到再往下讲</p>
+      <p class="az-sub">每个环节结束前：全员达到硬指标 + 填一格复盘卡，再往下讲；进阶题全部挪到课后</p>
     </div>
     <div class="course">
       <aside class="az-card is-orchid">
         <dl class="facts" style="margin:0;">
           <dt>受众</dt><dd>阿特拉斯中国研发 / IT / 数字化团队</dd>
-          <dt>环境</dt><dd>GitHub Codespaces（不 fork，吃预构建）</dd>
-          <dt>账号</dt><dd>GitHub + Copilot 席位 · Studio 演示租户</dd>
-          <dt>产出</dt><dd>自己行业的周报 · 自己规范的 PPT · 一个能一句话调用两者的 Studio 智能体</dd>
-          <dt>兜底</dt><dd>每道代码题一个参考答案分支，git switch 即追上</dd>
+          <dt>环境</dt><dd>GitHub Codespaces，不 fork，吃预构建</dd>
+          <dt>账号</dt><dd>GitHub + Copilot 席位 · 本仓库写权限 · Studio 演示租户</dd>
+          <dt>带走</dt><dd>自己行业的周报（含云端自动版）· 自己规范的 PPT · 一句话调用两者的 Studio 智能体 · 一张填满的复盘卡</dd>
         </dl>
       </aside>
       <div class="az-card">
         <div class="az-eyebrow">议程</div>
         <ul class="agenda" style="margin-top:12px;">
-          <li><span class="t">0:00</span><span class="n">环境</span><span class="d">开 Codespace、填令牌；智能体 = 模型 + 指令 + Skills + MCP 工具</span></li>
-          <li><span class="t">0:25</span><span class="n">Lab-01</span><span class="d">行业洞察 · MCP：出周报 → 改 focus.md → 让 Copilot 加一个 MCP 工具</span></li>
-          <li><span class="t">1:15</span><span class="n">休息</span><span class="d">讲师巡场，卡住的人切参考答案分支</span></li>
-          <li><span class="t">1:25</span><span class="n">Lab-02</span><span class="d">知识总结 · Skills + SDK：出 PPT → 改 SKILL.md → 让 Copilot 加一个服务能力</span></li>
-          <li><span class="t">2:20</span><span class="n">Lab-03</span><span class="d">Copilot Studio：建智能体、挂工具、5 段对话测试、改一处看行为变化</span></li>
-          <li><span class="t">3:10</span><span class="n">收口</span><span class="d">演示 gh-aw 每周一自动出周报 · 答疑 · 课后带走什么</span></li>
+          <li><span class="t">0:00</span><span class="n">开场</span><span class="d">项目地图 · 功能地图 · Copilot app 演示 · Codespace 就绪（20'）</span></li>
+          <li><span class="t">0:20</span><span class="n">热身</span><span class="d">Vibe coding：让 Copilot 给周报网页加「只看高影响」筛选（25'）</span></li>
+          <li><span class="t">0:45</span><span class="n">Lab-01</span><span class="d">行业洞察 · MCP + gh-aw：出周报 → 改 focus.md → 加 MCP 工具 → 推分支让云端自己跑（45'）</span></li>
+          <li><span class="t">1:30</span><span class="n">休息</span><span class="d">gh-aw 在云端跑，休息回来看自己的结果（10'）</span></li>
+          <li><span class="t">1:40</span><span class="n">Lab-02</span><span class="d">知识总结 · Skills + SDK：出 PPT → 改 SKILL.md → 加一种风格 → 跑服务（45'）</span></li>
+          <li><span class="t">2:25</span><span class="n">Lab-03</span><span class="d">Copilot Studio：一句话串起两个智能体 → 改一处看行为变化（45'）</span></li>
+          <li><span class="t">3:10</span><span class="n">复盘</span><span class="d">对着项目地图串一遍 · 每人讲一句「我做了什么」· 课后怎么继续（20'）</span></li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 热身 ===== -->
+  <section class="section">
+    <div class="section-head">
+      <div class="az-eyebrow">热身 · Vibe coding · 25 分钟</div>
+      <h2 class="az-title">描述 → 生成 → 运行 → 看效果 → 再描述</h2>
+      <div class="az-rule"></div>
+      <p class="az-sub">先在一个看得见、改坏也没关系的地方把 vibe coding 的循环走一遍，后面每个 Lab 的代码题都是这个循环</p>
+    </div>
+    <div class="az-card" style="padding:0; overflow:auto;">
+      <table class="az-table">
+        <thead><tr><th style="width:120px;">步骤</th><th>学员做什么</th><th>用到的功能</th><th>验收</th></tr></thead>
+        <tbody>
+          <tr><td>1 看懂 · 5'</td><td>问 Copilot：这个仓库是做什么的？三个 Lab 怎么串起来？</td><td>Ask 模式 · <code>@workspace</code></td><td>能用自己的话讲出项目地图</td></tr>
+          <tr><td>2 读懂 · 3'</td><td>打开周报网页的 <code>main.js</code>，选中渲染那段，问它在干什么</td><td>Inline Chat · <code>/explain</code></td><td>知道周报是怎么从 report.md 变成网页的</td></tr>
+          <tr class="us-row"><td>3 动手 · 12'</td><td>Agent 模式一句话：给周报网页加「只看高影响」开关；刷新看效果，不满意就再描述一次</td><td>Agent 模式 · 看改动 · Keep / Undo</td><td>打开开关后只剩影响等级为「高」的热点</td></tr>
+          <tr><td>4 规矩 · 5'</td><td>打开 <code>.github/copilot-instructions.md</code>，加一条团队规矩（如「注释用中文」），再让 Copilot 改一处代码看它是否遵守</td><td>自定义指令</td><td>新代码的注释是中文</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid grid-2" style="margin-top:20px;">
+      <div class="az-card">
+        <div class="az-eyebrow">第 3 步提示词（草稿）</div>
+        <pre class="prompt">给 Lab-01-Industry-Insight/frontend 的周报网页加一个「只看高影响」开关：
+读取同目录的 report.json，打开开关时只显示影响等级为「高」的热点，
+关掉恢复完整周报。样式和现有页面保持一致。
+改完告诉我怎么在 Codespace 里预览。</pre>
+      </div>
+      <div class="recap">
+        <div class="az-eyebrow">复盘卡 · 热身</div>
+        <dl>
+          <dt>用了什么</dt><dd>Agent 模式 + 上下文引用 + 自定义指令</dd>
+          <dt>它做了什么</dt><dd>读了 main.js 和 report.json，改了网页代码；我只描述要什么、看效果、决定留不留</dd>
+          <dt>对项目意味着</dt><dd>不会写前端也能改出可用的功能；但「看改动、能回退」是自己的责任</dd>
+        </dl>
       </div>
     </div>
   </section>
@@ -448,39 +530,39 @@ body.theme-dark .az-footer { border-top-color: var(--az-night-border); color: va
   <!-- ===== Lab-01 ===== -->
   <section class="section">
     <div class="section-head">
-      <div class="az-eyebrow">02 · Lab-01 行业洞察智能体 · MCP 工具 · 50 分钟</div>
-      <h2 class="az-title">让学员亲手给智能体装一只「手」</h2>
+      <div class="az-eyebrow">Lab-01 · 行业洞察智能体 · MCP + gh-aw · 45 分钟</div>
+      <h2 class="az-title">从「我能用」到「每周一自动给全组用」</h2>
       <div class="az-rule"></div>
-      <p class="az-sub">现版本学员只「用」了 MCP；新增代码题让他们体会 MCP 工具 = 一个函数 + 一段描述</p>
+      <p class="az-sub">同一套 MCP 工具，先在 VS Code 里交互式用，再用 gh-aw 放到云端定时跑</p>
     </div>
     <div class="az-card" style="padding:0; overflow:auto;">
       <table class="az-table">
-        <thead><tr><th style="width:120px;">步骤</th><th>学员做什么</th><th>验收（硬指标）</th><th>学到什么</th></tr></thead>
+        <thead><tr><th style="width:120px;">步骤</th><th>学员做什么</th><th>用到的功能</th><th>验收</th></tr></thead>
         <tbody>
-          <tr><td>1 用起来 · 10'</td><td>Copilot Chat 切 Agent 模式，运行 <code>/industry-insight</code>，预览周报网页</td><td>页头显示「模式：智能体研判」</td><td>智能体 = 指令 + 工具；抓取交给工具，研判交给模型</td></tr>
-          <tr><td>2 改成自己的 · 15'</td><td>在 <code>focus.md</code> 加一个自己关注的行业（搜索词、排除词、关注什么），再跑一次</td><td>周报里出现新行业，且有来源链接</td><td>换行业不改代码，一份 Markdown 同时驱动抓取和研判</td></tr>
-          <tr class="us-row"><td>3 基础题 · 20'</td><td>让 Copilot 加 MCP 工具 <code>get_high_impact</code>：只返回影响等级为「高」的热点</td><td>单测通过；重启 MCP 后问「本周有哪些高影响事件」，智能体调用新工具</td><td>工具的 docstring 就是给模型看的说明书，决定它什么时候被调用</td></tr>
-          <tr><td>3 进阶题 · 选做</td><td>再加 <code>search_signals(keyword)</code>：按关键词（客户名、竞品名）搜本周信号，做「客户雷达」</td><td>问「宁德时代本周有什么动静」能返回带链接的信号</td><td>工具粒度设计：一个工具一个意图</td></tr>
+          <tr><td>1 用起来 · 10'</td><td>Agent 模式运行 <code>/industry-insight</code>，看智能体依次调 4 个 MCP 工具出周报</td><td>Prompt 文件 · MCP</td><td>周报页头显示「模式：智能体研判」</td></tr>
+          <tr><td>2 改成自己的 · 10'</td><td>在 <code>focus.md</code> 加一个自己关注的行业（只改「搜索」「关注什么」两行），再跑一次</td><td>—（只改 Markdown）</td><td>周报里出现新行业，带来源链接</td></tr>
+          <tr class="us-row"><td>3 vibe coding · 15'</td><td>让 Copilot 加 MCP 工具「客户雷达」<code>search_signals(keyword)</code>：按客户名 / 竞品名搜本周信号；重启 MCP 后问「宁德时代本周有什么动静」</td><td>Agent 模式 · <code>/tests</code> · MCP</td><td>智能体调用了新工具，返回带链接的信号</td></tr>
+          <tr class="us-row"><td>4 上云 · 10'</td><td>把改动推到自己的分支 <code>student/&lt;名字&gt;</code>，读懂 <code>industry-insight.md</code> 四块配置，<code>gh aw compile</code>，在自己分支上触发工作流</td><td>gh-aw · GitHub Actions</td><td>Actions 里看到自己的运行；休息回来看到自己行业的周报（Issue / PR）</td></tr>
         </tbody>
       </table>
     </div>
     <div class="grid grid-2" style="margin-top:20px;">
       <div class="az-card">
-        <div class="az-eyebrow">基础题提示词（草稿）</div>
-        <pre class="prompt">在 Lab-01-Industry-Insight/mcp_server 里新增一个 MCP 工具 get_high_impact：
-读取 Lab-01-Industry-Insight/frontend/report.json，
-只返回影响等级为「高」的热点，每条包含行业、事件、对我们的影响、来源链接。
-逻辑写在 industry_tools.py，server.py 里注册工具并写清楚 docstring，
-在 tests/test_industry_tools.py 里加一个单元测试，最后运行测试。</pre>
-      </div>
-      <div class="az-card">
-        <div class="az-eyebrow">讲师要点</div>
+        <div class="az-eyebrow">第 4 步：gh-aw 讲清楚这四块</div>
         <ul class="az-list">
-          <li>先让学员读 server.py 里现有 4 个工具的 docstring，再动手</li>
-          <li>强调「改完要重启 MCP 服务器」：命令面板 MCP: List Servers → Restart</li>
-          <li>答案分支：<code>answer/lab01-basic</code>、<code>answer/lab01-advanced</code></li>
-          <li>Lab-01 产出的周报会被 Lab-02、Lab-03 继续用</li>
+          <li><strong>触发</strong>：<code>schedule</code> 每周一 8 点 + <code>workflow_dispatch</code> 手动触发</li>
+          <li><strong>网络白名单</strong>：智能体在防火墙里运行，只能访问列出的域名。加新的 RSS 源要同时加白名单再 compile（Google News 搜索不用）</li>
+          <li><strong>safe-outputs</strong>：智能体本身只读，结果只能通过建 PR / Issue 提交，人审核后才进主干</li>
+          <li><strong>编译</strong>：<code>.md</code> 是给人读写的源，<code>gh aw compile</code> 生成 Actions 真正运行的 <code>.lock.yml</code></li>
         </ul>
+      </div>
+      <div class="recap">
+        <div class="az-eyebrow">复盘卡 · Lab-01</div>
+        <dl>
+          <dt>用了什么</dt><dd>Prompt 文件 · MCP 服务器 · Agent 模式写代码 · gh-aw</dd>
+          <dt>它做了什么</dt><dd>MCP 工具抓取、去重、回填链接；模型只负责挑重点、判断影响；gh-aw 把同一套工具放到云端按时运行</dd>
+          <dt>对项目意味着</dt><dd>不用每周人工追几十个网站；业务同事改 focus.md 就能换行业；数据源封装一次，VS Code、gh-aw、Studio 都能复用；结果必须经人审核才进主干</dd>
+        </dl>
       </div>
     </div>
   </section>
@@ -488,40 +570,38 @@ body.theme-dark .az-footer { border-top-color: var(--az-night-border); color: va
   <!-- ===== Lab-02 ===== -->
   <section class="section">
     <div class="section-head">
-      <div class="az-eyebrow">03 · Lab-02 知识总结智能体 · Skills + Copilot SDK · 55 分钟</div>
-      <h2 class="az-title">从「在 Chat 里用」到「做成别人能调的服务」</h2>
+      <div class="az-eyebrow">Lab-02 · 知识总结智能体 · Skills + Copilot SDK · 45 分钟</div>
+      <h2 class="az-title">把团队的汇报规范，变成谁都能调用的服务</h2>
       <div class="az-rule"></div>
-      <p class="az-sub">现版本「用 SDK 做成网页服务」只是跑现成代码；新增代码题让学员亲手改一次 SDK 调用链</p>
+      <p class="az-sub">同一份 SKILL.md：在 Chat 里用一次，再通过 Copilot SDK 做成网页和 API</p>
     </div>
     <div class="az-card" style="padding:0; overflow:auto;">
       <table class="az-table">
-        <thead><tr><th style="width:120px;">步骤</th><th>学员做什么</th><th>验收（硬指标）</th><th>学到什么</th></tr></thead>
+        <thead><tr><th style="width:120px;">步骤</th><th>学员做什么</th><th>用到的功能</th><th>验收</th></tr></thead>
         <tbody>
-          <tr><td>1 用起来 · 10'</td><td>Chat 里让 Copilot 把一篇文章总结成 6 页 PPT，下载用 PowerPoint 打开</td><td>每页标题是结论句、文字可编辑</td><td>Skill 怎么被自动选中；knowledge2ppt 调 pptx</td></tr>
-          <tr><td>2 改成自己的 · 15'</td><td>改 <code>SKILL.md</code> 的「团队汇报规范」，再生成一次对比</td><td>新 PPT 体现改动（如多一页「对我们的影响」）</td><td>把团队习惯写成技能，所有人出的汇报格式一致</td></tr>
-          <tr class="us-row"><td>3 基础题 · 15'</td><td>让 Copilot 在 <code>lib/styles.ts</code> 加一种「公司品牌风」（学员描述自己公司的配色和字体）</td><td>网页上出现新风格，选它生成的 PPT 用了指定配色</td><td>风格只是传给 Skill 的一段描述，改一个文件即可</td></tr>
-          <tr><td>3 进阶题 · 选做</td><td>网页加「汇报对象」选项（领导 / 销售团队 / 技术评审），一路传到 SDK 提示词和 /api/jobs</td><td>选「销售团队」时，建议页面向销售动作</td><td>前端 → 路由 → copilot.ts 的完整链路</td></tr>
-          <tr><td>4 跑服务 · 10'</td><td><code>npm run dev</code>，网页上用「本周行业洞察周报」生成 PPT</td><td>进度页能下载 PPT</td><td>为 Lab-03 准备好对外 API</td></tr>
+          <tr><td>1 用起来 · 10'</td><td>Chat 里让 Copilot 把一篇文章做成 6 页汇报 PPT，下载用 PowerPoint 打开</td><td>Agent Skills（自动选中）</td><td>每页标题是结论句、文字可编辑</td></tr>
+          <tr><td>2 改成自己的 · 10'</td><td>改 <code>SKILL.md</code> 的「团队汇报规范」一条，再生成一次对比</td><td>—（只改 Markdown）</td><td>新 PPT 体现了改动</td></tr>
+          <tr class="us-row"><td>3 vibe coding · 15'</td><td>让 Copilot 在网页上加一种「公司品牌风」（学员描述自己公司的配色）</td><td>Agent 模式 · Edit 模式</td><td>选新风格生成的 PPT 用了指定配色</td></tr>
+          <tr><td>4 跑服务 · 10'</td><td><code>npm run dev</code>，网页上选「本周行业洞察周报」生成 PPT；读一眼 <code>lib/copilot.ts</code> 看 SDK 怎么加载 Skill</td><td>Copilot SDK</td><td>进度页能下载 PPT</td></tr>
         </tbody>
       </table>
     </div>
     <div class="grid grid-2" style="margin-top:20px;">
       <div class="az-card">
-        <div class="az-eyebrow">基础题提示词（草稿）</div>
-        <pre class="prompt">在 Lab-02-Knowledge-Summary/lib/styles.ts 的 PRESENTATION_STYLES 里
-新增一种风格 brand「公司品牌风」：主色 &lt;学员填&gt;，辅色 &lt;学员填&gt;，
-标题字体 &lt;学员填&gt;，适合对内汇报。
-照现有三种风格的写法补齐 label、description、emphasis，
-并在 app/globals.css 里给 .style-preview.brand 加一个预览样式。</pre>
-      </div>
-      <div class="az-card">
         <div class="az-eyebrow">讲师要点</div>
         <ul class="az-list">
-          <li>基础题只动 1 个文件（+ 1 段 CSS），混合学员也能做完</li>
-          <li>进阶题跨 3 个文件，适合研发学员，用来讲「前后端怎么串」</li>
-          <li>生成一次 PPT 约 3~5 分钟，提醒学员边等边读代码导读</li>
-          <li>答案分支：<code>answer/lab02-basic</code>、<code>answer/lab02-advanced</code></li>
+          <li>第 1 步和第 4 步用的是<strong>同一份 SKILL.md</strong>：Chat 里是人在用，SDK 里是程序在用</li>
+          <li>生成一次 PPT 约 3~5 分钟，等的时候带读 <code>lib/copilot.ts</code> 的 <code>skillDirectories</code></li>
+          <li>第 3 步只动 <code>lib/styles.ts</code> 一个文件（+ 一段 CSS），混合学员也能做完</li>
         </ul>
+      </div>
+      <div class="recap">
+        <div class="az-eyebrow">复盘卡 · Lab-02</div>
+        <dl>
+          <dt>用了什么</dt><dd>Agent Skills · Copilot SDK · Agent 模式写代码</dd>
+          <dt>它做了什么</dt><dd>Skill 规定了「结论 → 要点 → 建议」怎么排；pptx skill 负责出可编辑文件；SDK 让网页和 API 也能调用同一套 Skill</dd>
+          <dt>对项目意味着</dt><dd>读文章做汇报从半天变成几分钟，而且全组格式一致；规范改一处、所有入口同时生效；有了 API，别的系统（下一步的 Studio）就能调用</dd>
+        </dl>
       </div>
     </div>
   </section>
@@ -529,47 +609,92 @@ body.theme-dark .az-footer { border-top-color: var(--az-night-border); color: va
   <!-- ===== Lab-03 ===== -->
   <section class="section">
     <div class="section-head">
-      <div class="az-eyebrow">04 · Lab-03 串起来 · Copilot Studio · 50 分钟</div>
+      <div class="az-eyebrow">Lab-03 · 串起来 · Copilot Studio · 45 分钟</div>
       <h2 class="az-title">一句话：看看本周新能源汽车装配行业有什么变化，整理成汇报</h2>
       <div class="az-rule"></div>
-      <p class="az-sub">2026-10-16 已在演示租户实测跑通 5 段对话；本节是在「讲师事先建好连接器」前提下的学员步骤</p>
+      <p class="az-sub">2026-10-16 已在演示租户实测跑通；连接器由讲师事先建好，学员连自己的 Codespace</p>
     </div>
     <div class="az-card" style="padding:0; overflow:auto;">
       <table class="az-table">
-        <thead><tr><th style="width:120px;">步骤</th><th>学员做什么</th><th>验收（硬指标）</th><th>学到什么</th></tr></thead>
+        <thead><tr><th style="width:120px;">步骤</th><th>学员做什么</th><th>用到的功能</th><th>验收</th></tr></thead>
         <tbody>
-          <tr><td>1 暴露服务 · 10'</td><td>端口 3000 设 Public，跑 <code>smoke-test.sh</code></td><td>4 项全部打勾</td><td>云端智能体只能访问公网地址；为什么要 x-api-key</td></tr>
-          <tr><td>2 建智能体 · 15'</td><td>建 Standard 智能体、粘贴指令、关闭联网搜索、挂讲师建好的 4 个工具、建连接（填自己的 host 和密钥）</td><td>Tools 页 4 个工具都是 On</td><td>工具描述就是提示词；生成式编排怎么选工具</td></tr>
-          <tr><td>3 测试 · 10'</td><td>跑 5 段对话：洞察 / 洞察→PPT / 查进度 / 网页→PPT / 一句话串起来</td><td>拿到自己行业的洞察和一份 PPT</td><td>长任务异步化：提交即返回进度页</td></tr>
-          <tr class="us-row"><td>4 改一处 · 15'</td><td>改一条指令规则或一个工具描述（如「回答末尾写明由哪个团队跟进」），对比前后回答</td><td>能说出改了什么、行为怎么变了</td><td>智能体的行为由描述驱动，业务人员也能调</td></tr>
+          <tr><td>1 暴露服务 · 8'</td><td>端口 3000 设 Public，跑 <code>smoke-test.sh</code></td><td>Codespaces 端口转发</td><td>4 项全部打勾</td></tr>
+          <tr><td>2 建智能体 · 15'</td><td>建 Standard 智能体、粘贴指令、关闭联网搜索、挂讲师建好的 4 个工具、建连接（填自己的地址和密钥）</td><td>Copilot Studio · 工具 · 生成式编排</td><td>Tools 页 4 个工具都是 On</td></tr>
+          <tr><td>3 测试 · 10'</td><td>跑 5 段对话，点开每个工具卡片看它实际收到的参数</td><td>测试窗格</td><td>拿到自己行业的洞察和一份 PPT</td></tr>
+          <tr class="us-row"><td>4 改一处 · 12'</td><td>改一条指令或一个工具描述（如「回答末尾写明由哪个团队跟进」），对比前后回答</td><td>指令 · 工具描述</td><td>能说出改了什么、行为怎么变了</td></tr>
         </tbody>
       </table>
     </div>
+    <div class="grid grid-2" style="margin-top:20px;">
+      <div class="az-card">
+        <div class="az-eyebrow">讲师要点</div>
+        <ul class="az-list">
+          <li>讲清楚分工：Lab-01 / 02 是<strong>开发者</strong>用 GitHub Copilot 造能力，Lab-03 是<strong>业务同事</strong>在 Studio 里用能力</li>
+          <li>Studio 调的就是自己 Codespace 里的服务，自己改过的 focus.md 和 SKILL.md 会直接体现在回答里</li>
+          <li>为什么 PPT 不同步返回：生成要几分钟，先给进度页链接，这是接业务系统的通用做法</li>
+        </ul>
+      </div>
+      <div class="recap">
+        <div class="az-eyebrow">复盘卡 · Lab-03</div>
+        <dl>
+          <dt>用了什么</dt><dd>Copilot Studio · REST API 工具 · 指令与工具描述</dd>
+          <dt>它做了什么</dt><dd>Studio 根据工具描述决定先查洞察、再生成 PPT，参数自己从对话里取；真正干活的是我们在 Lab-01 / 02 造的服务</dd>
+          <dt>对项目意味着</dt><dd>业务同事不用打开 VS Code，一句话拿到洞察和汇报；智能体的行为由描述驱动，业务人员也能调；两个智能体完成了从信息到汇报的闭环</dd>
+        </dl>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== 待决 ===== -->
+  <!-- ===== 收尾 ===== -->
   <section class="section">
     <div class="section-head">
-      <div class="az-eyebrow">05 · 取舍与风险</div>
-      <h2 class="az-title">评审前要知道的代价</h2>
+      <div class="az-eyebrow">复盘 · 20 分钟</div>
+      <h2 class="az-title">对着项目地图，每人讲一句「我做了什么」</h2>
+      <div class="az-rule"></div>
+    </div>
+    <div class="grid grid-3">
+      <article class="az-card has-accent">
+        <div class="card-no">10'</div>
+        <h3 class="card-title">讲师串一遍</h3>
+        <p class="card-desc">点亮完整项目地图：数据 → MCP → 周报（含云端自动版）→ Skill + SDK → Studio。每段指出用了哪个 Copilot 功能。</p>
+      </article>
+      <article class="az-card has-accent">
+        <div class="card-no">5'</div>
+        <h3 class="card-title">学员讲一句</h3>
+        <p class="card-desc">抽 4~5 人，按复盘卡说：我用了什么功能、它替我做了什么、回去能用在哪项工作上。</p>
+      </article>
+      <article class="az-card has-accent">
+        <div class="card-no">5'</div>
+        <h3 class="card-title">课后怎么继续</h3>
+        <p class="card-desc">课后作业（进阶题）· fork 到自己账号的步骤 · 自己电脑上用 Copilot app 的方式 · 答疑渠道。</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== 前置与代价 ===== -->
+  <section class="section">
+    <div class="section-head">
+      <div class="az-eyebrow">前置条件与代价</div>
+      <h2 class="az-title">评审前要知道的</h2>
       <div class="az-rule"></div>
     </div>
     <div class="grid grid-2">
       <div class="az-card is-tint">
-        <h3 class="card-title" style="font-size:18px;">冲突：讲师建连接器 × 每人连自己的服务</h3>
-        <p class="card-desc">连接器里写死一个 host，而每个学员的 Codespace 地址都不同。计划：</p>
+        <h3 class="card-title" style="font-size:18px;">gh-aw「每人自己跑一次」需要</h3>
         <ul class="az-list">
-          <li><strong>首选</strong>：连接器加「Set host URL」策略，host 作为连接参数，学员建连接时填自己的地址 + 密钥（需走「自定义连接器」路径，未验证，由 Tarry 在租户里手动试）</li>
-          <li><strong>保底</strong>：学员自己导入 openapi.yaml（2026-10-16 已实测通过，多约 8 步）</li>
+          <li>学员对本仓库有<strong>写权限</strong>（能推自己的分支），同时用规则保护 <code>main</code>，防止误推</li>
+          <li>工作流读仓库 Secret <code>COPILOT_GITHUB_TOKEN</code>：全班共用讲师的令牌，额度记在讲师名下；或评估 gh-aw 的「用 Actions 令牌调用 Copilot」（需企业集中计费，未验证）</li>
+          <li>企业目前禁止 Actions 建 PR，结果以 Issue + 分支形式出现；30 人会产生约 30 个 Issue，课后统一关闭</li>
+          <li>每次运行约 5 分钟，放在休息前触发，休息回来看结果</li>
         </ul>
       </div>
       <div class="az-card">
         <h3 class="card-title" style="font-size:18px;">其他代价</h3>
         <ul class="az-list">
-          <li>要新做 4 道代码题的参考答案分支，并逐题确认 Copilot 照提示词能做出来</li>
-          <li>全班同时让 Copilot 写代码 + 生成 PPT，Copilot 额度消耗明显上升，课前要确认企业预算</li>
-          <li>Studio 测试和 Copilot Credits 同样计费，演示租户要有足够额度</li>
-          <li>进阶题预计只有部分人能完成，课后作业化</li>
+          <li>Lab-03 连接器冲突（讲师建好 × 每人连自己的）：首选「建连接时填 host」，未验证；保底学员自己导入 openapi.yaml</li>
+          <li>热身和 3 道代码题都要做参考答案分支，并逐题确认 Copilot 照提示词能做出来</li>
+          <li>全班同时写代码、生成 PPT、跑 gh-aw，Copilot 额度消耗明显上升，课前确认企业预算</li>
+          <li>进阶题全部挪到课后：Lab-01 加数据源 + 白名单、Lab-02「汇报对象」选项</li>
         </ul>
       </div>
     </div>
@@ -578,23 +703,23 @@ body.theme-dark .az-footer { border-top-color: var(--az-night-border); color: va
   <!-- ===== 评审问题 ===== -->
   <section class="section">
     <div class="section-head">
-      <div class="az-eyebrow">06 · 请评审</div>
+      <div class="az-eyebrow">请评审</div>
       <h2 class="az-title">需要你拍板的地方</h2>
       <div class="az-rule"></div>
     </div>
     <div class="grid grid-2">
       <div class="az-card">
         <ul class="az-list">
-          <li>代码题选题是否贴近阿特拉斯业务？Lab-01 进阶题「客户雷达」、Lab-02 基础题「公司品牌风」要不要换</li>
-          <li>时间分配：Lab-03 给 50 分钟够不够？是否压缩环境环节</li>
-          <li>Lab-03 第 4 步「改一处」，你更想让学员改指令还是改工具描述</li>
+          <li>功能地图的 12 个功能，有没有要加的（如 Copilot CLI、Copilot cloud agent）或要删的</li>
+          <li>复盘卡「对项目意味着」这一栏的说法，是否贴合阿特拉斯业务同事的语言</li>
+          <li>gh-aw 用全班共用讲师令牌，还是先验证 Actions 令牌方案</li>
         </ul>
       </div>
       <div class="az-card">
         <ul class="az-list">
-          <li>是否保留 gh-aw 每周定时的讲师演示，还是课后资料</li>
-          <li>答案分支命名 <code>answer/labXX-basic|advanced</code> 是否 OK</li>
-          <li>评审通过后的工作顺序：代码题 + 答案分支 → README 改写 → 讲师彩排</li>
+          <li>Lab-01 第 4 步只给 10 分钟，是否够推分支 + 编译 + 触发</li>
+          <li>复盘卡做成纸质、在线表单，还是写在仓库里的 Markdown</li>
+          <li>评审通过后的顺序：答案分支 + 仓库权限 → 各 README 改写 → 讲师彩排</li>
         </ul>
       </div>
     </div>
@@ -604,7 +729,7 @@ body.theme-dark .az-footer { border-top-color: var(--az-night-border); color: va
     <span style="display:inline-flex; align-items:center; gap:8px;">
       <span class="az-mark" style="width:12px;height:15px;"></span>埃知科技 · 上海埃知科技有限公司
     </span>
-    <span class="mono">教学设计评审稿 · 2026-10-16</span>
+    <span class="mono">教学设计评审稿 v2 · 2026-10-16</span>
   </footer>
 </div>
 </body>
