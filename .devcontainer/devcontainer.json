@@ -6,7 +6,8 @@
 // =============================================================================
 {
   "name": "Copilot Agent Labs · Python 3.12 + Node 24",
-  "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
+  // 基于官方 Python 3.12 镜像，只多做一件事：去掉签名过期的 yarn apt 源（见 Dockerfile）
+  "build": { "dockerfile": "Dockerfile" },
 
   "features": {
     // Lab-02 的 Next.js 与 Copilot SDK 要 Node 24

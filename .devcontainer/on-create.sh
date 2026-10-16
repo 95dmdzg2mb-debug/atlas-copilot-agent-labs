@@ -28,11 +28,6 @@ step "安装 Lab-02 Node 依赖"
 
 # ---- 3. 无头 Chromium（pptx skill 把 HTML 渲染成幻灯片要用，约 150MB）---------
 step "安装 Playwright Chromium 及系统依赖"
-# 基础镜像自带的 yarn apt 源签名密钥已过期，apt-get update 会直接失败，--with-deps 就装不上。
-# 本课不用 yarn，去掉这个源即可。
-if [[ -d /etc/apt/sources.list.d ]]; then
-  sudo grep -rl "dl.yarnpkg.com" /etc/apt/sources.list.d 2>/dev/null | xargs -r sudo rm -f
-fi
 (cd Lab-02-Knowledge-Summary && npx playwright install --with-deps chromium)
 
 # ---- 4. 离线自检：Lab-01 工具的单元测试（不联网、不需要凭证）------------------
