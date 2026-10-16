@@ -54,3 +54,29 @@
 - 未验证：真实生成 .pptx —— 讲师账号 Copilot Business 席位调用 `models.list` 返回 403「not authorized to use this Copilot feature」，
   需在席位所属组织/企业开启 Copilot CLI 策略后复测；devcontainer 需在真实 Codespace 里构建一次；Copilot Studio 导入连接器需在演示租户里走一遍。
 - 过程中的失误：`git mv -k` 在未跟踪文件上静默跳过却返回 0，串联的 `rm -rf` 删掉了刚拷入的 pptx skill；已从源仓库恢复并逐文件比对一致。
+
+## Lab-03 实测计划（2026-10-16）
+
+目标：按学员视角把 Lab-03 真实走通一遍 —— Studio 里一句话「看看本周新能源汽车装配行业有什么变化，整理成汇报」→ 返回洞察 + PPT 进度页 → 下载到 PPT；
+走完后把 README 改成与真实界面一致。
+
+分工：🤖 = Claude 做；👤 = 必须由用户做（登录/凭据/同意条款）
+
+### A. 服务端（Codespace）
+- [ ] 👤 设 Codespaces 用户 Secret `COPILOT_GITHUB_TOKEN`（`gh secret set ... --user --app codespaces`），学员也可用这条路代替 set-key.sh
+- [ ] 🤖 建测试 Codespace（空闲超时 120 分钟），生成 `LAB_API_KEY`，`npm run dev` 后台常驻
+- [ ] 🤖 端口 3000 设 Public（`gh codespace ports visibility 3000:public`），跑 `smoke-test.sh` 全绿
+- [ ] 🤖 公网 curl 走一遍 `CreatePresentationJob` → 进度页 → 下载，确认从 Studio 视角可用
+
+### B. Copilot Studio（演示租户，Chrome）
+- [ ] 👤 在 Chrome 登录 copilotstudio.microsoft.com，确认环境与授权
+- [ ] 🤖 新建智能体「业务汇报助手」，粘贴 README 里的智能体指令，确认生成式编排开启
+- [ ] 🤖 工具 → 新建 → REST API，上传填好 host 的 openapi.yaml；三个操作加为工具
+- [ ] 👤 建连接时粘贴 `LAB_API_KEY`（凭据由用户输入）
+- [ ] 🤖 测试窗格跑 4 段对话：洞察 / 洞察→PPT / 一句话串起来 / 网页→PPT；核对每次调用的参数与回复
+
+### C. 收尾
+- [ ] 🤖 按真实界面改 Lab-03 README（菜单名、截图位置、坑），必要时调 openapi 描述或智能体指令
+- [ ] 🤖 删除测试 Codespace；Studio 智能体保留给讲师演示（或按用户要求删除）
+
+风险：租户 DLP 拦自定义连接器；组织策略不允许 Public 端口；Studio 连接器超时；REST API 工具界面与文档不一致。
