@@ -12,7 +12,9 @@
     // Lab-02 的 Next.js 与 Copilot SDK 要 Node 24
     "ghcr.io/devcontainers/features/node:1": { "version": "24" },
     // gh：查看 Actions 运行、gh-aw 编译（讲师演示）
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    // gh codespace ssh / logs 依赖容器里的 SSH 服务：讲师远程排障、自动化验证都用它
+    "ghcr.io/devcontainers/features/sshd:1": {}
   },
 
   "customizations": {
