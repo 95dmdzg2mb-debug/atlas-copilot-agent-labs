@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { checkApiKey, publicBaseUrl } from "@/lib/api";
-import { filterByTopic, loadLatestReport } from "@/lib/insight";
+import { filterByTopic, loadLatestReport, normalizeTopic } from "@/lib/insight";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "还没有行业洞察周报，请先完成 Lab-01。" }, { status: 404 });
   }
 
-  const topic = new URL(request.url).searchParams.get("topic")?.trim() || "";
+  const topic = normalizeTopic(new URL(request.url).searchParams.get("topic")) ?? "";
   const report = filterByTopic(loaded.report, topic);
   const query = topic ? `?topic=${encodeURIComponent(topic)}` : "";
   return NextResponse.json({

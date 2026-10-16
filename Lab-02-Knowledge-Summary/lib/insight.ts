@@ -49,9 +49,17 @@ export async function loadLatestReport(): Promise<{ report: InsightReport; origi
   return null;
 }
 
-/** 按行业筛选：「新能源汽车装配」能匹配到「新能源汽车」，留空返回全部。 */
-export function filterByTopic(report: InsightReport, topic?: string | null): InsightReport {
+const WHOLE_REPORT = /^(全部|所有|全部行业|整份|all)$/i;
+
+/** 「全部」「all」之类的说法等同于不筛选，返回 undefined。Studio 里 topic 是必填参数，要整份周报时会传这些词。 */
+export function normalizeTopic(topic?: string | null): string | undefined {
   const query = topic?.trim();
+  return query && !WHOLE_REPORT.test(query) ? query : undefined;
+}
+
+/** 按行业筛选：「新能源汽车装配」能匹配到「新能源汽车」，留空或「全部」返回整份周报。 */
+export function filterByTopic(report: InsightReport, topic?: string | null): InsightReport {
+  const query = normalizeTopic(topic);
   if (!query) {
     return report;
   }

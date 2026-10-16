@@ -4,94 +4,100 @@
 # 导入前只改一处：把 host 换成你自己的 Codespace 公网地址（不带 https://），
 # 例如 fluffy-space-robot-x5g7-3000.app.github.dev。
 # 在 Codespace 终端运行 bash Lab-03-Copilot-Studio/smoke-test.sh 会打印你的 host。
-swagger: "2.0"
+swagger: '2.0'
 info:
   title: Atlas Agent Labs
   description: 行业洞察智能体（读本周行业洞察周报）与知识总结智能体（把网页或周报生成汇报 PPT）。
-  version: "1.0"
+  version: '1.0'
 host: YOUR-CODESPACE-NAME-3000.app.github.dev
 basePath: /
 schemes:
-  - https
+- https
 consumes:
-  - application/json
+- application/json
 produces:
-  - application/json
+- application/json
 securityDefinitions:
   api_key:
     type: apiKey
     in: header
     name: x-api-key
 security:
-  - api_key: []
+- api_key: []
 paths:
   /api/insight/latest:
     get:
       operationId: GetIndustryInsight
       summary: 查询本周行业洞察
-      description: >-
-        读取最新一期行业洞察周报。用户问某个行业（新能源汽车、锂电、半导体、压缩空气与真空竞品、节能降碳政策）
-        本周有什么变化、对业务有什么影响时调用。返回本周摘要、各行业热点（含对业务的影响和来源链接）、行动建议，
-        以及周报网页链接 reportPageUrl。
+      description: 读取最新一期行业洞察周报。用户问某个行业（新能源汽车、锂电、半导体、压缩空气与真空竞品、节能降碳政策） 本周有什么变化、对业务有什么影响时调用。返回本周摘要、各行业热点（含对业务的影响和来源链接）、行动建议， 以及周报网页链接 reportPageUrl。
       parameters:
-        - name: topic
-          in: query
-          required: false
-          type: string
-          x-ms-summary: 行业
-          description: 只看某个行业，例如「新能源汽车」。用户的说法更长也没关系（如「新能源汽车装配」），留空返回整份周报。
+      - name: topic
+        in: query
+        required: true
+        type: string
+        x-ms-summary: 行业
+        description: 行业名称，例如「新能源汽车」；用户的说法更长也没关系（如「新能源汽车装配」）。用户想看整份周报、没指定行业时填「全部」。
       responses:
-        "200":
+        '200':
           description: 周报内容
           schema:
-            $ref: "#/definitions/InsightReport"
-        "401":
+            $ref: '#/definitions/InsightReport'
+        '401':
           description: 缺少或错误的 x-api-key
-        "404":
+        '404':
           description: 还没有生成周报
-  /api/jobs:
+  /api/jobs/insight:
     post:
-      operationId: CreatePresentationJob
-      summary: 生成汇报 PPT
-      description: >-
-        提交一个生成汇报 PPT 的任务，立即返回任务号和进度页链接，PPT 在后台生成（通常 2~5 分钟）。
-        把本周行业洞察做成汇报时 sourceType 用 insight 并填 topic；把某篇网页文章做成汇报时 sourceType 用 url 并填 url。
-        调用成功后，把 progressPageUrl 发给用户，告诉用户在这个页面查看进度并下载 PPT。
+      operationId: CreateInsightPresentation
+      summary: 把行业洞察做成汇报 PPT
+      description: 把本周行业洞察周报（整份或某个行业）做成汇报 PPT。用户说「整理成汇报」「做成 PPT」且内容来自行业洞察时调用。提交后立即返回任务号和进度页链接，PPT 在后台生成。调用成功后立刻把 progressPageUrl 发给用户，告诉用户 PPT 约 2~5 分钟生成好，在这个页面查看进度并下载。
       parameters:
-        - name: body
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/CreateJobRequest"
-      responses:
-        "202":
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CreateInsightPresentationRequest'
+      responses: &id001
+        '202':
           description: 任务已提交
           schema:
-            $ref: "#/definitions/CreateJobResponse"
-        "400":
+            $ref: '#/definitions/CreateJobResponse'
+        '400':
           description: 参数错误
-        "401":
+        '401':
           description: 缺少或错误的 x-api-key
+  /api/jobs/webpage:
+    post:
+      operationId: CreateWebPagePresentation
+      summary: 把网页做成汇报 PPT
+      description: 把用户给出的一篇网页（技术文章、竞品产品页、展会报道等）总结成汇报 PPT。用户给了链接并要求做汇报或 PPT 时调用。提交后立即返回任务号和进度页链接，PPT 在后台生成。调用成功后立刻把 progressPageUrl 发给用户，告诉用户 PPT 约 2~5 分钟生成好，在这个页面查看进度并下载。
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CreateWebPagePresentationRequest'
+      responses: *id001
   /api/jobs/{id}:
     get:
       operationId: GetPresentationJob
       summary: 查询 PPT 生成进度
       description: 用户问 PPT 做好了没有时调用。status 为 succeeded 时返回 downloadUrl。
       parameters:
-        - name: id
-          in: path
-          required: true
-          type: string
-          x-ms-summary: 任务号
-          description: CreatePresentationJob 返回的 jobId
+      - name: id
+        in: path
+        required: true
+        type: string
+        x-ms-summary: 任务号
+        description: CreateInsightPresentation 或 CreateWebPagePresentation 返回的 jobId
       responses:
-        "200":
+        '200':
           description: 任务状态
           schema:
-            $ref: "#/definitions/JobStatus"
-        "401":
+            $ref: '#/definitions/JobStatus'
+        '401':
           description: 缺少或错误的 x-api-key
-        "404":
+        '404':
           description: 找不到任务
 definitions:
   Source:
@@ -99,10 +105,13 @@ definitions:
     properties:
       title:
         type: string
+        description: 原文标题
       url:
         type: string
+        description: 原文链接
       source:
         type: string
+        description: 来源媒体
   Hotspot:
     type: object
     properties:
@@ -124,16 +133,19 @@ definitions:
       sources:
         type: array
         items:
-          $ref: "#/definitions/Source"
+          $ref: '#/definitions/Source'
+        description: 该事件的原文来源列表
   Topic:
     type: object
     properties:
       name:
         type: string
+        description: 行业名称
       hotspots:
         type: array
         items:
-          $ref: "#/definitions/Hotspot"
+          $ref: '#/definitions/Hotspot'
+        description: 该行业本周的热点事件列表
   Action:
     type: object
     properties:
@@ -151,6 +163,7 @@ definitions:
     properties:
       title:
         type: string
+        description: 周报标题（含周次）
       mode:
         type: string
         description: llm 为智能体研判；fallback 为兜底结果（未经研判）
@@ -158,65 +171,48 @@ definitions:
         type: array
         items:
           type: string
+          description: 周报覆盖的全部行业名称
+        description: 周报覆盖的全部行业名称
       matchedTopic:
         type: array
         items:
           type: string
+          description: 按 topic 参数匹配到的行业；未传 topic 时为空
+        description: 按 topic 参数匹配到的行业；未传 topic 时为空
       summary:
         type: array
         items:
           type: string
+          description: 本周摘要，每条一句话
+        description: 本周摘要，每条一句话
       topics:
         type: array
         items:
-          $ref: "#/definitions/Topic"
+          $ref: '#/definitions/Topic'
+        description: 各行业的热点与对业务的影响
       actions:
         type: array
         items:
-          $ref: "#/definitions/Action"
+          $ref: '#/definitions/Action'
+        description: 行动建议列表
       reportPageUrl:
         type: string
         description: 周报网页链接，可直接发给用户
-  CreateJobRequest:
-    type: object
-    required:
-      - sourceType
-    properties:
-      sourceType:
-        type: string
-        enum: [insight, url]
-        x-ms-summary: 素材类型
-        description: insight = 本周行业洞察周报；url = 一篇网页
-      topic:
-        type: string
-        x-ms-summary: 行业
-        description: sourceType 为 insight 时可选，只用某个行业的部分，例如「新能源汽车」
-      url:
-        type: string
-        x-ms-summary: 网页地址
-        description: sourceType 为 url 时必填
-      pages:
-        type: integer
-        default: 6
-        x-ms-summary: 页数
-        description: PPT 总页数，1~30，默认 6
-      style:
-        type: string
-        enum: [consulting, geek, magazine]
-        default: consulting
-        x-ms-summary: 风格
-        description: consulting 咨询风（默认）/ geek 极客风 / magazine 杂志风
   CreateJobResponse:
     type: object
     properties:
       jobId:
         type: string
+        description: 任务号，查询进度时使用
       status:
         type: string
+        description: 任务状态：queued 排队中 / running 生成中
       message:
         type: string
+        description: 给用户看的提示信息
       statusUrl:
         type: string
+        description: 查询任务状态的接口地址
       progressPageUrl:
         type: string
         description: 进度页链接，发给用户在网页里查看进度并下载 PPT
@@ -225,15 +221,53 @@ definitions:
     properties:
       jobId:
         type: string
+        description: 任务号
       status:
         type: string
         description: queued / running / succeeded / failed
       message:
         type: string
+        description: 当前进度或失败原因
       fileName:
         type: string
+        description: 生成的 PPT 文件名（成功后才有）
       downloadUrl:
         type: string
         description: 生成成功后的 PPT 下载链接
       progressPageUrl:
         type: string
+        description: 进度页链接，可直接发给用户
+  CreateInsightPresentationRequest:
+    type: object
+    required:
+    - topic
+    properties:
+      topic:
+        type: string
+        x-ms-summary: 行业
+        description: 要汇报的行业，例如「新能源汽车」；要整份周报时填「全部」
+      pages: &id002
+        type: integer
+        default: 6
+        x-ms-summary: 页数
+        description: PPT 总页数，1~30，用户没说就不填（默认 6）
+      style: &id003
+        type: string
+        enum:
+        - consulting
+        - geek
+        - magazine
+        default: consulting
+        x-ms-summary: 风格
+        description: consulting 咨询风（默认）/ geek 极客风 / magazine 杂志风，用户没说就不填
+  CreateWebPagePresentationRequest:
+    type: object
+    required:
+    - url
+    properties:
+      url:
+        type: string
+        x-ms-summary: 网页地址
+        description: 要总结的网页地址（http/https），例如一篇技术文章、竞品产品页或展会报道
+      pages: *id002
+      style: *id003
