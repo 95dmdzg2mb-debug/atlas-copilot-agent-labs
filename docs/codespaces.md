@@ -88,6 +88,9 @@ bash Lab-03-Copilot-Studio/smoke-test.sh
 
 **期望结果**：最后一行「全部通过（4 项），可以去 Copilot Studio 建连接器了」。
 
+在 Studio 里建连接时粘贴的，必须是**这个 Codespace** 的 API 密钥（smoke-test 第二行打印的那个）。每个新 Codespace 都会生成新的密钥，用以前记下的会报 401。
+4 个工具都要在 Additional details 里把 Credentials to use 改成 **Maker-provided credentials**，否则测试时会反复弹「先连接……」。
+
 ## 5. 卡住了怎么办
 
 超过 5 分钟没进展，就从参考答案分支拿需要的文件，先跟上（只覆盖这几个文件，你别处的改动不受影响）：
@@ -108,7 +111,7 @@ bash Lab-03-Copilot-Studio/smoke-test.sh
 3. 删除 Codespace：<https://github.com/codespaces> → 你的 Codespace → **Delete**（停止后仍按存储计费）。
 4. 删除令牌和 Secret：<https://github.com/settings/personal-access-tokens> 删 PAT；
    <https://github.com/settings/codespaces> 删 `COPILOT_GITHUB_TOKEN`；fork 的 Settings → Secrets and variables → Actions 删同名 Secret。
-5. Copilot Studio：删掉你建的「业务汇报助手」和「Atlas Agent Labs · 你的名字」工具及连接。
+5. Copilot Studio：Agents 里删掉你建的「业务汇报助手 你的名字」；Power Automate → Connections 里删掉你的「Atlas · 你的名字」连接。导入时自动生成的连接器和工具定义由讲师课后统一清理。
 6. fork 可以留着课后继续改；课前启用的 Industry Insight Weekly 每周一会自动跑，删了令牌或不想要就在 fork 的
    Actions → Industry Insight Weekly → **⋯** → **Disable workflow**。fork 不要了就 Settings → 最下面 **Delete this repository**。
 

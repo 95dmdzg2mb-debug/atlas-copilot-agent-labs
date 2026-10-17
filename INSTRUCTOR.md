@@ -38,7 +38,9 @@
    - 为每位学员开好 M365 账号 + Copilot Studio 授权（试用许可即可）；
    - Power Platform 管理中心的 **DLP 策略允许自定义连接器**访问 `*.app.github.dev`；
    - 确认学员用哪个环境：2026-10-16 实测演示租户的 Default 环境新建智能体会一直转圈，**Trial 环境（Ontology-trial）正常**；
-   - 自己用一个学员账号把 Lab-03 完整走一遍（[Lab-03 README](Lab-03-Copilot-Studio/README.md) 已按实测写成，含所有坑）。
+   - 自己用一个学员账号把 Lab-03 完整走一遍（[Lab-03 README](Lab-03-Copilot-Studio/README.md) 已按 2026-10-17 重跑写成，含所有坑）；
+   - 学员的 4 个工具都要改成 **Maker-provided credentials**（工具详情 → Additional details → Credentials to use），否则测试时会反复弹「先连接……打开连接管理器」。Agent status 因此会多一条「使用作者凭据」的提醒，本课不发布智能体，可以忽略；
+   - 每个学员导入一次 REST API 工具，租户里就会多出：1 个 Solution（「<title> Solution」）、1 个自定义连接器、1 个 AIPlugin + 4 个 AIPluginOperation、1 个连接。课后清理见下文「课后」。
 6. **网络**：场地网络要能访问 `github.com`、`*.github.dev`、`*.githubcopilot.com`、`news.google.com`、
    `copilotstudio.microsoft.com`、`*.powerplatform.com`。企业网络做 SSL 解密的，提前备热点。
 
@@ -84,6 +86,8 @@
 | 学员 gh-aw 报 401 | 学员 fork 没设 Actions secret 或令牌过期 | fork → Settings → Secrets and variables → Actions → `COPILOT_GITHUB_TOKEN` |
 | 学员 `git restore --source origin/answer/...` 报 invalid reference | fork 时只复制了 main | `git remote add upstream <本仓库地址> && git fetch upstream`，改用 `upstream/answer/...` |
 | Studio 里一堆同名「Atlas Agent Labs」 | 学员没改 openapi.yaml 的 title | 让学员把 title 改成「Atlas Agent Labs · 名字」重新导入，删掉自己旧的那个 |
+| Studio 工具卡片 `connectorAuthorizationError`（HTTP 401） | 连接里的密钥不是学员当前 Codespace 的（每个 Codespace 的 LAB_API_KEY 都不同，课前建过、重建过的最容易错） | Power Automate → Connections → 学员的连接 ⋯ → Edit → 粘贴 smoke-test 打印的密钥 → Update，不用删连接 |
+| 测试时反复弹「先连接……打开连接管理器」 | 工具还是 End user credentials | 工具详情 → Additional details → Credentials to use 改成 Maker-provided credentials → Save |
 | Chat 没有 Agent 模式 / 工具图标 | Copilot 策略没开 Agent 或 MCP | 管理员开策略；临时让学员看讲师屏幕 |
 | 「无法列出模型」且令牌正确 | Copilot CLI 策略没开 | 管理员开策略；临时用讲师 Codespace 演示 |
 | 端口可见性没有 Public | 组织 Codespaces 策略限制 | 组织 Settings → Codespaces → 端口可见性放开 Public |
@@ -93,5 +97,11 @@
 ## 课后
 
 - 提醒学员按 [实操手册 · 课后清理](docs/manual/index.html#after) 做：端口改回 Private、推送改动、删除 Codespace、删除 PAT 和两处 Secret、删 Studio 里自己的智能体和工具。
-- 讲师：清理 Studio 演示租户里残留的智能体和「Atlas Agent Labs · …」连接器；按需更新或删除本仓库的 `COPILOT_GITHUB_TOKEN`。
+- 讲师：清理 Studio 演示租户（2026-10-17 实测顺序，**只在 Power Automate 里删自定义连接器删不干净，刷新后会自己回来**）：
+  1. 学员没删的智能体：Copilot Studio → Agents → ⋯ → Delete（会提示数据永久删除）；
+  2. Copilot Studio → 左侧 ⋯ → **Solutions** → 打开 **Default Solution** → **Objects**，按类型筛选后多选删除（Delete from this environment）：先 **AIPluginOperation**（工具操作），再 **AIPlugin**（工具），最后 **Custom connectors**；名字都带「Atlas Agent Labs」；
+  3. [Power Automate](https://make.powerautomate.com) → Connections：删掉「Atlas · …」「Connect to Atlas Agent Labs …」等连接；
+  4. Solutions 列表里删掉导入时自动生成的「Atlas Agent Labs … Solution」（只是空容器）；
+  5. Connection references 里的 Content Conversion、Dataverse 是 SYSTEM 托管的，不要动。
+- 讲师：按需更新或删除本仓库的 `COPILOT_GITHUB_TOKEN`。
 - 学员想继续用：fork 留着即可，课前启用的定时工作流每周一会自动跑，换一个长期令牌即可；不想要就在 fork 的 Actions → Industry Insight Weekly → ⋯ → Disable workflow。

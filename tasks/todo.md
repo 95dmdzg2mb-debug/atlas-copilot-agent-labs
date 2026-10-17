@@ -138,11 +138,30 @@
 前置：Studio（Ontology-trial）已清空（智能体、连接器、AIPlugin、连接、Solution）；旧 fork 与 Codespace 已删；PAT 与 Codespaces secret 保留。
 分工：🤖 = Claude 按手册操作并截图；👤 = 令牌 / API 密钥相关，Claude 停下来给步骤，等用户做完。文档边跑边改，截图换新。
 
-- [ ] 课前：🤖 fork（不只复制 main）→ 🤖 启用 Actions + 允许建 PR → 👤 Codespaces secret 加上新 fork、fork 的 Actions secret
-- [ ] 开场：🤖 建 Codespace → 信任文件夹 → 界面就绪 → set-key（回车跳过）
-- [ ] 热身 1~4
-- [ ] Lab-01 1~4（含 fork 上手动跑 gh-aw，看 PR）
-- [ ] Lab-02 1~4
-- [ ] Lab-03：端口 Public + smoke → 改 openapi → Studio 新建智能体（Solution、名字带名字）→ 指令 → 关 Web Search → 导入 REST API →
-      👤 建连接粘贴 LAB_API_KEY → 挂 4 个工具（逐个核对连接、试 Maker-provided credentials）→ 测试 1~5 → 改一处
-- [ ] 文档：手册 / Lab-03 README / codespaces.md / INSTRUCTOR.md 按实测改；Studio 截图全换新；课后清理补「Default Solution 里删 AIPlugin」
+- [x] 课前：🤖 fork（不只复制 main）→ 🤖 启用 Actions + 允许建 PR → 👤 Codespaces secret 加上新 fork、fork 的 Actions secret
+- [x] 开场：🤖 建 Codespace → 信任文件夹 → 界面就绪 → set-key（回车跳过）
+- [x] 热身 1~4
+- [x] Lab-01 1~4（fork 上手动跑 gh-aw 成功，出 Draft PR #1，含食品饮料 3 个热点）
+- [x] Lab-02 1~4
+- [x] Lab-03：端口 Public + smoke → 改 openapi → Studio 新建智能体 → 指令 → 关 Web Search → 导入 REST API →
+      👤 建连接粘贴 LAB_API_KEY → 挂 4 个工具（Maker-provided credentials）→ 测试 5 句全过 → 改一处
+- [x] 文档：手册 / Lab-03 README / codespaces.md / INSTRUCTOR.md 按实测改；截图全换新；讲师手册补 Default Solution 清理流程
+
+### 重跑结论（2026-10-17 晚）
+
+- 新发现并已写进文档：
+  1. fork 上定时工作流要单独 Enable，否则没有 Run workflow；启用后每周一会在 fork 上定时跑（课后清理提醒 Disable）。
+  2. 首次打开 Codespace 直接弹信任对话框；首建约 3 分钟。
+  3. Agent 改网页要请求运行命令十来次（约 6 分钟）；自定义指令第一次没被遵守，追问一句才补注释。
+  4. gh-aw 在 fork 上出 Draft PR；fork 默认关 Issues，失败时看运行日志。
+  5. Chat 里出 6 页 PPT 实测约 20 分钟（多次撞 html2pptx 版式规则后自修）；Codespace 无 LibreOffice，缩略图失败改用浏览器预览。
+  6. 网页生成品牌风 PPT：6 页都有「仅供内部讨论」，但颜色用了相近深蓝、无黄色、细条在顶部。
+  7. Studio：New agent 有必填 Solution；导入向导「Create connection」回到 Add tool 对话框；按名字搜工具；新建连接要起显示名；
+     **工具改 Maker-provided credentials 后不再弹连接授权**；Agent status 多出 3 条可忽略的提醒。
+  8. **Studio 401（connectorAuthorizationError）= 连接里的密钥不是当前 Codespace 的**：用临时日志确认 Studio 带了 32 位 x-api-key 但首尾不匹配；
+     Power Automate → Connections → Edit 更新即可，不用重建。
+  9. 指令编辑器点击位置会随滚动错位，插到段落中间；未保存时 Cancel → Discard 可恢复。手册示例去掉了「/」。
+- 已验证：5 句 Studio 测试全过（洞察 1.6~1.8 秒、提交 PPT 1.2~1.5 秒、查进度 2.3 秒、网页→PPT 2.1 秒），Studio 发起的 PPT 约 4 分钟生成，每页都有 SKILL.md 加的保密标识。
+- 过程中的失误：给 api.ts 加调试日志时 shell 转义把 `\n` 变成真换行，导致语法错误约 1 分钟；已从备份恢复，改用 base64 传补丁；
+  调试结束后 api.ts 已恢复（git diff 无变化），临时日志已删除。在 VS Code 里用 `code -g` 打开文件后焦点会跳到编辑器，接着打字会写进文件（已 Revert + 手动修复并 node --check 通过）。
+- 未做：本次没有推送 docs/rerun-1017 分支；Studio 的 Activity 回看、发布到渠道不在课程范围。
