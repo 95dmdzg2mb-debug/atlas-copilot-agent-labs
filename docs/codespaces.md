@@ -12,7 +12,7 @@
 - [ ] 你的 fork → **Actions** 页签 → 点「I understand my workflows, go ahead and enable them」；
       再点左侧 **Industry Insight Weekly**（标着 Disabled）→ 黄条上的 **Enable workflow**，看到 **Run workflow** 按钮才算好；
       Settings → Actions → General → Workflow permissions 勾选 **Allow GitHub Actions to create and approve pull requests** → Save
-- [ ] 按第 1 节在你的 fork 上建好 Codespace（第一次要现装依赖，5~8 分钟）
+- [ ] 按第 1 节在你的 fork 上建好 Codespace（第一次要现装依赖，3~8 分钟）
 - [ ] 讲师发给你的 Copilot Studio 演示账号能登录 <https://copilotstudio.microsoft.com>（Lab-03 要用）
 
 ### 准备 Copilot 令牌（Fine-grained PAT）
@@ -30,10 +30,11 @@
 ## 1. 创建 Codespace（5 分钟）
 
 1. 打开**你自己的 fork**（`<你的用户名>/atlas-copilot-agent-labs`），点 **Code → Codespaces → Create codespace on main**。
-   fork 没有预构建，第一次要现装 Python / Node 依赖和浏览器，约 5~8 分钟。
-2. 等待浏览器里出现 VS Code，终端里打印出「环境就绪」。
+   fork 没有预构建，第一次要现装 Python / Node 依赖和浏览器，约 3~8 分钟。
+2. 等待浏览器里出现 VS Code，弹出「Do you trust the authors…」时点 **Trust Folder & Continue**。
 
-**期望结果**：终端最后几行是「环境就绪。下一步：……」，左下角显示 `Codespaces`。
+**期望结果**：左下角显示 `Codespaces: …`，终端提示符停在 `/workspaces/atlas-copilot-agent-labs (main)`。
+安装过程和「环境就绪」的提示写在创建日志里（命令面板 `Codespaces: View Creation Log`），终端里看不到是正常的。
 
 3. 在终端运行：
    ```bash
@@ -115,7 +116,7 @@ bash Lab-03-Copilot-Studio/smoke-test.sh
 
 | 现象 | 处理 |
 |---|---|
-| Codespace 一直在装依赖，很久不好 | fork 没有预构建，第一次要 5~8 分钟，等它装完；以后打开同一个 Codespace 就快了 |
+| Codespace 一直在装依赖，很久不好 | fork 没有预构建，第一次要 3~8 分钟，等它装完；以后打开同一个 Codespace 就快了 |
 | fork 的 Actions 里没有 Industry Insight Weekly | fork 上工作流默认停用：Actions 页签点「I understand my workflows, go ahead and enable them」 |
 | 有 Industry Insight Weekly 但没有 Run workflow 按钮 | 定时工作流在 fork 上要单独启用：点进去 → **Enable workflow** |
 | gh-aw 报 401 | fork 的 Actions secret `COPILOT_GITHUB_TOKEN` 没设或令牌过期 |

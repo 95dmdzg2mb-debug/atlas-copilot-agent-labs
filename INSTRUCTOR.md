@@ -26,7 +26,7 @@
    - 个人账号每月免费 120 核时 + 15 GB 存储；4 核机器（`hostRequirements.cpus = 4`）课前建一次加上课半天约 15~20 核时，在免费额度内；
    - 个人账号默认允许端口设为 Public（Lab-03 必需）；
    - 课后提醒删除 Codespace（停止后仍按存储计费）。
-3. **没有预构建**：预构建只对本仓库生效，fork 吃不到，每人第一次开 Codespace 要现装 Python / Node 依赖和 Chromium（5~8 分钟）。
+3. **没有预构建**：预构建只对本仓库生效，fork 吃不到，每人第一次开 Codespace 要现装 Python / Node 依赖和 Chromium（3~8 分钟）。
    所以要求学员 **T-1 天**建好 Codespace，上课直接打开。
 4. **Copilot 策略**（学员 Copilot 席位所在的组织或企业。学员用阿特拉斯的席位时，席位由企业 `atlascopco-Lab` 管理，
    只能由阿特拉斯的企业管理员改；每人可在 <https://github.com/settings/copilot/features> 自查以下各项是否为 Enabled）：
@@ -78,7 +78,7 @@
 
 | 现象 | 原因 | 处理 |
 |---|---|---|
-| Codespace 开了很久还在装依赖 | fork 没有预构建，第一次要现装 5~8 分钟 | 等它装完；以后打开同一个 Codespace 就快了。所以要求 T-1 建好 |
+| Codespace 开了很久还在装依赖 | fork 没有预构建，第一次要现装 3~8 分钟 | 等它装完；以后打开同一个 Codespace 就快了。所以要求 T-1 建好 |
 | 学员 fork 的 Actions 里看不到 Industry Insight Weekly | fork 上工作流默认停用 | fork → Actions 页签 → I understand my workflows, go ahead and enable them |
 | 有 Industry Insight Weekly 但没有 Run workflow | 定时工作流在 fork 上要单独启用 | 点进去 → 黄条上的 Enable workflow |
 | 学员 gh-aw 报 401 | 学员 fork 没设 Actions secret 或令牌过期 | fork → Settings → Secrets and variables → Actions → `COPILOT_GITHUB_TOKEN` |

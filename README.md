@@ -25,7 +25,7 @@ focus.md → MCP 工具抓取/校验 → 周报 report.json ──▶ 读周报 
 1. 右上角 **Fork** → Owner 选自己 → **取消勾选**「Copy the `main` branch only」（卡住时要用 `answer/*` 参考答案分支）。
 2. 生成 Fine-grained PAT（Account → Copilot Requests: Read），存成个人 Codespaces secret 和 fork 的 Actions secret，名字都叫 `COPILOT_GITHUB_TOKEN`。
 3. 在 fork 的 **Actions** 页签启用工作流，Settings → Actions → General 勾选「Allow GitHub Actions to create and approve pull requests」。
-4. 在**你的 fork** 上 **Code → Codespaces → Create codespace on main**（第一次要现装依赖，5~8 分钟，建议课前做）。
+4. 在**你的 fork** 上 **Code → Codespaces → Create codespace on main**（第一次要现装依赖，3~8 分钟，建议课前做）。
 
 📘 **学员实操手册**（每一步都有截图、期望结果、复盘卡、卡住了怎么办）：[docs/manual/index.html](docs/manual/index.html)
 （仓库开启 GitHub Pages 后也可以在浏览器直接打开：`https://atlascopco-lab.github.io/atlas-copilot-agent-labs/manual/`）

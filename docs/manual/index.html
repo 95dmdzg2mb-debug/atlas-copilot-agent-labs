@@ -441,7 +441,7 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
       <div class="az-eyebrow">课前准备 · 讲师会提前发通知</div>
       <h2 class="az-title">上课前：fork 一份自己的仓库，配好自己的令牌</h2>
       <div class="az-rule"></div>
-      <p class="az-sub">每人用自己的仓库、自己的 Codespace、自己的 Copilot 额度。建议上课前一天做完，第一次创建 Codespace 要 5~8 分钟</p>
+      <p class="az-sub">每人用自己的仓库、自己的 Codespace、自己的 Copilot 额度。建议上课前一天做完，第一次创建 Codespace 要 3~8 分钟</p>
     </div>
     <div class="az-card" style="padding:0; overflow:auto;">
       <table class="az-table">
@@ -478,9 +478,9 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
       <div class="step-no">0.1</div>
       <div class="step-body">
         <h3>在自己的 fork 上创建 Codespace</h3>
-        <p class="do">打开<b>你自己的</b>仓库 <code>&lt;你的用户名&gt;/atlas-copilot-agent-labs</code>（不是 atlascopco-Lab 那个）→ 绿色 <b>Code</b> 按钮 → <b>Codespaces</b> 页签 → 点 <b>+</b>（Create codespace on main）。</p>
+        <p class="do">打开<b>你自己的</b>仓库 <code>&lt;你的用户名&gt;/atlas-copilot-agent-labs</code>（不是 atlascopco-Lab 那个）→ 绿色 <b>Code</b> 按钮 → <b>Codespaces</b> 页签 → 点绿色的 <b>Create codespace on main</b>（已经建过的话，点右上角 <b>+</b> 是再建一个，直接点列表里已有的那个继续用）。</p>
         <figure class="shot"><img src="img/01-create-codespace.jpg" alt="Code 下拉中的 Codespaces 页签" loading="lazy"></figure>
-        <p class="see"><b>应该看到</b>：面板底部写着「Codespace usage for this repository is paid for by <b>你的用户名</b>」（2026-10-17 实测：学员是 atlascopco-Lab 组织成员时，在自己 fork 上建的 Codespace 也显示「paid for by atlascopco-Lab」，由组织承担）。第一次创建要现装 Python / Node 依赖和浏览器，约 5~8 分钟，所以建议课前做。创建过的 Codespace 会列在「On current branch」下面，下次直接点它继续。</p>
+        <p class="see"><b>应该看到</b>：面板底部写着「Codespace usage for this repository is paid for by <b>你的用户名</b>」（2026-10-17 实测：学员是 atlascopco-Lab 组织成员时，在自己 fork 上建的 Codespace 也显示「paid for by atlascopco-Lab」，由组织承担）。第一次创建要现装 Python / Node 依赖和浏览器，约 3~8 分钟（2026-10-17 实测从点击到 VS Code 可用约 3 分钟），所以建议课前做。创建过的 Codespace 会列在「On current branch」下面，下次直接点它继续。</p>
       </div>
     </div>
 
@@ -488,7 +488,7 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
       <div class="step-no">0.2</div>
       <div class="step-body">
         <h3>信任这个文件夹</h3>
-        <p class="do">VS Code 打开后，顶部有一条「Restricted Mode」提示。点 <b>Manage</b>，在弹窗里点 <b>Trust Folder &amp; Continue</b>。</p>
+        <p class="do">VS Code 打开后会弹出「Do you trust the authors of the files in this folder?」，点 <b>Trust Folder &amp; Continue</b>。没弹窗、只看到顶部「Restricted Mode」黄条时，点黄条上的 <b>Manage</b> 再选 Trust。</p>
         <figure class="shot"><img src="img/02-trust-folder.jpg" alt="信任文件夹弹窗" loading="lazy"></figure>
         <p class="see"><b>为什么</b>：受限模式下终端、扩展、MCP 都不能运行。这是课程仓库，可以信任。</p>
       </div>
@@ -538,7 +538,7 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
         <p class="do">点 Chat 输入框，输入下面这句，回车：</p>
         <pre class="prompt">这个仓库是做什么的？三个 Lab 怎么串起来？只回答，不要改任何文件。</pre>
         <figure class="shot"><img src="img/05-warmup-ask.jpg" alt="Copilot 回答项目结构" loading="lazy"></figure>
-        <p class="see"><b>应该看到</b>：「Completed N steps」——它自己读了 README 和各 Lab 的文件，然后讲出「找信息 → 做汇报 → 交付给业务」三段。试着用自己的话复述一遍。</p>
+        <p class="see"><b>应该看到</b>：模型选 Auto 时先显示「Auto routed task to …」，它自己读了 README 和各 Lab 的文件，然后讲出「获取信息 → 做汇报 → 交付给业务」三段（每次措辞不同）。试着用自己的话复述一遍。</p>
         <p class="tip">小技巧：把 Chat 和编辑器之间的分隔线往左拖，Chat 面板宽一些更好读。</p>
       </div>
     </div>
@@ -562,10 +562,11 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
         <p class="do">Chat 右上角 <b>+</b> 开一个新对话，输入：</p>
         <pre class="prompt">给 Lab-01-Industry-Insight/frontend 的周报网页加一个「只看高影响」开关：读取同目录的 report.json，打开开关时只显示影响等级为「高」的热点，关掉恢复完整周报。样式和现有页面保持一致。改完告诉我怎么在 Codespace 里预览。</pre>
         <p class="do">Agent 会先读文件、改代码，再要求运行检查命令。读一下命令，点 <b>Allow</b>：</p>
+        <p class="tip">2026-10-17 实测：它会自己写验证脚本、发现问题再修，前后请求运行命令十来次（<code>node --check</code>、<code>sed</code>、<code>grep</code> 这类检查和只读命令），全程约 6 分钟。每次看一眼命令再点 Allow；下拉里的「Enable Auto Approve」会改全局设置，课上不要开。</p>
         <figure class="shot"><img src="img/08-agent-confirm.jpg" alt="Agent 请求运行命令" loading="lazy"></figure>
-        <p class="see">编辑器里绿色高亮的是新增代码，浮条上的 <b>Keep / Undo</b> 可以逐处决定；Chat 底部「4 files changed」可以一次决定全部。</p>
+        <p class="see">编辑器里绿色高亮的是新增代码，浮条上的 <b>Keep / Undo</b> 可以逐处决定；Chat 底部「N files changed」（实测 3 个文件）可以一次决定全部。</p>
         <figure class="shot"><img src="img/09-agent-done.jpg" alt="Agent 完成" loading="lazy"></figure>
-        <p class="do">它会自己用 <code>python -m http.server 8080</code> 起预览服务。打开端口 8080 的页面（Ports 面板 → 8080 → 地球图标），勾选右上角「只看高影响」：</p>
+        <p class="do">它会自己起一个预览服务（<code>python3 -m http.server …</code>，端口号以它回复里说的为准，实测是 8000）。Ports 面板里找到这个端口 → 地球图标（Open in Browser），打开右上角「只看高影响」：</p>
         <div class="grid grid-2">
           <figure class="shot"><img src="img/10-preview-off.jpg" alt="开关关闭" loading="lazy"><figcaption>关闭：完整周报</figcaption></figure>
           <figure class="shot"><img src="img/11-preview-high-only.jpg" alt="开关打开" loading="lazy"><figcaption>打开：只剩影响等级「高」的热点</figcaption></figure>
@@ -584,7 +585,10 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
         <p class="do">新开一个对话，让 Copilot 再加一个小功能：</p>
         <pre class="prompt">给周报网页底部加一个「复制本周摘要」按钮，点一下把「本周摘要」里的几条文字复制到剪贴板。只改 frontend 目录。</pre>
         <figure class="shot"><img src="img/13-rule-followed.jpg" alt="新函数遵守了规矩" loading="lazy"></figure>
-        <p class="see"><b>应该看到</b>：新函数 <code>copyWeeklySummary</code> 上方有「// 业务用途：…」。对比第 3 步写的 <code>filterHighImpactHotspots</code>：那时还没有这条规矩，所以没有这行注释。</p>
+        <p class="see"><b>应该看到</b>：新函数（实测叫 <code>getWeeklySummary</code> / <code>copyWeeklySummary</code>，名字每次不同）上方有「// 业务用途：…」。对比第 3 步写的筛选函数：那时还没有这条规矩，所以没有这行注释。</p>
+        <p class="warn">2026-10-17 实测第一次<b>没加</b>注释：自定义指令是写给 AI 的规矩，多数时候会遵守，但不保证。没加就在同一个对话里追问下面这句，它会对照规矩自己补上（实测 37 秒补好两处）：</p>
+        <pre class="prompt">按 .github/copilot-instructions.md 里的约定，检查你刚加的函数。</pre>
+        <p class="see">这正是本环节要学的：规矩写下来让所有人的 Copilot 都知道，结果还是要自己验收。</p>
       </div>
     </div>
 
@@ -592,7 +596,7 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
       <div class="az-eyebrow">复盘卡 · 热身</div>
       <dl>
         <dt>用了什么</dt><dd>Agent 模式 · Inline Chat + <code>/explain</code> · 上下文（选中代码）· 自定义指令</dd>
-        <dt>它做了什么</dt><dd>读了 main.js 和 report.json，改了 4 个文件，自己跑语法检查、起预览服务；我只描述要什么、看效果、决定 Keep 还是 Undo</dd>
+        <dt>它做了什么</dt><dd>读了 main.js 和 report.json，改了 3 个文件，自己写脚本验证、发现问题再修、起预览服务；我只描述要什么、看效果、决定 Keep 还是 Undo，不守规矩就追问</dd>
         <dt>对项目意味着</dt><dd>不会写前端也能改出可用的功能；团队规矩写进 <code>copilot-instructions.md</code> 一次，所有人的 Copilot 都遵守；「看改动、能回退」是自己的责任</dd>
       </dl>
     </div>
