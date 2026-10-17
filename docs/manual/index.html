@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Copilot 工作坊实操手册</title>
+  <style>
+/* ============================================================================
+   埃知科技 · 上海埃知科技有限公司 — Brand Tokens (aizhi-html)
+   Drop into any HTML page to get the canonical palette, fonts, motifs.
+   Themes: <body class="theme-light"> (纸感) · <body class="theme-dark"> (墨紫)
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* --- Hue family: orchid (logo) · plum ink · ivory-pink paper --- */
+  --az-orchid:       #BD59A5;   /* logo colour · accent fills · rule segment 1 */
+  --az-orchid-deep:  #9A3F85;   /* text-safe accent on light */
+  --az-orchid-soft:  #D998C9;   /* accent on dark · rule segment 2 */
+  --az-orchid-tint:  #F4E4F0;   /* tags · soft fills */
+  --az-orchid-mist:  #FAF0F7;   /* faint bands */
+
+  --az-ink:          #2D1E3A;   /* primary text (light) · page base (dark) */
+  --az-ink-2:        #4B3A5B;   /* body text */
+  --az-ink-3:        #7E6F8A;   /* muted */
+  --az-ink-4:        #C9BFD0;   /* hairline / disabled */
+
+  --az-paper:        #F8F4F7;
+  --az-paper-deep:   #F1EAEF;
+  --az-surface:      #FFFFFF;
+  --az-surface-2:    #FAF5F8;
+  --az-border:       #E7DEE5;
+  --az-border-2:     #D3C6D0;
+
+  --az-night:        #2D1E3A;
+  --az-night-2:      #43305A;
+  --az-night-surface:   #3E2E51;
+  --az-night-surface-2: #4A3961;
+  --az-night-border:    #5B4A72;
+  --az-night-text:      #F7F2F6;
+  --az-night-text-2:    #D9CCE0;
+  --az-night-muted:     #A895B4;
+
+  --az-warn:         #C2603E;   /* only for「问题」labels */
+
+  /* --- Tuned page backgrounds (use these, not flat white / black) --- */
+  --az-bg-light: linear-gradient(135deg, #FBF8FA 0%, #F7F2F5 55%, #F1EAEF 100%);
+  --az-bg-dark:  linear-gradient(135deg, #2D1E3A 0%, #352544 45%, #43305A 100%);
+  --az-glow-light: radial-gradient(60% 50% at 88% 0%, rgba(189,89,165,.14), rgba(189,89,165,0) 70%);
+  --az-glow-dark:  radial-gradient(60% 50% at 82% 0%, rgba(189,89,165,.32), rgba(189,89,165,0) 70%);
+
+  /* --- Type --- */
+  --font-cn:   "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-sans: "Noto Sans", "Noto Sans SC", "PingFang SC", -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  /* --- Shape --- */
+  --az-radius:    10px;
+  --az-radius-lg: 16px;
+  --az-shadow:    0 6px 18px rgba(45, 30, 58, 0.08), 0 1px 3px rgba(45, 30, 58, 0.05);
+  --az-shadow-lg: 0 16px 40px rgba(45, 30, 58, 0.14);
+
+  /* --- The mark as CSS images (vector, recolourable) --- */
+  --az-mark-orchid: url("data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%201000'%3E%3Cpath%20fill='%23BD59A5'%20stroke='%23BD59A5'%20stroke-width='6'%20stroke-linejoin='round'%20fill-rule='evenodd'%20d='M392.3%202.5%20L384.2%206.1%20L373.1%2019.5%20L157.9%20373.9%20L134.5%20416.8%20L133.9%20424.6%20L138.1%20434.3%20L147.8%20442.9%20L157.6%20444.9%20L280.9%20443.2%20L282.0%20449.1%20L244.2%20511.1%20L157.6%20635.9%20L96.3%20712.1%20L7.8%20808.7%20L2.5%20820.7%20L2.8%20831.0%20L11.4%20842.1%20L27.8%20846.0%20L257.8%20846.0%20L266.1%20843.5%20L274.8%20836.0%20L307.1%20790.4%20L306.8%20778.1%20L299.8%20769.5%20L287.0%20767.5%20L140.6%20767.3%20L138.6%20764.2%20L187.9%20703.0%20L267.8%20593.3%20L328.5%20499.4%20L395.3%20385.9%20L399.8%20382.5%20L526.4%20587.4%20L355.2%20588.5%20L347.2%20591.0%20L335.7%20602.4%20L310.4%20643.1%20L311.0%20654.8%20L317.9%20662.0%20L483.0%20664.3%20L485.8%20668.7%20L405.3%20767.8%20L239.4%20964.1%20L232.5%20976.9%20L232.2%20989.4%20L239.7%20996.7%20L560.1%20997.2%20L569.9%20988.3%20L569.3%20978.3%20L539.3%20934.0%20L527.6%20924.6%20L515.3%20922.6%20L370.0%20922.6%20L366.9%20919.3%20L464.4%20799.0%20L579.3%20666.5%20L686.5%20791.5%20L682.1%20798.4%20L656.7%20806.0%20L643.9%20817.7%20L642.5%20833.0%20L647.8%20841.6%20L664.0%20846.0%20L779.2%20846.0%20L788.1%20842.1%20L795.4%20834.1%20L797.3%20818.5%20L791.5%20806.5%20L743.9%20758.9%20L676.8%20682.1%20L614.1%20600.8%20L526.7%20469.9%20L433.7%20312.6%20L404.8%20267.8%20L397.0%20264.5%20L391.1%20268.4%20L331.0%20370.0%20L241.6%20370.3%20L242.2%20365.5%20L384.5%20126.4%20L399.5%20105.2%20L408.4%20115.8%20L505.3%20277.6%20L577.7%20392.3%20L573.5%20399.2%20L557.1%20407.3%20L547.6%20415.9%20L544.5%20422.0%20L547.6%20437.6%20L554.3%20442.7%20L564.6%20445.2%20L645.6%20445.2%20L654.8%20441.3%20L665.4%20429.6%20L667.0%20420.4%20L661.7%20407.0%20L587.7%20289.5%20L428.7%2020.6%20L412.0%204.5%20L401.4%201.7%20Z'/%3E%3C/svg%3E");
+  --az-mark-white:  url("data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%201000'%3E%3Cpath%20fill='%23FFFFFF'%20stroke='%23FFFFFF'%20stroke-width='6'%20stroke-linejoin='round'%20fill-rule='evenodd'%20d='M392.3%202.5%20L384.2%206.1%20L373.1%2019.5%20L157.9%20373.9%20L134.5%20416.8%20L133.9%20424.6%20L138.1%20434.3%20L147.8%20442.9%20L157.6%20444.9%20L280.9%20443.2%20L282.0%20449.1%20L244.2%20511.1%20L157.6%20635.9%20L96.3%20712.1%20L7.8%20808.7%20L2.5%20820.7%20L2.8%20831.0%20L11.4%20842.1%20L27.8%20846.0%20L257.8%20846.0%20L266.1%20843.5%20L274.8%20836.0%20L307.1%20790.4%20L306.8%20778.1%20L299.8%20769.5%20L287.0%20767.5%20L140.6%20767.3%20L138.6%20764.2%20L187.9%20703.0%20L267.8%20593.3%20L328.5%20499.4%20L395.3%20385.9%20L399.8%20382.5%20L526.4%20587.4%20L355.2%20588.5%20L347.2%20591.0%20L335.7%20602.4%20L310.4%20643.1%20L311.0%20654.8%20L317.9%20662.0%20L483.0%20664.3%20L485.8%20668.7%20L405.3%20767.8%20L239.4%20964.1%20L232.5%20976.9%20L232.2%20989.4%20L239.7%20996.7%20L560.1%20997.2%20L569.9%20988.3%20L569.3%20978.3%20L539.3%20934.0%20L527.6%20924.6%20L515.3%20922.6%20L370.0%20922.6%20L366.9%20919.3%20L464.4%20799.0%20L579.3%20666.5%20L686.5%20791.5%20L682.1%20798.4%20L656.7%20806.0%20L643.9%20817.7%20L642.5%20833.0%20L647.8%20841.6%20L664.0%20846.0%20L779.2%20846.0%20L788.1%20842.1%20L795.4%20834.1%20L797.3%20818.5%20L791.5%20806.5%20L743.9%20758.9%20L676.8%20682.1%20L614.1%20600.8%20L526.7%20469.9%20L433.7%20312.6%20L404.8%20267.8%20L397.0%20264.5%20L391.1%20268.4%20L331.0%20370.0%20L241.6%20370.3%20L242.2%20365.5%20L384.5%20126.4%20L399.5%20105.2%20L408.4%20115.8%20L505.3%20277.6%20L577.7%20392.3%20L573.5%20399.2%20L557.1%20407.3%20L547.6%20415.9%20L544.5%20422.0%20L547.6%20437.6%20L554.3%20442.7%20L564.6%20445.2%20L645.6%20445.2%20L654.8%20441.3%20L665.4%20429.6%20L667.0%20420.4%20L661.7%20407.0%20L587.7%20289.5%20L428.7%2020.6%20L412.0%204.5%20L401.4%201.7%20Z'/%3E%3C/svg%3E");
+  --az-mark-ink:    url("data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%201000'%3E%3Cpath%20fill='%232D1E3A'%20stroke='%232D1E3A'%20stroke-width='6'%20stroke-linejoin='round'%20fill-rule='evenodd'%20d='M392.3%202.5%20L384.2%206.1%20L373.1%2019.5%20L157.9%20373.9%20L134.5%20416.8%20L133.9%20424.6%20L138.1%20434.3%20L147.8%20442.9%20L157.6%20444.9%20L280.9%20443.2%20L282.0%20449.1%20L244.2%20511.1%20L157.6%20635.9%20L96.3%20712.1%20L7.8%20808.7%20L2.5%20820.7%20L2.8%20831.0%20L11.4%20842.1%20L27.8%20846.0%20L257.8%20846.0%20L266.1%20843.5%20L274.8%20836.0%20L307.1%20790.4%20L306.8%20778.1%20L299.8%20769.5%20L287.0%20767.5%20L140.6%20767.3%20L138.6%20764.2%20L187.9%20703.0%20L267.8%20593.3%20L328.5%20499.4%20L395.3%20385.9%20L399.8%20382.5%20L526.4%20587.4%20L355.2%20588.5%20L347.2%20591.0%20L335.7%20602.4%20L310.4%20643.1%20L311.0%20654.8%20L317.9%20662.0%20L483.0%20664.3%20L485.8%20668.7%20L405.3%20767.8%20L239.4%20964.1%20L232.5%20976.9%20L232.2%20989.4%20L239.7%20996.7%20L560.1%20997.2%20L569.9%20988.3%20L569.3%20978.3%20L539.3%20934.0%20L527.6%20924.6%20L515.3%20922.6%20L370.0%20922.6%20L366.9%20919.3%20L464.4%20799.0%20L579.3%20666.5%20L686.5%20791.5%20L682.1%20798.4%20L656.7%20806.0%20L643.9%20817.7%20L642.5%20833.0%20L647.8%20841.6%20L664.0%20846.0%20L779.2%20846.0%20L788.1%20842.1%20L795.4%20834.1%20L797.3%20818.5%20L791.5%20806.5%20L743.9%20758.9%20L676.8%20682.1%20L614.1%20600.8%20L526.7%20469.9%20L433.7%20312.6%20L404.8%20267.8%20L397.0%20264.5%20L391.1%20268.4%20L331.0%20370.0%20L241.6%20370.3%20L242.2%20365.5%20L384.5%20126.4%20L399.5%20105.2%20L408.4%20115.8%20L505.3%20277.6%20L577.7%20392.3%20L573.5%20399.2%20L557.1%20407.3%20L547.6%20415.9%20L544.5%20422.0%20L547.6%20437.6%20L554.3%20442.7%20L564.6%20445.2%20L645.6%20445.2%20L654.8%20441.3%20L665.4%20429.6%20L667.0%20420.4%20L661.7%20407.0%20L587.7%20289.5%20L428.7%2020.6%20L412.0%204.5%20L401.4%201.7%20Z'/%3E%3C/svg%3E");
+}
+
+/* ----------------------------------------------------------------------------
+   Base + themes
+   ---------------------------------------------------------------------------- */
+body {
+  margin: 0;
+  font-family: var(--font-cn);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+body.theme-light { background: var(--az-glow-light), var(--az-bg-light); color: var(--az-ink); }
+body.theme-dark  { background: var(--az-glow-dark),  var(--az-bg-dark);  color: var(--az-night-text); }
+body.theme-light, body.theme-dark { min-height: 100vh; }
+
+/* Faint chevron texture (the apex of the pine, repeated). Add class to <body>. */
+.az-chevron-pattern { position: relative; }
+.az-chevron-pattern::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='114'%3E%3Cpolyline points='24,80 66,25 108,80' fill='none' stroke='%23BD59A5' stroke-opacity='0.05' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 132px 114px;
+}
+body.theme-dark.az-chevron-pattern::before {
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='114'%3E%3Cpolyline points='24,80 66,25 108,80' fill='none' stroke='%23FFFFFF' stroke-opacity='0.05' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* ----------------------------------------------------------------------------
+   Mark + lockup   (mark aspect w/h = 0.80)
+   ---------------------------------------------------------------------------- */
+.az-mark {
+  display: inline-block; width: 32px; height: 40px;
+  background: var(--az-mark-orchid) center / contain no-repeat;
+}
+.az-mark.white { background-image: var(--az-mark-white); }
+.az-mark.ink   { background-image: var(--az-mark-ink); }
+
+.az-lockup { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+.az-lockup .az-mark { width: 36px; height: 45px; }
+.az-lockup .wm {
+  font-family: var(--font-cn); font-weight: 700; font-size: 17px; letter-spacing: 0.16em; line-height: 1;
+}
+.az-lockup .sub {
+  font-family: var(--font-cn); font-size: 10px; letter-spacing: 0.08em; margin-top: 5px; color: var(--az-ink-3);
+}
+body.theme-dark .az-lockup .sub { color: var(--az-night-muted); }
+
+/* Ghost mark decoration — put inside a position:relative container */
+.az-ghost {
+  position: absolute; pointer-events: none; z-index: 0;
+  width: 520px; height: 650px; right: -120px; top: -60px;
+  background: var(--az-mark-orchid) center / contain no-repeat; opacity: .10;
+}
+body.theme-dark .az-ghost { background-image: var(--az-mark-white); opacity: .08; }
+
+/* ----------------------------------------------------------------------------
+   Eyebrow (with mini mark), titles, 双段线 rule
+   ---------------------------------------------------------------------------- */
+.az-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; letter-spacing: 0.18em;
+  color: var(--az-orchid-deep);
+}
+.az-eyebrow::before {
+  content: ""; width: 11px; height: 14px; flex: none;
+  background: var(--az-mark-orchid) center / contain no-repeat;
+}
+body.theme-dark .az-eyebrow { color: var(--az-orchid-soft); }
+
+.az-title   { font-family: var(--font-cn); font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; margin: 0; color: inherit; }
+.az-sub     { font-family: var(--font-cn); font-size: 14px; color: var(--az-ink-3); margin: 0; }
+body.theme-dark .az-sub { color: var(--az-night-muted); }
+
+/* 双段线：一长一短，呼应两层松枝 */
+.az-rule { display: flex; align-items: center; gap: 6px; height: 3px; margin: 18px 0; }
+.az-rule::before { content: ""; width: 48px; height: 3px; background: var(--az-orchid); border-radius: 2px; }
+.az-rule::after  { content: ""; width: 14px; height: 3px; background: var(--az-orchid-soft); border-radius: 2px; }
+.az-rule.on-orchid::before { background: #FFFFFF; }
+.az-rule.on-orchid::after  { background: #F3DDEE; }
+
+/* ----------------------------------------------------------------------------
+   Cards
+   ---------------------------------------------------------------------------- */
+.az-card {
+  background: var(--az-surface); border: 1px solid var(--az-border);
+  border-radius: var(--az-radius); box-shadow: var(--az-shadow); padding: 28px; position: relative;
+}
+body.theme-dark .az-card { background: var(--az-night-surface); border-color: var(--az-night-border); box-shadow: none; }
+.az-card.has-accent::before {
+  content: ""; position: absolute; top: 0; left: 24px; right: 24px; height: 3px;
+  background: var(--az-orchid); border-radius: 0 0 2px 2px;
+}
+.az-card.is-orchid { background: var(--az-orchid-deep); border-color: transparent; color: #fff; }
+body.theme-dark .az-card.is-orchid { background: var(--az-orchid); }
+.az-card.is-orchid .az-sub, .az-card.is-orchid .az-eyebrow { color: #F3DDEE; }
+.az-card.is-orchid .az-eyebrow::before { background-image: var(--az-mark-white); }
+.az-card.is-tint { background: var(--az-orchid-tint); border-color: transparent; }
+body.theme-dark .az-card.is-tint { background: #4E355F; }
+
+/* Tag / chip */
+.az-tag {
+  display: inline-block; padding: 4px 12px; border-radius: 999px;
+  background: var(--az-orchid-tint); color: var(--az-orchid-deep);
+  font-family: var(--font-cn); font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+}
+body.theme-dark .az-tag { background: #4E355F; color: var(--az-night-text); }
+
+/* Key chip (A/B/C/D) */
+.az-key {
+  display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px;
+  border-radius: 10px; background: var(--az-orchid); color: #fff;
+  font-family: var(--font-mono); font-weight: 600; font-size: 14px;
+}
+
+/* ----------------------------------------------------------------------------
+   Lists — never "•" glyphs; small orchid squares
+   ---------------------------------------------------------------------------- */
+.az-list { list-style: none; margin: 0; padding: 0; }
+.az-list li { position: relative; padding-left: 20px; margin: 8px 0; font-size: 14px; color: var(--az-ink-2); }
+.az-list li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 7px; height: 7px; background: var(--az-orchid); }
+body.theme-dark .az-list li { color: var(--az-night-text-2); }
+.az-card.is-orchid .az-list li { color: #fff; }
+.az-card.is-orchid .az-list li::before { background: #fff; }
+
+/* ----------------------------------------------------------------------------
+   KPI block
+   ---------------------------------------------------------------------------- */
+.az-kpi .big {
+  font-family: var(--font-sans); font-weight: 700; font-size: 48px; letter-spacing: -0.03em; line-height: 1;
+  color: var(--az-orchid-deep); margin: 0;
+}
+body.theme-dark .az-kpi .big { color: var(--az-orchid-soft); }
+.az-kpi .label { font-family: var(--font-cn); font-size: 15px; font-weight: 700; margin: 14px 0 4px; color: inherit; }
+.az-kpi .sub   { font-family: var(--font-cn); font-size: 12px; color: var(--az-ink-3); }
+body.theme-dark .az-kpi .sub { color: var(--az-night-muted); }
+
+/* ----------------------------------------------------------------------------
+   松塔阶梯 — tiers that widen downward (会用 → 会做 → 会造 → 上生产)
+   ---------------------------------------------------------------------------- */
+.az-tiers { display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; }
+.az-tier {
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  border-radius: 14px; padding: 16px 24px; box-shadow: var(--az-shadow);
+}
+.az-tier .name { font-family: var(--font-cn); font-weight: 700; font-size: 20px; letter-spacing: 0.04em; }
+.az-tier .who  { font-size: 12px; opacity: .8; margin-top: 2px; }
+.az-tier .prod { font-size: 13px; text-align: right; max-width: 55%; }
+.az-tier:nth-child(1) { width: 52%; background: var(--az-orchid-tint); color: var(--az-ink); }
+.az-tier:nth-child(2) { width: 66%; background: #E4BFDA; color: var(--az-ink); }
+.az-tier:nth-child(3) { width: 80%; background: var(--az-orchid); color: #fff; }
+.az-tier:nth-child(4) { width: 94%; background: var(--az-orchid-deep); color: #fff; }
+body.theme-dark .az-tier:nth-child(1) { background: #4E355F; color: var(--az-night-text); }
+body.theme-dark .az-tier:nth-child(2) { background: #6A4A7E; color: var(--az-night-text); }
+body.theme-dark .az-tier:nth-child(3) { background: #A45C93; }
+body.theme-dark .az-tier:nth-child(4) { background: var(--az-orchid); }
+body.theme-dark .az-tier { box-shadow: none; }
+.az-tiers .trunk { width: 30px; height: 22px; background: var(--az-ink-4); border-radius: 0 0 6px 6px; }
+@media (max-width: 720px) {
+  .az-tier { flex-direction: column; align-items: flex-start; }
+  .az-tier .prod { text-align: left; max-width: 100%; }
+  .az-tier:nth-child(1) { width: 76%; } .az-tier:nth-child(2) { width: 84%; }
+  .az-tier:nth-child(3) { width: 92%; } .az-tier:nth-child(4) { width: 100%; }
+}
+
+/* ----------------------------------------------------------------------------
+   Buttons
+   ---------------------------------------------------------------------------- */
+.az-btn {
+  display: inline-block; padding: 12px 24px; border-radius: 10px; text-decoration: none; cursor: pointer;
+  font-family: var(--font-cn); font-weight: 700; font-size: 14px; letter-spacing: 0.04em;
+  border: 1px solid transparent; transition: transform .12s ease, box-shadow .12s ease;
+}
+.az-btn:hover { transform: translateY(-1px); box-shadow: var(--az-shadow); }
+.az-btn-primary { background: var(--az-orchid-deep); color: #fff; }
+body.theme-dark .az-btn-primary { background: var(--az-orchid); }
+.az-btn-ghost { background: transparent; color: var(--az-orchid-deep); border-color: var(--az-orchid-deep); }
+body.theme-dark .az-btn-ghost { color: var(--az-orchid-soft); border-color: var(--az-orchid-soft); }
+
+/* ----------------------------------------------------------------------------
+   Table
+   ---------------------------------------------------------------------------- */
+.az-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.az-table th { text-align: left; padding: 14px 16px; background: var(--az-ink); color: #fff; font-weight: 700; }
+.az-table th.us { color: var(--az-orchid-soft); }
+.az-table td { padding: 13px 16px; border-bottom: 1px solid var(--az-border); color: var(--az-ink-2); }
+.az-table td.us { color: var(--az-orchid-deep); font-weight: 700; }
+.az-table tr:nth-child(even) td { background: var(--az-surface-2); }
+body.theme-dark .az-table th { background: var(--az-night-surface-2); color: var(--az-night-text); }
+body.theme-dark .az-table td { color: var(--az-night-text-2); border-color: var(--az-night-border); }
+body.theme-dark .az-table tr:nth-child(even) td { background: var(--az-night-surface); }
+body.theme-dark .az-table td.us { color: var(--az-orchid-soft); }
+
+/* ----------------------------------------------------------------------------
+   Footer
+   ---------------------------------------------------------------------------- */
+.az-footer {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  border-top: 1px solid var(--az-border); padding: 16px 0 0; margin-top: 64px;
+  font-family: var(--font-cn); font-size: 11px; letter-spacing: 0.06em; color: var(--az-ink-3);
+}
+.az-footer .mono { font-family: var(--font-mono); letter-spacing: 0.16em; }
+body.theme-dark .az-footer { border-top-color: var(--az-night-border); color: var(--az-night-muted); }
+
+
+    /* Page-specific layout — keep generic styles in tokens.css */
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 56px 72px; position: relative; z-index: 1; }
+    .header-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 24px; }
+    .deck-meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--az-ink-3); }
+    body.theme-dark .deck-meta { color: var(--az-night-muted); }
+
+    .hero { position: relative; padding: 72px 0 80px; }
+    .hero h1 { font-size: 60px; margin: 16px 0 0; }
+    .hero h2.tail { font-size: 28px; font-weight: 700; margin: 10px 0 0; color: var(--az-orchid-deep); letter-spacing: 0.02em; }
+    body.theme-dark .hero h2.tail { color: var(--az-orchid-soft); }
+    .hero .lead { font-size: 17px; color: var(--az-ink-2); max-width: 640px; margin: 0; letter-spacing: 0.02em; }
+    body.theme-dark .hero .lead { color: var(--az-night-text-2); }
+    .hero .hero-mark { position: absolute; right: 40px; top: 60px; width: 220px; height: 275px; z-index: 1; }
+    .cta-row { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .section { margin-top: 72px; position: relative; }
+    .section-head { margin-bottom: 28px; }
+    .section-head h2 { font-size: 30px; margin: 10px 0 0; }
+    .grid { display: grid; gap: 20px; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .card-no { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; color: var(--az-orchid-deep); }
+    body.theme-dark .card-no { color: var(--az-orchid-soft); }
+    .card-title { font-size: 21px; font-weight: 700; margin: 10px 0 12px; line-height: 1.25; }
+    .card-desc { font-size: 14px; color: var(--az-ink-2); line-height: 1.7; margin: 0; }
+    body.theme-dark .card-desc { color: var(--az-night-text-2); }
+
+    .course { display: grid; grid-template-columns: 300px 1fr; gap: 20px; }
+    .facts dt { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.2em; color: #F3DDEE; margin-top: 16px; }
+    .facts dd { margin: 4px 0 0; font-weight: 700; font-size: 15px; }
+    .facts dt:first-child { margin-top: 0; }
+    .agenda { list-style: none; margin: 0; padding: 0; }
+    .agenda li { display: grid; grid-template-columns: 70px 90px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--az-border); align-items: baseline; }
+    .agenda li:last-child { border-bottom: 0; }
+    body.theme-dark .agenda li { border-color: var(--az-night-border); }
+    .agenda .t { font-family: var(--font-mono); color: var(--az-orchid-deep); font-size: 13px; }
+    body.theme-dark .agenda .t { color: var(--az-orchid-soft); }
+    .agenda .n { font-weight: 700; font-size: 16px; }
+    .agenda .d { font-size: 14px; color: var(--az-ink-2); }
+    body.theme-dark .agenda .d { color: var(--az-night-text-2); }
+
+    @media (max-width: 900px) {
+      .wrap { padding: 28px 22px 56px; }
+      .grid-3, .grid-4, .grid-2, .course { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 40px; }
+      .hero .hero-mark { display: none; }
+    }
+  
+
+    html, body { overflow-x: clip; }
+    .hero { overflow: hidden; }
+    .status-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+    code { font-family: var(--font-mono); font-size: 12.5px; background: var(--az-orchid-tint); color: var(--az-ink); padding: 1px 6px; border-radius: 4px; }
+    pre.prompt { font-family: var(--font-mono); font-size: 12.5px; line-height: 1.7; white-space: pre-wrap; margin: 12px 0 0; padding: 14px 16px;
+                 background: var(--az-surface-2); border: 1px solid var(--az-border); border-left: 3px solid var(--az-orchid); border-radius: 8px; color: var(--az-ink-2); }
+    .az-table td:first-child { font-weight: 700; color: var(--az-ink); white-space: nowrap; }
+    .az-table tr.us-row td { background: var(--az-orchid-mist); }
+    .az-table td { vertical-align: top; line-height: 1.6; }
+    .az-card.is-tint .card-desc, .az-card.is-tint .az-list li { color: var(--az-ink-2); }
+    .map { display:flex; align-items:stretch; gap:10px; flex-wrap:wrap; }
+    .map .node { flex:1 1 180px; background:var(--az-surface); border:1px solid var(--az-border); border-radius:10px; padding:16px 18px; box-shadow:var(--az-shadow); }
+    .map .node.lit { background:var(--az-orchid-tint); border-color:transparent; }
+    .map .node.lit2 { background:var(--az-orchid-deep); border-color:transparent; color:#fff; }
+    .map .node.lit2 .ds, .map .node.lit2 .lab { color:#F3DDEE; }
+    .map .lab { font-family:var(--font-mono); font-size:11px; letter-spacing:.18em; color:var(--az-orchid-deep); }
+    .map .nm { font-weight:700; font-size:17px; margin:6px 0; }
+    .map .ds { font-size:13px; color:var(--az-ink-2); line-height:1.6; }
+    .map .arrow { align-self:center; font-size:22px; color:var(--az-orchid); }
+    .recap { background:var(--az-surface); border:1px dashed var(--az-orchid); border-radius:10px; padding:22px 24px; }
+    .recap dl { margin:12px 0 0; display:grid; grid-template-columns:96px 1fr; gap:10px 14px; }
+    .recap dt { font-weight:700; font-size:13px; color:var(--az-orchid-deep); }
+    .recap dd { margin:0; font-size:13.5px; color:var(--az-ink-2); line-height:1.65; }
+    @media (max-width: 900px) { .az-table td:first-child { white-space: normal; } .map .arrow { display:none; } .recap dl { grid-template-columns:1fr; gap:4px; } .recap dd { margin-bottom:8px; } }
+
+  
+/* ===== 实操手册 ===== */
+.toc { margin: 8px 0 8px; }
+.toc ol { margin: 10px 0 0; padding-left: 22px; columns: 2; column-gap: 32px; }
+.toc li { margin: 4px 0; }
+.toc a { color: var(--az-orchid-deep); text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+.step { display: grid; grid-template-columns: 56px 1fr; gap: 18px; margin: 28px 0; }
+.step-no { width: 44px; height: 44px; border-radius: 50%; background: var(--az-orchid); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 15px; }
+.step-body h3 { margin: 6px 0 10px; font-size: 20px; color: var(--az-ink); }
+.step-body p { margin: 8px 0; line-height: 1.75; color: var(--az-ink-2); }
+.step-body .see { background: var(--az-surface-2); border-left: 3px solid var(--az-orchid); padding: 8px 14px; border-radius: 6px; }
+.step-body .tip { font-size: 14px; color: var(--az-ink-3); }
+.step-body .warn { background: #FBEDE7; border-left: 3px solid var(--az-warn); padding: 8px 14px; border-radius: 6px; font-size: 14px; }
+.step-body ol.plain { margin: 8px 0; padding-left: 22px; line-height: 1.8; color: var(--az-ink-2); }
+pre.cmd, pre.prompt { white-space: pre-wrap; word-break: break-word; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.6; padding: 12px 16px; border-radius: 8px; margin: 10px 0; }
+pre.cmd { background: #2D1E3A; color: #F7F2F6; }
+figure.shot { margin: 14px 0; }
+figure.shot img { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid var(--az-border); box-shadow: var(--az-shadow); background: #fff; }
+figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6px; text-align: center; }
+.shot-todo { border: 2px dashed var(--az-border-2); border-radius: 8px; padding: 18px; color: var(--az-ink-3); font-size: 14px; text-align: center; margin: 14px 0; }
+@media (max-width: 720px) { .step { grid-template-columns: 1fr; gap: 6px; } .toc ol { columns: 1; } }
+</style>
+</head>
+<body class="theme-light az-chevron-pattern">
+<div class="wrap">
+
+  <header class="header-row">
+    <a class="az-lockup" href="#">
+      <span class="az-mark" role="img" aria-label="埃知科技"></span>
+      <span>
+        <div class="wm">埃知科技</div>
+        <div class="sub">上海埃知科技有限公司</div>
+      </span>
+    </a>
+    <span class="deck-meta">实操手册 v1 · 2026-10-17</span>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="az-ghost"></div>
+    <div style="position:relative; z-index:1;">
+      <div class="az-eyebrow">阿特拉斯中国 · Copilot 智能体工作坊 · 学员实操手册</div>
+      <h1 class="az-title">每一步，都知道自己在干什么</h1>
+      <h2 class="az-title tail">开场 → 热身 → Lab-01 → Lab-02 → Lab-03</h2>
+      <div class="az-rule"></div>
+      <p class="lead">本手册的每张截图都来自 2026-10-17 在真实 Codespace 里完整走一遍的结果。每一步按同一个格式写：<b>做什么</b> → <b>截图</b> → <b>应该看到</b>；每个环节结束有一张复盘卡，回答「用了什么功能 / 它替我做了什么 / 对项目意味着什么」。</p>
+      <div class="status-row">
+        <span class="az-tag">时长：半天 3.5 小时</span>
+        <span class="az-tag">环境：GitHub Codespaces（浏览器里的 VS Code）</span>
+        <span class="az-tag">截图里的密钥已打码</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 目录 ===== -->
+  <nav class="toc az-card">
+    <div class="az-eyebrow">目录</div>
+    <ol>
+      <li><a href="#prep">课前准备</a></li>
+      <li><a href="#s0">开场 · 打开 Codespace（20 分钟）</a></li>
+      <li><a href="#warmup">热身 · Vibe coding（25 分钟）</a></li>
+      <li><a href="#lab01">Lab-01 · 行业洞察智能体 · MCP + gh-aw（45 分钟）</a></li>
+      <li><a href="#lab02">Lab-02 · 知识总结智能体 · Skills + SDK（45 分钟）</a></li>
+      <li><a href="#lab03">Lab-03 · Copilot Studio 串起来（45 分钟）</a></li>
+      <li><a href="#trouble">遇到问题</a></li>
+      <li><a href="#after">课后清理</a></li>
+    </ol>
+  </nav>
+
+  <!-- ===== 读图约定 ===== -->
+  <section class="section">
+    <div class="grid grid-3">
+      <article class="az-card has-accent">
+        <div class="card-no">读图</div>
+        <h3 class="card-title">橙色框 = 你要看 / 要点的地方</h3>
+        <p class="card-desc">灰色块是打码的密钥或无关信息。截图里的文字和你屏幕上的不完全一样很正常：AI 每次生成的内容都会有差别。</p>
+      </article>
+      <article class="az-card has-accent">
+        <div class="card-no">确认</div>
+        <h3 class="card-title">Agent 每执行一条命令都会问你</h3>
+        <p class="card-desc">看到「Run bash command?」先读一遍命令再点 <b>Allow</b>。调 MCP 工具时可以点 <b>Allow in this Session</b>，本次对话不再问。</p>
+      </article>
+      <article class="az-card is-orchid">
+        <div class="card-no" style="color:#F3DDEE;">留不留</div>
+        <h3 class="card-title">Keep / Undo 由你决定</h3>
+        <p class="card-desc" style="color:#fff;">Agent 改完文件后，Chat 底部会出现「N files changed · Keep · Undo」。看效果满意再点 Keep，不满意 Undo 后重新描述。</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== 课前准备 ===== -->
+  <section class="section" id="prep">
+    <div class="section-head">
+      <div class="az-eyebrow">课前准备 · 讲师会提前发通知</div>
+      <h2 class="az-title">上课前要有的三样东西</h2>
+      <div class="az-rule"></div>
+    </div>
+    <div class="az-card" style="padding:0; overflow:auto;">
+      <table class="az-table">
+        <thead><tr><th style="width:220px;">准备什么</th><th>怎么检查</th></tr></thead>
+        <tbody>
+          <tr><td>GitHub 账号 + Copilot 席位</td><td>已被讲师加入 <code>atlascopco-Lab</code> 组织，能打开课程仓库 <code>atlas-copilot-agent-labs</code></td></tr>
+          <tr><td>Copilot 令牌（Fine-grained PAT）</td><td>按讲师通知在 <a href="https://github.com/settings/personal-access-tokens">个人设置</a> 生成：Resource owner 选自己，权限只勾 Account → <b>Copilot Requests: Read</b>。<br>推荐存成个人的 Codespaces secret <code>COPILOT_GITHUB_TOKEN</code>（<a href="https://github.com/settings/codespaces">设置页</a> → New secret，仓库选课程仓库），这样令牌不落盘。</td></tr>
+          <tr><td>Copilot Studio 演示账号</td><td>能登录 <a href="https://copilotstudio.microsoft.com">copilotstudio.microsoft.com</a>（Lab-03 用）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== 开场 ===== -->
+  <section class="section" id="s0">
+    <div class="section-head">
+      <div class="az-eyebrow">开场 · 20 分钟</div>
+      <h2 class="az-title">在浏览器里打开一个装好一切的开发环境</h2>
+      <div class="az-rule"></div>
+      <p class="az-sub">讲师先讲项目地图和功能地图，再用 GitHub Copilot app 演示 3 分钟；然后大家一起开 Codespace</p>
+    </div>
+
+    <div class="step">
+      <div class="step-no">0.1</div>
+      <div class="step-body">
+        <h3>创建 Codespace</h3>
+        <p class="do">打开课程仓库 → 绿色 <b>Code</b> 按钮 → <b>Codespaces</b> 页签 → 点 <b>+</b>（Create codespace on main）。<b>不要先 fork</b>，fork 之后要重装全部依赖。</p>
+        <figure class="shot"><img src="img/01-create-codespace.jpg" alt="Code 下拉中的 Codespaces 页签" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：面板底部写着「Codespace usage for this repository is paid for by atlascopco-Lab」，费用由组织承担。创建过的 Codespace 会列在「On current branch」下面，下次直接点它继续。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">0.2</div>
+      <div class="step-body">
+        <h3>信任这个文件夹</h3>
+        <p class="do">VS Code 打开后，顶部有一条「Restricted Mode」提示。点 <b>Manage</b>，在弹窗里点 <b>Trust Folder &amp; Continue</b>。</p>
+        <figure class="shot"><img src="img/02-trust-folder.jpg" alt="信任文件夹弹窗" loading="lazy"></figure>
+        <p class="see"><b>为什么</b>：受限模式下终端、扩展、MCP 都不能运行。这是课程仓库，可以信任。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">0.3</div>
+      <div class="step-body">
+        <h3>认识界面</h3>
+        <p class="do">左边是资源管理器，中间是编辑器（自动打开了 README），下面是终端，右边是 Copilot Chat。</p>
+        <figure class="shot"><img src="img/03-vscode-ready.jpg" alt="VS Code 就绪" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：左下角是蓝色的「Codespaces: …」，终端提示符停在 <code>/workspaces/atlas-copilot-agent-labs (main)</code>，Chat 输入框下方显示 <b>Agent</b>。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">0.4</div>
+      <div class="step-body">
+        <h3>填令牌、生成 API 密钥</h3>
+        <p class="do">在终端运行：</p>
+        <pre class="cmd">bash .devcontainer/set-key.sh</pre>
+        <p class="do">提示粘贴令牌时：如果课前已经设了 Codespaces secret，<b>直接回车跳过</b>；否则粘贴 <code>github_pat_…</code> 再回车（输入不显示）。</p>
+        <figure class="shot"><img src="img/04-set-key.jpg" alt="set-key 输出" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：「✔ LAB_API_KEY = …」。这个值 Lab-03 要用，先不用记，随时可以再跑一次查看。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 热身 ===== -->
+  <section class="section" id="warmup">
+    <div class="section-head">
+      <div class="az-eyebrow">热身 · Vibe coding · 25 分钟</div>
+      <h2 class="az-title">描述 → 生成 → 运行 → 看效果 → 再描述</h2>
+      <div class="az-rule"></div>
+      <p class="az-sub">在一个看得见、改坏也没关系的地方（周报网页）把 vibe coding 的循环走一遍</p>
+    </div>
+
+    <div class="az-card is-tint" style="margin-bottom:24px;">
+      <h3 class="card-title" style="font-size:17px;">关于 Chat 模式（2026-10 实测）</h3>
+      <p class="card-desc">当前 Codespaces 里的 VS Code，Chat 模式下拉里只有 <b>Agent</b>（外加自定义智能体），原来的 Ask / Edit 已经合并进 Agent。只想问问题、不想让它改文件时，在提问里加一句「只回答，不要改任何文件」即可。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-no">1</div>
+      <div class="step-body">
+        <h3>看懂项目 · 让 Copilot 读整个仓库</h3>
+        <p class="do">点 Chat 输入框，输入下面这句，回车：</p>
+        <pre class="prompt">这个仓库是做什么的？三个 Lab 怎么串起来？只回答，不要改任何文件。</pre>
+        <figure class="shot"><img src="img/05-warmup-ask.jpg" alt="Copilot 回答项目结构" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：「Completed N steps」——它自己读了 README 和各 Lab 的文件，然后讲出「找信息 → 做汇报 → 交付给业务」三段。试着用自己的话复述一遍。</p>
+        <p class="tip">小技巧：把 Chat 和编辑器之间的分隔线往左拖，Chat 面板宽一些更好读。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">2</div>
+      <div class="step-body">
+        <h3>读懂代码 · Inline Chat + /explain</h3>
+        <p class="do">打开 <code>Lab-01-Industry-Insight/frontend/main.js</code>（终端里 <code>code -g Lab-01-Industry-Insight/frontend/main.js:52</code>），选中 <code>renderMarkdown</code> 到 <code>loadReport</code> 那一段，按 <b>Cmd+I</b>（Windows：Ctrl+I），输入：</p>
+        <pre class="prompt">/explain 用中文解释：周报是怎么从 report.md 变成网页的？</pre>
+        <figure class="shot"><img src="img/06-inline-explain-ask.jpg" alt="Inline Chat 输入 /explain" loading="lazy"></figure>
+        <figure class="shot"><img src="img/07-inline-explain-answer.jpg" alt="Inline Chat 解释结果" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：解释直接出现在代码上方：fetchText 读 report.md → marked 转 HTML → DOMPurify 清理 → 放进页面。选中代码时，右边 Chat 也会自动带上 <code>main.js:52-85</code> 作为上下文。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">3</div>
+      <div class="step-body">
+        <h3>动手 · 一句话给网页加功能</h3>
+        <p class="do">Chat 右上角 <b>+</b> 开一个新对话，输入：</p>
+        <pre class="prompt">给 Lab-01-Industry-Insight/frontend 的周报网页加一个「只看高影响」开关：读取同目录的 report.json，打开开关时只显示影响等级为「高」的热点，关掉恢复完整周报。样式和现有页面保持一致。改完告诉我怎么在 Codespace 里预览。</pre>
+        <p class="do">Agent 会先读文件、改代码，再要求运行检查命令。读一下命令，点 <b>Allow</b>：</p>
+        <figure class="shot"><img src="img/08-agent-confirm.jpg" alt="Agent 请求运行命令" loading="lazy"></figure>
+        <p class="see">编辑器里绿色高亮的是新增代码，浮条上的 <b>Keep / Undo</b> 可以逐处决定；Chat 底部「4 files changed」可以一次决定全部。</p>
+        <figure class="shot"><img src="img/09-agent-done.jpg" alt="Agent 完成" loading="lazy"></figure>
+        <p class="do">它会自己用 <code>python -m http.server 8080</code> 起预览服务。打开端口 8080 的页面（Ports 面板 → 8080 → 地球图标），勾选右上角「只看高影响」：</p>
+        <div class="grid grid-2">
+          <figure class="shot"><img src="img/10-preview-off.jpg" alt="开关关闭" loading="lazy"><figcaption>关闭：完整周报</figcaption></figure>
+          <figure class="shot"><img src="img/11-preview-high-only.jpg" alt="开关打开" loading="lazy"><figcaption>打开：只剩影响等级「高」的热点</figcaption></figure>
+        </div>
+        <p class="see"><b>验收</b>：打开开关后只剩「·高」的热点。不满意（比如样式不对、条数不对）就在同一个对话里继续描述，满意再点 <b>Keep</b>。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">4</div>
+      <div class="step-body">
+        <h3>定规矩 · 自定义指令</h3>
+        <p class="do">打开 <code>.github/copilot-instructions.md</code>，在文件<b>最后</b>加一行团队规矩，保存：</p>
+        <pre class="cmd">- 新增的 JavaScript 函数上方必须加一行中文注释，以「// 业务用途：」开头，说明它帮业务同事解决什么问题。</pre>
+        <figure class="shot"><img src="img/12-instructions-rule.jpg" alt="自定义指令新增规矩" loading="lazy"></figure>
+        <p class="do">新开一个对话，让 Copilot 再加一个小功能：</p>
+        <pre class="prompt">给周报网页底部加一个「复制本周摘要」按钮，点一下把「本周摘要」里的几条文字复制到剪贴板。只改 frontend 目录。</pre>
+        <figure class="shot"><img src="img/13-rule-followed.jpg" alt="新函数遵守了规矩" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：新函数 <code>copyWeeklySummary</code> 上方有「// 业务用途：…」。对比第 3 步写的 <code>filterHighImpactHotspots</code>：那时还没有这条规矩，所以没有这行注释。</p>
+      </div>
+    </div>
+
+    <div class="recap">
+      <div class="az-eyebrow">复盘卡 · 热身</div>
+      <dl>
+        <dt>用了什么</dt><dd>Agent 模式 · Inline Chat + <code>/explain</code> · 上下文（选中代码）· 自定义指令</dd>
+        <dt>它做了什么</dt><dd>读了 main.js 和 report.json，改了 4 个文件，自己跑语法检查、起预览服务；我只描述要什么、看效果、决定 Keep 还是 Undo</dd>
+        <dt>对项目意味着</dt><dd>不会写前端也能改出可用的功能；团队规矩写进 <code>copilot-instructions.md</code> 一次，所有人的 Copilot 都遵守；「看改动、能回退」是自己的责任</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== Lab-01 ===== -->
+  <section class="section" id="lab01">
+    <div class="section-head">
+      <div class="az-eyebrow">Lab-01 · 行业洞察智能体 · MCP + gh-aw · 45 分钟</div>
+      <h2 class="az-title">从「我能用」到「每周一自动给全组用」</h2>
+      <div class="az-rule"></div>
+      <p class="az-sub">业务痛点：下游行业、竞品新品、节能政策散在几十个网站，靠人看又慢又容易漏</p>
+    </div>
+
+    <div class="step">
+      <div class="step-no">1</div>
+      <div class="step-body">
+        <h3>用起来 · Prompt 文件 + MCP 工具</h3>
+        <p class="do">新开对话，输入 <code>/industry</code>，在弹出的建议里选 <b>/industry-insight</b>，回车。</p>
+        <figure class="shot"><img src="img/20-lab01-slash.jpg" alt="斜杠命令 industry-insight" loading="lazy"></figure>
+        <p class="see"><code>/industry-insight</code> 就是仓库里的 <code>.github/prompts/industry-insight.prompt.md</code>：一份写好的工作说明书，存进仓库后人人都能用同一个斜杠命令。</p>
+        <p class="do">智能体第一次调用 MCP 工具时会请求确认，点 <b>Allow in this Session</b>：</p>
+        <figure class="shot"><img src="img/21-lab01-mcp-confirm.jpg" alt="MCP 工具确认" loading="lazy"></figure>
+        <p class="see">卡片上写着工具来自「industry-insight (MCP Server)」，下面那段中文就是工具的描述（写在 <code>mcp_server/server.py</code> 里）。智能体正是读这段描述决定什么时候调用它。</p>
+        <figure class="shot"><img src="img/22-lab01-build-report.jpg" alt="build_weekly_report 调用" loading="lazy"></figure>
+        <p class="see">依次调用 <code>read_focus</code> → <code>fetch_industry_signals</code> → <code>get_signals</code>（每个行业一次）→ <code>build_weekly_report</code>。最后一步把研判结果作为 <code>insights</code> 参数传进去，工具负责校验信号 ID、回填原文链接、渲染周报。</p>
+        <figure class="shot"><img src="img/23-lab01-done.jpg" alt="周报生成完成" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：约 3~4 分钟后汇报「几个行业、几个热点、几条行动建议」，并如实说出哪个源抓取失败。刷新 8080 预览页：</p>
+        <figure class="shot"><img src="img/24-lab01-report-page.jpg" alt="周报页面" loading="lazy"></figure>
+        <p class="see"><b>验收</b>：页头生成时间是刚才，<b>模式：智能体研判</b>（不是 fallback）。</p>
+        <p class="tip">注意：重新生成后，热点的影响等级可能和热身时不一样；如果这期没有「高」，热身做的开关打开后会是空的，这是数据决定的，不是 bug。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">2</div>
+      <div class="step-body">
+        <h3>改成自己的 · 只改 Markdown</h3>
+        <p class="do">打开 <code>Lab-01-Industry-Insight/focus.md</code>，在「## 全局排除词」上面复制一段 <code>## 行业</code>，改成你关心的行业。示例：</p>
+        <pre class="cmd">## 食品饮料
+
+- 搜索（中文）：食品饮料 工厂 OR 新厂 OR 扩产 OR 投产
+- 搜索（中文）：乳制品 OR 啤酒 OR 饮料 生产线 投产
+- 关注什么：食品饮料工厂新建和产线扩建；无油压缩空气（食品级）、真空包装设备的新需求
+- 排除词：新品口味, 代言, 促销</pre>
+        <figure class="shot"><img src="img/25-lab01-focus-edit.jpg" alt="focus.md 新增行业" loading="lazy"></figure>
+        <p class="do">保存，新开对话再跑一次 <code>/industry-insight</code>，刷新周报页：</p>
+        <figure class="shot"><img src="img/26-lab01-new-industry.jpg" alt="周报出现新行业" loading="lazy"></figure>
+        <p class="see"><b>验收</b>：周报里多了「食品饮料」，每个热点都带「来源」链接，「对我们的影响」落到具体设备。没改一行代码。</p>
+        <p class="tip">不会写搜索词？问 Copilot：<code>我负责食品饮料行业的空压机销售，参照 #file:Lab-01-Industry-Insight/focus.md 的格式帮我写一段「## 食品饮料」</code></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">3</div>
+      <div class="step-body">
+        <h3>Vibe coding · 加一个 MCP 工具「客户雷达」</h3>
+        <p class="do">新开对话，输入：</p>
+        <pre class="prompt">给 industry-insight MCP 服务器加一个工具「客户雷达」search_signals(keyword, limit=10)：在已抓取的信号 output/raw_signals.json 里按关键词（客户名或竞品名）搜标题和摘要，返回匹配的信号（id、行业、标题、来源、链接、日期）。逻辑写在 industry_tools.py，在 server.py 和 cli.py 里注册；参照 tests/test_industry_tools.py 的风格补一个单元测试并运行。</pre>
+        <figure class="shot"><img src="img/27-lab01-radar-done.jpg" alt="客户雷达完成" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：改了 4 个文件，「4 项单元测试全部通过」。点 <b>Keep</b>。</p>
+        <p class="do"><b>重启 MCP 服务器</b>，新工具才会被加载：打开 <code>.vscode/mcp.json</code>，点 <code>"industry-insight"</code> 上方的 <b>Restart</b>（看不到这行小字就按 F1 → <code>MCP: List Servers</code>）。</p>
+        <figure class="shot"><img src="img/28-lab01-mcp-restart.jpg" alt="重启 MCP" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：小字变成「5 tools」，输出面板最后一行「Discovered 5 tools」。</p>
+        <p class="do">新开对话问：</p>
+        <pre class="prompt">宁德时代（CATL）本周有什么动静？用客户雷达查，每条带链接。</pre>
+        <figure class="shot"><img src="img/29-lab01-radar-call.jpg" alt="调用 search_signals" loading="lazy"></figure>
+        <figure class="shot"><img src="img/30-lab01-radar-answer.jpg" alt="客户雷达回答" loading="lazy"></figure>
+        <p class="see"><b>验收</b>：智能体调用了 <code>search_signals</code>，输入 <code>{"keyword": "CATL"}</code>，回答里每条都有原文链接。你写的函数，智能体读了它的描述就会用。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">4</div>
+      <div class="step-body">
+        <h3>上云 · 推到自己的分支，让 gh-aw 在 GitHub 上跑</h3>
+        <p class="do">先读懂 <code>.github/workflows/industry-insight.md</code> 的四块配置：</p>
+        <div class="az-card" style="padding:0; overflow:auto; margin:10px 0 16px;">
+          <table class="az-table">
+            <thead><tr><th style="width:150px;">配置</th><th>意思</th></tr></thead>
+            <tbody>
+              <tr><td><code>on</code></td><td>每周一北京时间 8 点定时跑（<code>schedule</code>），也可以手动触发（<code>workflow_dispatch</code>）</td></tr>
+              <tr><td><code>network.allowed</code></td><td>智能体在防火墙里运行，只能访问列出的域名。给 <code>input/sources.json</code> 加新的 RSS 源要同时加白名单（Google News 搜索不用）</td></tr>
+              <tr><td><code>safe-outputs</code></td><td>智能体本身只读，结果只能通过建 PR / Issue 提交，人审核后才进主干</td></tr>
+              <tr><td><code>mcp-scripts</code></td><td>把同一套 <code>industry_tools</code> 函数通过 <code>cli.py</code> 暴露给云端智能体：VS Code 里用的工具，云端照样用</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tip">改了 <code>industry-insight.md</code> 本身，要运行 <code>gh aw compile industry-insight</code> 生成 Actions 真正运行的 <code>.lock.yml</code>。本步只改了 focus.md 和工具代码，不用编译。</p>
+        <p class="do">在终端把 Lab-01 的改动推到自己的分支（把 <code>&lt;名字&gt;</code> 换成你的拼音）：</p>
+        <pre class="cmd">git switch -c student/&lt;名字&gt;
+git add Lab-01-Industry-Insight/focus.md Lab-01-Industry-Insight/mcp_server Lab-01-Industry-Insight/tests
+git commit -m "Lab-01: 加食品饮料行业 + 客户雷达工具"
+git push -u origin student/&lt;名字&gt;</pre>
+        <figure class="shot"><img src="img/31-lab01-push.jpg" alt="推送分支" loading="lazy"></figure>
+        <p class="do">打开仓库的 <b>Actions</b> → 左侧 <b>Industry Insight Weekly</b> → <b>Run workflow</b> → 「Use workflow from」选你的 <code>student/&lt;名字&gt;</code> → <b>Run workflow</b>。</p>
+        <figure class="shot"><img src="img/32-gh-aw-run-dialog.jpg" alt="选择分支运行" loading="lazy"></figure>
+        <figure class="shot"><img src="img/33-gh-aw-queued.jpg" alt="运行已排队" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：列表最上面出现你的运行，分支是 <code>student/&lt;名字&gt;</code>。一次约 5 分钟，放在休息前触发，休息回来看结果：成功时会生成一份带你行业的周报（以分支 + Issue 的形式交给人审核）。</p>
+        <p class="warn">2026-10-17 实测：工作流在学员分支上能正常触发，云端用的是学员分支上的 focus.md；但这次 agent 步骤报 <code>401 Authentication failed</code>，原因是仓库 Secret <code>COPILOT_GITHUB_TOKEN</code> 里的令牌已经失效（与分支无关）。课前讲师要更新这个 Secret 并手动跑通一次。失败时 gh-aw 会自动开一个「[aw] … had a request rejected」Issue 说明原因。</p>
+      </div>
+    </div>
+
+    <div class="recap">
+      <div class="az-eyebrow">复盘卡 · Lab-01</div>
+      <dl>
+        <dt>用了什么</dt><dd>Prompt 文件 · MCP 服务器 · Agent 模式写代码 + 单元测试 · gh-aw</dd>
+        <dt>它做了什么</dt><dd>MCP 工具负责抓取、去重、回填链接；模型只负责挑重点、判断影响；gh-aw 把同一套工具放到 GitHub Actions 里按时运行</dd>
+        <dt>对项目意味着</dt><dd>不用每周人工追几十个网站；业务同事改 focus.md 就能换行业；数据源封装一次，VS Code、gh-aw、Studio 都能复用；结果必须经人审核才进主干</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== Lab-02 ===== -->
+  <section class="section" id="lab02">
+    <div class="section-head">
+      <div class="az-eyebrow">Lab-02 · 知识总结智能体 · Skills + Copilot SDK · 45 分钟</div>
+      <h2 class="az-title">把团队的汇报规范，变成谁都能调用的服务</h2>
+      <div class="az-rule"></div>
+      <p class="az-sub">业务痛点：读完一篇文章做汇报要半天，读、提炼、排版，格式人人不同</p>
+    </div>
+
+    <div class="step">
+      <div class="step-no">1</div>
+      <div class="step-body">
+        <h3>用起来 · 在 Chat 里用 Skill</h3>
+        <p class="do">新开对话，输入（也可以换成任意一篇文章：<code>把这篇文章总结成 6 页汇报 PPT，风格用咨询风：url=https://…</code>）：</p>
+        <pre class="prompt">把 #file:Lab-01-Industry-Insight/frontend/report.md 里「新能源汽车」和「锂电」两部分总结成 6 页汇报 PPT，风格用咨询风。</pre>
+        <figure class="shot"><img src="img/34-lab02-skill-picked.jpg" alt="自动选中 knowledge2ppt skill" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：「Read skill · knowledge2ppt」：你没有点名，Copilot 根据 Skill 的描述自己选中了它。</p>
+        <figure class="shot"><img src="img/35-lab02-skill-steps.jpg" alt="Skill 工作流程" loading="lazy"></figure>
+        <p class="see">它按 Skill 里写的流程干活：先写大纲 <code>outline.md</code> → 统一样式 <code>theme.css</code> → 每页一个 HTML → <code>pptx</code> skill 把 HTML 转成可编辑的 .pptx。过程中会多次请求运行检查命令（统计页数、核对链接、渲染预览图），读一下点 Allow。全程约 5 分钟。</p>
+        <figure class="shot"><img src="img/37-lab02-chat-done.jpg" alt="PPT 生成完成" loading="lazy"></figure>
+        <figure class="shot"><img src="img/36-lab02-ppt-preview.jpg" alt="6 页 PPT 预览" loading="lazy"><figcaption>生成的 6 页：每页标题都是一句结论，最后一页是来源</figcaption></figure>
+        <p class="see"><b>验收</b>：在资源管理器 <code>Lab-02-Knowledge-Summary/output/chat/…/</code> 里右键 .pptx → <b>Download</b>，用 PowerPoint 打开，文字可以直接编辑。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">2</div>
+      <div class="step-body">
+        <h3>改成自己的 · 把团队规范写进 SKILL.md</h3>
+        <p class="do">打开 <code>.github/skills/knowledge2ppt/SKILL.md</code>，在「团队汇报规范」一段末尾加一条你们团队的真实习惯，例如：</p>
+        <pre class="cmd">- **保密标识**：每页右上角用小字写「仅供内部讨论」。</pre>
+        <figure class="shot"><img src="img/38-lab02-skill-edit.jpg" alt="SKILL.md 新增规范" loading="lazy"></figure>
+        <p class="see">不用在 Chat 里重跑：第 4 步用网页生成时就能看到效果。网页服务通过 Copilot SDK 加载的是<b>同一份</b> SKILL.md。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">3</div>
+      <div class="step-body">
+        <h3>Vibe coding · 给网页加「公司品牌风」</h3>
+        <p class="do">新开对话，把配色换成你们公司的：</p>
+        <pre class="prompt">给 Lab-02 网页加一种 PPT 风格「公司品牌风」：白底，主色深蓝 #003A70，强调色亮黄 #FFC20E，标题加粗，每页底部一条深蓝细条。只改 Lab-02-Knowledge-Summary/lib/styles.ts 和风格预览的 CSS，改完跑 npm run typecheck。</pre>
+        <figure class="shot"><img src="img/39-lab02-brand-done.jpg" alt="品牌风完成" loading="lazy"></figure>
+        <p class="see"><b>应该看到</b>：改了 2 个文件，<code>npm run typecheck</code> 通过。点 <b>Keep</b>。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">4</div>
+      <div class="step-body">
+        <h3>跑服务 · Copilot SDK 把 Skill 做成网页和 API</h3>
+        <p class="do">在终端启动服务：</p>
+        <pre class="cmd">cd Lab-02-Knowledge-Summary &amp;&amp; npm run dev</pre>
+        <figure class="shot"><img src="img/40-lab02-npm-dev.jpg" alt="npm run dev" loading="lazy"></figure>
+        <p class="do">看到「Ready」和右下角端口 3000 的提示后，点 <b>Open in Browser</b>。素材来源选 <b>本周行业洞察周报</b>，「只看某个行业」填你在 Lab-01 加的行业（如 <code>食品饮料</code>），风格选 <b>公司品牌风</b>，点 <b>开始生成 PPT</b>：</p>
+        <figure class="shot"><img src="img/41-lab02-brand-card.jpg" alt="选择公司品牌风" loading="lazy"></figure>
+        <p class="see">等待的 3~5 分钟里，让 Copilot 带你读代码：<code>Lab-02-Knowledge-Summary/lib/copilot.ts 里 Copilot SDK 是在哪里加载 skill 的？</code>（看 <code>skillDirectories</code>）</p>
+        <figure class="shot"><img src="img/42-lab02-web-done.jpg" alt="网页生成完成" loading="lazy"></figure>
+        <figure class="shot"><img src="img/43-lab02-brand-ppt.jpg" alt="品牌风 PPT" loading="lazy"><figcaption>网页生成的 PPT：每页右上角都有「仅供内部讨论」（第 2 步改的 SKILL.md）、深蓝品牌色（第 3 步加的风格）、内容是 Lab-01 新加的食品饮料行业</figcaption></figure>
+        <p class="see"><b>验收</b>：点「下载 …pptx」能拿到文件；三处改动（focus.md、SKILL.md、styles.ts）同时体现在一份 PPT 里。</p>
+        <p class="tip">实测：模型会按风格描述排版，但颜色不一定严格照搬（这次用了相近的深蓝，没有用黄色强调色）。想要严格的品牌色，把要求写得更硬，例如在风格描述里写「必须使用且只使用以下色值」。</p>
+      </div>
+    </div>
+
+    <div class="recap">
+      <div class="az-eyebrow">复盘卡 · Lab-02</div>
+      <dl>
+        <dt>用了什么</dt><dd>Agent Skills（自动选中）· Copilot SDK · Agent 模式写代码</dd>
+        <dt>它做了什么</dt><dd>knowledge2ppt skill 规定「结论 → 要点 → 建议」怎么排；pptx skill 负责出可编辑文件；SDK 让网页和 API 调用同一套 Skill</dd>
+        <dt>对项目意味着</dt><dd>读文章做汇报从半天变成几分钟，全组格式一致；规范改一处，Chat、网页、API 所有入口同时生效；有了 API，别的系统（下一步的 Studio）就能调用</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== Lab-03 ===== -->
+  <section class="section" id="lab03">
+    <div class="section-head">
+      <div class="az-eyebrow">Lab-03 · 串起来 · Copilot Studio · 45 分钟</div>
+      <h2 class="az-title">业务同事一句话：洞察 + 汇报 PPT</h2>
+      <div class="az-rule"></div>
+      <p class="az-sub">开发者用 GitHub Copilot 造能力（Lab-01 / 02），业务同事在 Copilot Studio 里用能力</p>
+    </div>
+
+    <div class="step">
+      <div class="step-no">1</div>
+      <div class="step-body">
+        <h3>暴露服务 · 端口 3000 设为 Public</h3>
+        <p class="do">底部面板 <b>Ports</b> 页签（看不到就点面板标题栏的 <b>…</b> → Ports）→ 右键 Lab-02 那一行（3000）→ <b>Port Visibility</b> → <b>Public</b>。</p>
+        <figure class="shot"><img src="img/50-lab03-port-public.jpg" alt="端口设为 Public" loading="lazy"></figure>
+        <p class="warn">Codespace 每次重启后端口都会被改回 Private，要重新设一次。服务的所有接口都要求 <code>x-api-key</code>，公开端口不等于谁都能调用。</p>
+        <p class="do">点终端右上角 <b>+</b> 新开一个终端（npm 那个终端要一直开着），运行连通自检：</p>
+        <pre class="cmd">bash Lab-03-Copilot-Studio/smoke-test.sh</pre>
+        <figure class="shot"><img src="img/51-lab03-smoke.jpg" alt="smoke test 通过" loading="lazy"></figure>
+        <p class="see"><b>验收</b>：4 项全部打勾，最后一行「全部通过（4 项）」。脚本第一行打印的 <b>host</b> 和第二行的 <b>API 密钥</b>，下一步建连接时要填。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">2</div>
+      <div class="step-body">
+        <h3>建智能体 · 粘贴指令、挂上 4 个工具</h3>
+        <p class="do">用演示租户账号登录 <a href="https://copilotstudio.microsoft.com">Copilot Studio</a>，按 <a href="../../Lab-03-Copilot-Studio/README.md">Lab-03 README</a> 第 3 步操作。要点：</p>
+        <ol class="plain">
+          <li>左下角切到讲师指定的 <b>Trial</b> 环境；<b>Agents → New agent 旁的下拉 → Agent（Standard）</b>，不要选带「GitHub Copilot」标记的。</li>
+          <li>名称 <code>业务汇报助手</code>；Agent settings 里 Language 选 Chinese (Simplified)，<b>Schema name 手动填英文</b>（如 <code>bizreport</code>）。</li>
+          <li>Overview → Instructions → Edit，粘贴 README 里的「智能体指令」整段；自己修改时<b>不要输入 <code>/</code></b>，斜杠会弹出插入菜单吞掉后面的字。</li>
+          <li>Knowledge → <b>Web Search 关掉</b>，只按工具返回的内容回答。</li>
+          <li>Tools → Add a tool → 搜 <code>Atlas</code>，挂上讲师建好的「Atlas Agent Labs」4 个工具；建连接时填<b>你自己</b>的 host 和 API 密钥。</li>
+        </ol>
+        <p class="see"><b>验收</b>：Tools 页 4 个工具都是 <b>On</b>、Trigger 是 <b>By agent</b>。</p>
+        <figure class="shot"><img src="img/52-studio-overview.jpg" alt="智能体 Overview 与指令" loading="lazy"><figcaption>Overview：指令粘贴后的样子；右侧是 Test your agent 窗格</figcaption></figure>
+        <figure class="shot"><img src="img/53-studio-tools.jpg" alt="Tools 页 4 个工具" loading="lazy"><figcaption>Tools：4 个中文名工具都是 On、By agent（灰色 Off 的是旧版工具，可忽略）</figcaption></figure>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">3</div>
+      <div class="step-body">
+        <h3>测试 · 一句话串起两个智能体</h3>
+        <p class="do">右侧 <b>Test your agent</b> 依次输入，每次点开左侧工具卡片，看它实际收到的参数：</p>
+        <div class="az-card" style="padding:0; overflow:auto; margin:10px 0 16px;">
+          <table class="az-table">
+            <thead><tr><th style="width:40px;">#</th><th>输入</th><th>应该看到</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><code>本周新能源汽车装配行业有什么变化？对我们有什么影响？</code></td><td>调用「查询本周行业洞察」，附周报链接</td></tr>
+              <tr><td>2</td><td><code>把这些整理成 6 页汇报 PPT</code></td><td>调用「把行业洞察做成汇报 PPT」，回复进度页链接</td></tr>
+              <tr><td>3</td><td><code>PPT 做好了吗？</code></td><td>调用「查询 PPT 生成进度」，给出下载链接</td></tr>
+              <tr><td>4</td><td><code>看看本周食品饮料行业有什么变化，整理成汇报</code></td><td>先洞察、再提交 PPT；用的是你 Lab-01 加的行业和 Lab-02 改的规范</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tip">第一次调用工具时如果提示「先连接……打开连接管理器」：点开 → 状态为 Stale 的那一行点 Review → 选已建好的连接 → Submit → 回对话点重试。</p>
+        <div class="shot-todo">Studio 截图待补：测试窗格对话 + 工具卡片参数</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-no">4</div>
+      <div class="step-body">
+        <h3>改一处 · 看行为怎么变</h3>
+        <p class="do">在 Instructions 末尾加一句，例如「回答最后一行写明由哪个团队（销售 / 产品 / 市场）跟进」，保存后重跑第 1 句测试，对比前后回答。</p>
+        <p class="see"><b>验收</b>：能说出改了什么、回答怎么变了。智能体的行为由指令和工具描述驱动，业务人员自己就能调。</p>
+      </div>
+    </div>
+
+    <div class="recap">
+      <div class="az-eyebrow">复盘卡 · Lab-03</div>
+      <dl>
+        <dt>用了什么</dt><dd>Codespaces 端口转发 · Copilot Studio · REST API 工具（openapi.yaml）· 指令与工具描述</dd>
+        <dt>它做了什么</dt><dd>Studio 根据工具描述决定先查洞察、再生成 PPT，参数自己从对话里取；真正干活的是我们在 Lab-01 / 02 造的服务</dd>
+        <dt>对项目意味着</dt><dd>业务同事不用打开 VS Code，一句话拿到洞察和汇报；生成要几分钟，所以先给进度页，这是接业务系统的通用做法</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== 排障 ===== -->
+  <section class="section" id="trouble">
+    <div class="section-head">
+      <div class="az-eyebrow">遇到问题</div>
+      <h2 class="az-title">先对照这张表，再举手</h2>
+      <div class="az-rule"></div>
+    </div>
+    <div class="az-card" style="padding:0; overflow:auto;">
+      <table class="az-table">
+        <thead><tr><th style="width:240px;">现象</th><th style="width:240px;">原因</th><th>处理</th></tr></thead>
+        <tbody>
+          <tr><td>顶部「Restricted Mode」，终端打不开</td><td>还没信任文件夹</td><td>点 Manage → Trust Folder &amp; Continue（开场 0.2）</td></tr>
+          <tr><td>Chat 模式下拉只有 Agent，找不到 Ask</td><td>新版 VS Code 已合并模式</td><td>正常。只想问问题时加一句「不要改任何文件」</td></tr>
+          <tr><td>Agent 一直停着不动</td><td>在等你确认命令</td><td>往下滚，找「Run bash command?」点 Allow</td></tr>
+          <tr><td>命令确认卡片显示红色「untrusted code」</td><td>风险评估对 heredoc / 管道比较保守</td><td>读一下命令：只读本机文件、访问 127.0.0.1 的可以放心 Allow；看不懂就 Skip 并问讲师</td></tr>
+          <tr><td>Agent 想用 <code>rg</code> 报错</td><td>Codespace 里没装 ripgrep</td><td>不用管，它会自动改用 grep</td></tr>
+          <tr><td>斜杠命令回车后没发出去</td><td>第一次回车是选中了补全建议</td><td>再按一次回车</td></tr>
+          <tr><td>新加的 MCP 工具智能体不调用</td><td>MCP 服务器没重启</td><td>mcp.json 里点 Restart，确认「5 tools」</td></tr>
+          <tr><td>周报页头写「模式：fallback」</td><td>研判结果没通过校验（引用了不存在的信号 ID 等）</td><td>看 Chat 里 build_weekly_report 返回的 warnings，让智能体按提示修正重试</td></tr>
+          <tr><td>Lab-02 进度页「无法列出模型」</td><td>没有有效的 Copilot 令牌</td><td>重新 <code>bash .devcontainer/set-key.sh</code>，Ctrl+C 停掉再 <code>npm run dev</code></td></tr>
+          <tr><td>gh-aw 运行失败，自动出现「[aw] … had a request rejected」Issue</td><td>Issue 里写着原因；<code>401 authentication_failed</code> 表示仓库 Secret 里的令牌失效</td><td>找讲师更新仓库 Secret <code>COPILOT_GITHUB_TOKEN</code> 后重跑</td></tr>
+          <tr><td>smoke-test「公网地址可访问」失败（302 / 401）</td><td>端口 3000 是 Private（重启后会变回去）</td><td>Ports 面板右键 3000 → Port Visibility → Public</td></tr>
+          <tr><td>Studio 工具调用返回 401</td><td>连接里的密钥和 .env 的 LAB_API_KEY 不一致</td><td>再跑 set-key.sh 看当前值，重建连接</td></tr>
+          <tr><td>Studio 调用超时</td><td>Codespace 空闲超时停了</td><td>回到 Codespace 让它恢复，重启 npm run dev、重设 Public；把空闲超时调到 120 分钟</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== 课后 ===== -->
+  <section class="section" id="after">
+    <div class="section-head">
+      <div class="az-eyebrow">课后清理</div>
+      <h2 class="az-title">走之前做三件事</h2>
+      <div class="az-rule"></div>
+    </div>
+    <div class="grid grid-3">
+      <article class="az-card has-accent">
+        <div class="card-no">1</div>
+        <h3 class="card-title">端口改回 Private</h3>
+        <p class="card-desc">Ports 面板右键 3000 → Port Visibility → Private。</p>
+      </article>
+      <article class="az-card has-accent">
+        <div class="card-no">2</div>
+        <h3 class="card-title">保存你的改动</h3>
+        <p class="card-desc">已推到 <code>student/&lt;名字&gt;</code> 分支的会保留；其他文件（如 PPT）在资源管理器里右键 Download。</p>
+      </article>
+      <article class="az-card has-accent">
+        <div class="card-no">3</div>
+        <h3 class="card-title">停掉 Codespace</h3>
+        <p class="card-desc">左下角「Codespaces」→ Stop Current Codespace。不用了可以在 <a href="https://github.com/codespaces">github.com/codespaces</a> 删除。</p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="az-footer">
+    <span>埃知科技 · 上海埃知科技有限公司</span>
+    <span>阿特拉斯中国 Copilot 智能体工作坊 · 实操手册 v1 · 2026-10-17</span>
+  </footer>
+
+</div>
+</body>
+</html>
