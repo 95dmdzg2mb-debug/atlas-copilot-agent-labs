@@ -103,7 +103,8 @@ fork 上的定时工作流默认是停用的（Disabled），课前准备里已�
    ```
 3. 你的 fork → **Actions → Industry Insight Weekly → Run workflow**（分支 `main`）。
 
-**期望结果**：约 5 分钟后你的 fork 里出现一个周报 PR，里面有你新加的行业。失败时 gh-aw 会自动开一个「[aw] …」Issue 写明原因。
+**期望结果**：约 5 分钟后你的 fork 里出现一个 **Draft** 周报 PR，里面有你新加的行业；审核后点 **Ready for review** 再 Merge。
+失败时在 Actions 里点开这次运行看日志（gh-aw 会想开「[aw] …」Issue 说明原因，但 fork 默认关了 Issues，看不到）。
 
 > 改了 `industry-insight.md` 本身要先 `gh aw compile industry-insight`；只改 focus.md 和工具代码不用编译。
 > 给 `input/sources.json` 加新的 RSS 源时，要同时把域名加到工作流的 `network.allowed` 再编译。
