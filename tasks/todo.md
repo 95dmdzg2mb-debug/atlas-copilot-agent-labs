@@ -165,5 +165,13 @@
 - 过程中的失误：给 api.ts 加调试日志时 shell 转义把 `\n` 变成真换行，导致语法错误约 1 分钟；已从备份恢复，改用 base64 传补丁；
   调试结束后 api.ts 已恢复（git diff 无变化），临时日志已删除。在 VS Code 里用 `code -g` 打开文件后焦点会跳到编辑器，接着打字会写进文件（已 Revert + 手动修复并 node --check 通过）。
 - 收尾（10-17 晚）：PR #7 rebase 合并进 main；answer/warmup、lab01、lab02 rebase 到最新 main（各只比 main 多一个提交）并 force push；answer/lab02 品牌色改成与提示词一致（白底、#003A70、#FFC20E、底部深蓝细条）；手册「看答案」改用 `git show origin/answer/…`。
-- 遗留：Pages 没开，Deploy GitHub Pages 每次推送都失败（Create Pages site failed，Resource not accessible by integration），需要在仓库 Settings → Pages 选 GitHub Actions；仓库有 21 个 Dependabot 告警未处理。
-- [ ] 👤 删除测试资源（用户要自己从头再跑）：Studio 智能体「业务汇报助手 Tarry」、Codespace super-space-spoon、fork tarrywang/atlas-copilot-agent-labs；🤖 之后清理 Studio 连接「Atlas · Tarry」、连接器与 AIPlugin、自动生成的 Solution
+- 遗留：Pages 没开，Deploy GitHub Pages 每次推送都失败（Create Pages site failed，Resource not accessible by integration），需要在仓库 Settings → Pages 选 GitHub Actions。
+- [x] 👤 删除测试资源（用户要自己从头再跑）：Studio 智能体「业务汇报助手 Tarry」、Codespace super-space-spoon、fork tarrywang/atlas-copilot-agent-labs；🤖 之后清理 Studio 连接「Atlas · Tarry」、连接器与 AIPlugin、自动生成的 Solution
+      （10-17 晚已清：Default Solution 里删 4 个 AIPluginOperation → AIPlugin → 自定义连接器后，连接随之消失；再删「Atlas Agent Labs · Tarry Solution」。
+      复查：Agents 0、Custom connectors 0、Connections 0、Solutions 只剩两个内置，Connection references 只剩 SYSTEM 的 Content Conversion / Dataverse）
+- [x] 依赖漏洞（PR #8）：Dependabot 实际有 54 个未关告警（2 critical / 29 high / 21 medium / 2 low；之前记的「21 个」不对），全在 Lab-02 的 package-lock.json。
+      next / eslint-config-next 15.5.12 → 15.5.28，sharp → ^0.35.5；overrides 固定 @github/copilot 1.0.43、postcss ^8.5.23、image-size ^2.0.3。
+      **@github/copilot 不能放开到最新**：1.0.64 起去掉了 index.js，SDK 0.2.2 会报「Copilot CLI not found」（直接 npm audit fix 就会装上 1.0.98）。
+      验证：新锁文件对 54 个告警的受影响版本范围逐条比对 0 命中；npm audit --omit=dev 为 0（剩 braces 5 条，开发依赖、上游无修复）；
+      npm ci / typecheck / lint / build、next start 冒烟、html2pptx 出单页 PPTX、SDK 拉起 CLI 1.0.43 握手都通过。
+- [ ] 👤 手动全程重跑时确认 Lab-02 带令牌生成 PPT 正常（Copilot CLI 从 1.0.27 升到 1.0.43，这一步没测）
