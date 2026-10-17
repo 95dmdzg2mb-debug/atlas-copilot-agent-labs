@@ -987,8 +987,8 @@ git fetch upstream</pre>
       <article class="az-card has-accent">
         <div class="card-no">提示 2</div>
         <h3 class="card-title">想先看看答案改了什么</h3>
-        <p class="card-desc">不覆盖文件，只看差别（按 <code>q</code> 退出）：</p>
-        <pre class="cmd">git diff main origin/answer/lab01</pre>
+        <p class="card-desc">每个参考答案分支都只比 main 多一个提交，不覆盖文件、直接看这个提交改了什么（按 <code>q</code> 退出）：</p>
+        <pre class="cmd">git show origin/answer/lab01</pre>
         <p class="card-desc">或者直接问 Copilot：「对比我的 search_signals 和 origin/answer/lab01 上的版本，我的为什么跑不通？只回答，不要改文件。」</p>
       </article>
     </div>

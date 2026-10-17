@@ -16,6 +16,7 @@
 1. **仓库设为 Public，学员各自 fork**（2026-10-17 决定）。每人在自己的 fork 上开 Codespace、跑 gh-aw，
    Codespaces / Actions / Copilot 额度都记在学员自己账号上，互不影响；学员也不需要本仓库的写权限。
    - fork 时提醒**取消勾选**「Copy the `main` branch only」，`answer/*` 参考答案分支才会带过去；
+   - `answer/*` 每个分支只比 main 多一个提交（学员用 `git show origin/answer/…` 看答案）。改过 main 之后，在发通知前把三个分支 rebase 到最新 main 再 `git push --force-with-lease`；
    - 学员课前要做：fork → 生成 Fine-grained PAT（Account → Copilot Requests: Read，7 天过期）→
      存成个人 Codespaces secret 和 fork 的 Actions secret（都叫 `COPILOT_GITHUB_TOKEN`）→ fork 的 Actions 页签启用工作流，
      再单独 Enable 一次 Industry Insight Weekly（fork 上定时工作流默认 Disabled，不启用就没有 Run workflow）→
