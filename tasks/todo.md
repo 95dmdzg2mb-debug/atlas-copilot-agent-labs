@@ -104,7 +104,7 @@
 - [ ] 热身：@workspace / /explain / Agent 模式改网页 / 自定义指令
 - [ ] Lab-01：/industry-insight → 改 focus.md → 客户雷达 → 推分支 + Actions 触发 → Issue 结果
 - [ ] Lab-02：Chat 用 Skill → 改 SKILL.md → 品牌风 → 网页生成 PPT
-- [ ] Lab-03：端口 Public → smoke-test → Studio 建智能体 / 挂工具 / 测试 / 改一处
+- [x] Lab-03：端口 Public → smoke-test → Studio 建智能体 / 挂工具 / 测试（54/55 取自 Activity 页 10-16 的实测会话）；「改一处」未截图
 
 ### C. 写手册
 - [ ] docs/manual/index.html + docs/manual/img/，每步：做什么 → 截图 → 应该看到 → 复盘三问；附排障表
