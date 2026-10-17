@@ -397,6 +397,43 @@ def get_signals(
     }
 
 
+def search_signals(
+    *,
+    keyword: str,
+    signals_path: str | Path = DEFAULT_OUTPUT / "raw_signals.json",
+    limit: int = 10,
+) -> dict[str, Any]:
+    """按关键词搜索信号标题和摘要，返回客户或竞品相关线索。"""
+    keyword = str(keyword or "").strip()
+    if not keyword:
+        raise ValueError("keyword 不能为空。")
+
+    data = _load_signals(signals_path)
+    needle = keyword.casefold()
+    rows = [
+        it for it in data["items"]
+        if needle in str(it.get("title") or "").casefold()
+        or needle in str(it.get("summary") or "").casefold()
+    ]
+    limit = max(1, min(int(limit or 10), 80))
+    return {
+        "keyword": keyword,
+        "total": len(rows),
+        "returned": min(len(rows), limit),
+        "items": [
+            {
+                "id": it["id"],
+                "topic": it["topic"],
+                "title": it["title"],
+                "source": it["source"],
+                "url": it["url"],
+                "date": (it.get("published_at") or "")[:10],
+            }
+            for it in rows[:limit]
+        ],
+    }
+
+
 # --------------------------------------------------------------------------- #
 # 校验 + 兜底 + 渲染
 # --------------------------------------------------------------------------- #

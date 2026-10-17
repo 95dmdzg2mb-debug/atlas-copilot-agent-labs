@@ -54,6 +54,34 @@ def test_parse_focus_reads_topics_queries_and_excludes():
     assert all("when%3A7d" in r["url"] for r in plan)
 
 
+def test_search_signals_matches_title_and_summary_and_limits_results(tmp_path):
+    sig = _signals(tmp_path)
+    data = json.loads(sig.read_text(encoding="utf-8"))
+    data["items"][0]["title"] = "Acme battery factory expansion"
+    data["items"][1]["title"] = "Battery factory project"
+    data["items"][1]["summary"] = "Project partner: Globex Corporation"
+    sig.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+
+    title_match = t.search_signals(keyword="ACME", signals_path=sig)
+    assert title_match["total"] == 1
+    assert title_match["items"] == [{
+        "id": "S001",
+        "topic": "锂电",
+        "title": "Acme battery factory expansion",
+        "source": "A",
+        "url": "https://a.example/1",
+        "date": "2026-10-15",
+    }]
+
+    summary_match = t.search_signals(keyword="globex", signals_path=sig)
+    assert [item["id"] for item in summary_match["items"]] == ["S002"]
+
+    limited = t.search_signals(keyword="battery", signals_path=sig, limit=1)
+    assert limited["total"] == 2
+    assert limited["returned"] == 1
+    assert len(limited["items"]) == 1
+
+
 def test_report_uses_only_real_signal_ids(tmp_path):
     sig = _signals(tmp_path)
     insights = {
