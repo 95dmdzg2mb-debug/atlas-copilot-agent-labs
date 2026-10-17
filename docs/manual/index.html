@@ -378,7 +378,7 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
         <div class="sub">上海埃知科技有限公司</div>
       </span>
     </a>
-    <span class="deck-meta">实操手册 v1 · 2026-10-17</span>
+    <span class="deck-meta">实操手册 v1.1（fork 版）· 2026-10-17</span>
   </header>
 
   <!-- ===== Hero ===== -->
@@ -389,7 +389,7 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
       <h1 class="az-title">每一步，都知道自己在干什么</h1>
       <h2 class="az-title tail">开场 → 热身 → Lab-01 → Lab-02 → Lab-03</h2>
       <div class="az-rule"></div>
-      <p class="lead">本手册的每张截图都来自 2026-10-17 在真实 Codespace 里完整走一遍的结果。每一步按同一个格式写：<b>做什么</b> → <b>截图</b> → <b>应该看到</b>；每个环节结束有一张复盘卡，回答「用了什么功能 / 它替我做了什么 / 对项目意味着什么」。</p>
+      <p class="lead">本手册的截图来自真实环境：VS Code / GitHub 部分是 2026-10-17 在 Codespace 里完整走一遍的结果，Copilot Studio 部分（Lab-03 第 3 步）取自 2026-10-16 测试会话的 Activity 回放。fork 相关步骤（课前准备、开场 0.1、Lab-01 第 4 步、Lab-03 第 2 步）是按「每人 fork 一份」的新方式写的，暂时沿用原截图，界面文字以正文为准。每一步按同一个格式写：<b>做什么</b> → <b>截图</b> → <b>应该看到</b>；每个环节结束有一张复盘卡，回答「用了什么功能 / 它替我做了什么 / 对项目意味着什么」。</p>
       <div class="status-row">
         <span class="az-tag">时长：半天 3.5 小时</span>
         <span class="az-tag">环境：GitHub Codespaces（浏览器里的 VS Code）</span>
@@ -409,6 +409,7 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
       <li><a href="#lab02">Lab-02 · 知识总结智能体 · Skills + SDK（45 分钟）</a></li>
       <li><a href="#lab03">Lab-03 · Copilot Studio 串起来（45 分钟）</a></li>
       <li><a href="#trouble">遇到问题</a></li>
+      <li><a href="#stuck">卡住了怎么办 · 用参考答案追上进度</a></li>
       <li><a href="#after">课后清理</a></li>
     </ol>
   </nav>
@@ -438,19 +439,26 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
   <section class="section" id="prep">
     <div class="section-head">
       <div class="az-eyebrow">课前准备 · 讲师会提前发通知</div>
-      <h2 class="az-title">上课前要有的三样东西</h2>
+      <h2 class="az-title">上课前：fork 一份自己的仓库，配好自己的令牌</h2>
       <div class="az-rule"></div>
+      <p class="az-sub">每人用自己的仓库、自己的 Codespace、自己的 Copilot 额度。建议上课前一天做完，第一次创建 Codespace 要 5~8 分钟</p>
     </div>
     <div class="az-card" style="padding:0; overflow:auto;">
       <table class="az-table">
-        <thead><tr><th style="width:220px;">准备什么</th><th>怎么检查</th></tr></thead>
+        <thead><tr><th style="width:220px;">准备什么</th><th>怎么做 / 怎么检查</th></tr></thead>
         <tbody>
-          <tr><td>GitHub 账号 + Copilot 席位</td><td>已被讲师加入 <code>atlascopco-Lab</code> 组织，能打开课程仓库 <code>atlas-copilot-agent-labs</code></td></tr>
-          <tr><td>Copilot 令牌（Fine-grained PAT）</td><td>按讲师通知在 <a href="https://github.com/settings/personal-access-tokens">个人设置</a> 生成：Resource owner 选自己，权限只勾 Account → <b>Copilot Requests: Read</b>。<br>推荐存成个人的 Codespaces secret <code>COPILOT_GITHUB_TOKEN</code>（<a href="https://github.com/settings/codespaces">设置页</a> → New secret，仓库选课程仓库），这样令牌不落盘。</td></tr>
-          <tr><td>Copilot Studio 演示账号</td><td>能登录 <a href="https://copilotstudio.microsoft.com">copilotstudio.microsoft.com</a>（Lab-03 用）</td></tr>
+          <tr><td>1. GitHub 账号 + Copilot 席位</td><td>登录 <a href="https://github.com/copilot">github.com/copilot</a> 能正常对话</td></tr>
+          <tr><td>2. Fork 课程仓库</td><td>打开 <a href="https://github.com/atlascopco-Lab/atlas-copilot-agent-labs">atlascopco-Lab/atlas-copilot-agent-labs</a> → 右上角 <b>Fork</b> → Owner 选<b>你自己</b> → <b>取消勾选</b>「Copy the <code>main</code> branch only」（卡住时要用到参考答案分支）→ Create fork。之后所有操作都在 <code>&lt;你的用户名&gt;/atlas-copilot-agent-labs</code> 上进行。</td></tr>
+          <tr><td>3. Copilot 令牌（Fine-grained PAT）</td><td>在 <a href="https://github.com/settings/personal-access-tokens/new">个人设置 → Fine-grained tokens</a> 生成：Resource owner 选自己，过期时间选 7 天，权限只勾 Account permissions → <b>Copilot Requests: Read</b>。生成后复制 <code>github_pat_…</code>，<b>只显示一次</b>。</td></tr>
+          <tr><td>4. 存成 Codespaces secret</td><td><a href="https://github.com/settings/codespaces">Settings → Codespaces</a> → New secret：Name <code>COPILOT_GITHUB_TOKEN</code>，Value 粘贴令牌，Repository access 选你 fork 的仓库。Codespace 启动时自动注入，令牌不落盘。</td></tr>
+          <tr><td>5. 存成仓库 Actions secret（Lab-01 第 4 步用）</td><td>你的 fork → Settings → Secrets and variables → <b>Actions</b> → New repository secret：Name 同样是 <code>COPILOT_GITHUB_TOKEN</code>，Value 同一个令牌。云端的 gh-aw 智能体用它调用 Copilot。</td></tr>
+          <tr><td>6. 打开 fork 的 Actions</td><td>你的 fork → <b>Actions</b> 页签 → 点「I understand my workflows, go ahead and enable them」。再到 Settings → Actions → General → 最下面 Workflow permissions 勾选 <b>Allow GitHub Actions to create and approve pull requests</b> → Save。</td></tr>
+          <tr><td>7. 先建好 Codespace</td><td>按 <a href="#s0">开场 0.1</a> 在自己的 fork 上建一次，等到 VS Code 出现后可以关掉页面，上课时直接打开。</td></tr>
+          <tr><td>8. Copilot Studio 演示账号</td><td>能登录 <a href="https://copilotstudio.microsoft.com">copilotstudio.microsoft.com</a>（Lab-03 用，讲师发账号）</td></tr>
         </tbody>
       </table>
     </div>
+    <p class="tip">费用：Codespace 和 Actions 记在你自己的账号上。GitHub 个人账号每月有 120 核时的免费 Codespaces 额度（相当于 2 核机器 60 小时），本课程用 4 核机器，课前建一次加上课半天约 15~20 核时，在免费额度内；课后记得停掉或删除 Codespace（见 <a href="#after">课后清理</a>）。Copilot 调用用的是你自己的 Copilot 额度。</p>
   </section>
 
   <!-- ===== 开场 ===== -->
@@ -465,10 +473,10 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
     <div class="step">
       <div class="step-no">0.1</div>
       <div class="step-body">
-        <h3>创建 Codespace</h3>
-        <p class="do">打开课程仓库 → 绿色 <b>Code</b> 按钮 → <b>Codespaces</b> 页签 → 点 <b>+</b>（Create codespace on main）。<b>不要先 fork</b>，fork 之后要重装全部依赖。</p>
+        <h3>在自己的 fork 上创建 Codespace</h3>
+        <p class="do">打开<b>你自己的</b>仓库 <code>&lt;你的用户名&gt;/atlas-copilot-agent-labs</code>（不是 atlascopco-Lab 那个）→ 绿色 <b>Code</b> 按钮 → <b>Codespaces</b> 页签 → 点 <b>+</b>（Create codespace on main）。</p>
         <figure class="shot"><img src="img/01-create-codespace.jpg" alt="Code 下拉中的 Codespaces 页签" loading="lazy"></figure>
-        <p class="see"><b>应该看到</b>：面板底部写着「Codespace usage for this repository is paid for by atlascopco-Lab」，费用由组织承担。创建过的 Codespace 会列在「On current branch」下面，下次直接点它继续。</p>
+        <p class="see"><b>应该看到</b>：面板底部写着「Codespace usage for this repository is paid for by <b>你的用户名</b>」（截图是旧的组织仓库，写的是 atlascopco-Lab）。第一次创建要现装 Python / Node 依赖和浏览器，约 5~8 分钟，所以建议课前做。创建过的 Codespace 会列在「On current branch」下面，下次直接点它继续。</p>
       </div>
     </div>
 
@@ -498,7 +506,7 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
         <h3>填令牌、生成 API 密钥</h3>
         <p class="do">在终端运行：</p>
         <pre class="cmd">bash .devcontainer/set-key.sh</pre>
-        <p class="do">提示粘贴令牌时：如果课前已经设了 Codespaces secret，<b>直接回车跳过</b>；否则粘贴 <code>github_pat_…</code> 再回车（输入不显示）。</p>
+        <p class="do">提示粘贴令牌时：如果课前已经按「课前准备」第 4 项设了 Codespaces secret，<b>直接回车跳过</b>；否则粘贴你自己的 <code>github_pat_…</code> 再回车（输入不显示）。</p>
         <figure class="shot"><img src="img/04-set-key.jpg" alt="set-key 输出" loading="lazy"></figure>
         <p class="see"><b>应该看到</b>：「✔ LAB_API_KEY = …」。这个值 Lab-03 要用，先不用记，随时可以再跑一次查看。</p>
       </div>
@@ -656,7 +664,7 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
     <div class="step">
       <div class="step-no">4</div>
       <div class="step-body">
-        <h3>上云 · 推到自己的分支，让 gh-aw 在 GitHub 上跑</h3>
+        <h3>上云 · 推到自己的 fork，让 gh-aw 在 GitHub 上跑</h3>
         <p class="do">先读懂 <code>.github/workflows/industry-insight.md</code> 的四块配置：</p>
         <div class="az-card" style="padding:0; overflow:auto; margin:10px 0 16px;">
           <table class="az-table">
@@ -670,17 +678,16 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
           </table>
         </div>
         <p class="tip">改了 <code>industry-insight.md</code> 本身，要运行 <code>gh aw compile industry-insight</code> 生成 Actions 真正运行的 <code>.lock.yml</code>。本步只改了 focus.md 和工具代码，不用编译。</p>
-        <p class="do">在终端把 Lab-01 的改动推到自己的分支（把 <code>&lt;名字&gt;</code> 换成你的拼音）：</p>
-        <pre class="cmd">git switch -c student/&lt;名字&gt;
-git add Lab-01-Industry-Insight/focus.md Lab-01-Industry-Insight/mcp_server Lab-01-Industry-Insight/tests
+        <p class="do">在终端把 Lab-01 的改动提交并推到你 fork 的 main（Codespace 建在你自己的仓库上，<code>origin</code> 就是你的 fork）：</p>
+        <pre class="cmd">git add Lab-01-Industry-Insight/focus.md Lab-01-Industry-Insight/mcp_server Lab-01-Industry-Insight/tests
 git commit -m "Lab-01: 加食品饮料行业 + 客户雷达工具"
-git push -u origin student/&lt;名字&gt;</pre>
-        <figure class="shot"><img src="img/31-lab01-push.jpg" alt="推送分支" loading="lazy"></figure>
-        <p class="do">打开仓库的 <b>Actions</b> → 左侧 <b>Industry Insight Weekly</b> → <b>Run workflow</b> → 「Use workflow from」选你的 <code>student/&lt;名字&gt;</code> → <b>Run workflow</b>。</p>
-        <figure class="shot"><img src="img/32-gh-aw-run-dialog.jpg" alt="选择分支运行" loading="lazy"></figure>
+git push</pre>
+        <figure class="shot"><img src="img/31-lab01-push.jpg" alt="推送" loading="lazy"><figcaption>截图是旧版推送到 student 分支的样子；现在直接推到你 fork 的 main</figcaption></figure>
+        <p class="do">打开<b>你 fork 的</b> <b>Actions</b> → 左侧 <b>Industry Insight Weekly</b> → <b>Run workflow</b> → 分支保持 <code>main</code> → <b>Run workflow</b>。</p>
+        <figure class="shot"><img src="img/32-gh-aw-run-dialog.jpg" alt="手动运行" loading="lazy"></figure>
         <figure class="shot"><img src="img/33-gh-aw-queued.jpg" alt="运行已排队" loading="lazy"></figure>
-        <p class="see"><b>应该看到</b>：列表最上面出现你的运行，分支是 <code>student/&lt;名字&gt;</code>。一次约 5 分钟，放在休息前触发，休息回来看结果：成功时会生成一份带你行业的周报（以分支 + Issue 的形式交给人审核）。</p>
-        <p class="warn">2026-10-17 实测：工作流在学员分支上能正常触发，云端用的是学员分支上的 focus.md；但这次 agent 步骤报 <code>401 Authentication failed</code>，原因是仓库 Secret <code>COPILOT_GITHUB_TOKEN</code> 里的令牌已经失效（与分支无关）。课前讲师要更新这个 Secret 并手动跑通一次。失败时 gh-aw 会自动开一个「[aw] … had a request rejected」Issue 说明原因。</p>
+        <p class="see"><b>应该看到</b>：列表最上面出现你的运行。一次约 5 分钟，放在休息前触发，休息回来看结果：成功时你的 fork 里会多一个 <b>Pull request</b>，里面是带你新行业的周报，你自己审核后 Merge。</p>
+        <p class="warn">左侧找不到 Industry Insight Weekly、或者没有 Run workflow 按钮：fork 的 Actions 还没打开（课前准备第 6 项）。运行失败时 gh-aw 会自动在你的 fork 开一个「[aw] …」Issue 说明原因，<code>401 Authentication failed</code> 表示你 fork 的 Actions secret <code>COPILOT_GITHUB_TOKEN</code> 没设或令牌过期（课前准备第 5 项）。fork 上的定时任务默认不跑，所以本课程都用手动触发。</p>
       </div>
     </div>
 
@@ -795,13 +802,19 @@ git push -u origin student/&lt;名字&gt;</pre>
       <div class="step-no">2</div>
       <div class="step-body">
         <h3>建智能体 · 粘贴指令、挂上 4 个工具</h3>
-        <p class="do">用演示租户账号登录 <a href="https://copilotstudio.microsoft.com">Copilot Studio</a>，按 <a href="../../Lab-03-Copilot-Studio/README.md">Lab-03 README</a> 第 3 步操作。要点：</p>
+        <p class="do">用演示租户账号登录 <a href="https://copilotstudio.microsoft.com">Copilot Studio</a>，按 <a href="https://github.com/atlascopco-Lab/atlas-copilot-agent-labs/blob/main/Lab-03-Copilot-Studio/README.md">Lab-03 README</a> 第 3 步操作。要点：</p>
         <ol class="plain">
           <li>左下角切到讲师指定的 <b>Trial</b> 环境；<b>Agents → New agent 旁的下拉 → Agent（Standard）</b>，不要选带「GitHub Copilot」标记的。</li>
           <li>名称 <code>业务汇报助手</code>；Agent settings 里 Language 选 Chinese (Simplified)，<b>Schema name 手动填英文</b>（如 <code>bizreport</code>）。</li>
           <li>Overview → Instructions → Edit，粘贴 README 里的「智能体指令」整段；自己修改时<b>不要输入 <code>/</code></b>，斜杠会弹出插入菜单吞掉后面的字。</li>
           <li>Knowledge → <b>Web Search 关掉</b>，只按工具返回的内容回答。</li>
-          <li>Tools → Add a tool → 搜 <code>Atlas</code>，挂上讲师建好的「Atlas Agent Labs」4 个工具；建连接时填<b>你自己</b>的 host 和 API 密钥。</li>
+          <li>Tools → 导入<b>你自己的</b> REST API 工具（每人一份，避免几十个人的连接挤在一起）：
+            <ol class="plain">
+              <li>在 Codespace 里打开 <code>Lab-03-Copilot-Studio/openapi.yaml</code>，改两处：<code>host:</code> 换成 smoke-test 打印的 host（形如 <code>xxx-3000.app.github.dev</code>，不带 https://）；<code>title:</code> 改成 <code>Atlas Agent Labs · 你的名字</code>。保存后右键文件 → Download。</li>
+              <li>Studio：Tools → Add a tool → Create new 区域 See all → <b>REST API</b> → 上传刚下载的 openapi.yaml → Next；Authentication 选 <b>API key</b>，Parameter name 填 <code>x-api-key</code>，Location 选 <b>Header</b>；4 个操作逐个点开 → Publish。</li>
+              <li>Create connection 后搜 <code>Atlas</code>，在<b>带你名字</b>的「Atlas Agent Labs · …」下挂上 4 个工具；第一个工具新建连接时粘贴你的 API 密钥，其余 3 个复用。</li>
+            </ol>
+            详细步骤见 Lab-03 README 第 2、3 步。大家在同一个 Trial 环境里，搜出来会有很多同类工具，认准带你名字的那一个。</li>
         </ol>
         <p class="see"><b>验收</b>：Tools 页 4 个工具都是 <b>On</b>、Trigger 是 <b>By agent</b>。</p>
         <figure class="shot"><img src="img/52-studio-overview.jpg" alt="智能体 Overview 与指令" loading="lazy"><figcaption>Overview：指令粘贴后的样子；右侧是 Test your agent 窗格</figcaption></figure>
@@ -870,44 +883,101 @@ git push -u origin student/&lt;名字&gt;</pre>
           <tr><td>新加的 MCP 工具智能体不调用</td><td>MCP 服务器没重启</td><td>mcp.json 里点 Restart，确认「5 tools」</td></tr>
           <tr><td>周报页头写「模式：fallback」</td><td>研判结果没通过校验（引用了不存在的信号 ID 等）</td><td>看 Chat 里 build_weekly_report 返回的 warnings，让智能体按提示修正重试</td></tr>
           <tr><td>Lab-02 进度页「无法列出模型」</td><td>没有有效的 Copilot 令牌</td><td>重新 <code>bash .devcontainer/set-key.sh</code>，Ctrl+C 停掉再 <code>npm run dev</code></td></tr>
-          <tr><td>gh-aw 运行失败，自动出现「[aw] … had a request rejected」Issue</td><td>Issue 里写着原因；<code>401 authentication_failed</code> 表示仓库 Secret 里的令牌失效</td><td>找讲师更新仓库 Secret <code>COPILOT_GITHUB_TOKEN</code> 后重跑</td></tr>
+          <tr><td>fork 的 Actions 页没有 Industry Insight Weekly / 没有 Run workflow</td><td>fork 上的工作流默认是停用的</td><td>Actions 页签点「I understand my workflows, go ahead and enable them」（课前准备第 6 项）</td></tr>
+          <tr><td>gh-aw 运行失败，自动出现「[aw] …」Issue</td><td>Issue 里写着原因；<code>401 authentication_failed</code> 表示你 fork 的 Actions secret 没设或令牌过期</td><td>你的 fork → Settings → Secrets and variables → Actions → 更新 <code>COPILOT_GITHUB_TOKEN</code> 后重跑</td></tr>
+          <tr><td>gh-aw 成功了但没有 PR，只有一个分支 + Issue</td><td>fork 没允许 Actions 建 PR</td><td>Settings → Actions → General → 勾选 Allow GitHub Actions to create and approve pull requests；或者按 Issue 里的链接手动从那个分支开 PR</td></tr>
           <tr><td>smoke-test「公网地址可访问」失败（302 / 401）</td><td>端口 3000 是 Private（重启后会变回去）</td><td>Ports 面板右键 3000 → Port Visibility → Public</td></tr>
           <tr><td>Studio 工具调用返回 401</td><td>连接里的密钥和 .env 的 LAB_API_KEY 不一致</td><td>再跑 set-key.sh 看当前值，重建连接</td></tr>
+          <tr><td>Studio 工具调用返回 404 / 连不上，或拿到的是别人的周报</td><td>挂错了工具（别人名字的那一个），或 openapi.yaml 的 host 没改</td><td>Tools 里删掉错的，重新导入 host 和 title 都改成自己的 openapi.yaml</td></tr>
+          <tr><td>Codespace 重建后 Studio 连不上</td><td>新 Codespace 名字变了，host 跟着变</td><td>改 openapi.yaml 的 host，在 Studio 里编辑这个工具重新上传（或删掉重导）</td></tr>
           <tr><td>Studio 调用超时</td><td>Codespace 空闲超时停了</td><td>回到 Codespace 让它恢复，重启 npm run dev、重设 Public；把空闲超时调到 120 分钟</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
+  <!-- ===== 卡住了 ===== -->
+  <section class="section" id="stuck">
+    <div class="section-head">
+      <div class="az-eyebrow">卡住了怎么办</div>
+      <h2 class="az-title">用参考答案追上进度，不耽误下一个环节</h2>
+      <div class="az-rule"></div>
+      <p class="az-sub">AI 每次生成的代码都不一样，跑不通不丢人。超过 5 分钟没进展，就把参考答案拿过来，先跟上，课后再对比</p>
+    </div>
+    <div class="az-card" style="padding:0; overflow:auto; margin-bottom:20px;">
+      <table class="az-table">
+        <thead><tr><th style="width:150px;">卡在哪</th><th style="width:200px;">参考答案分支</th><th>在终端运行（只覆盖这几个文件，你别处的改动不受影响）</th></tr></thead>
+        <tbody>
+          <tr><td>热身第 3 步<br>「只看高影响」开关</td><td><code>answer/warmup</code></td><td><pre class="cmd">git restore --source origin/answer/warmup -- Lab-01-Industry-Insight/frontend</pre></td></tr>
+          <tr><td>Lab-01 第 3 步<br>客户雷达工具</td><td><code>answer/lab01</code></td><td><pre class="cmd">git restore --source origin/answer/lab01 -- Lab-01-Industry-Insight/mcp_server Lab-01-Industry-Insight/tests</pre>然后在 <code>.vscode/mcp.json</code> 里 Restart MCP 服务器</td></tr>
+          <tr><td>Lab-02 第 3 步<br>公司品牌风</td><td><code>answer/lab02</code></td><td><pre class="cmd">git restore --source origin/answer/lab02 -- Lab-02-Knowledge-Summary/lib/styles.ts Lab-02-Knowledge-Summary/app/globals.css</pre>如果 <code>npm run dev</code> 正在跑，刷新网页即可</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid grid-2">
+      <article class="az-card has-accent">
+        <div class="card-no">提示 1</div>
+        <h3 class="card-title">报「invalid reference: origin/answer/…」</h3>
+        <p class="card-desc">fork 时只复制了 main。从课程原仓库拿一次就好：</p>
+        <pre class="cmd">git remote add upstream https://github.com/atlascopco-Lab/atlas-copilot-agent-labs.git
+git fetch upstream</pre>
+        <p class="card-desc">之后把上面命令里的 <code>origin/</code> 换成 <code>upstream/</code>。</p>
+      </article>
+      <article class="az-card has-accent">
+        <div class="card-no">提示 2</div>
+        <h3 class="card-title">想先看看答案改了什么</h3>
+        <p class="card-desc">不覆盖文件，只看差别（按 <code>q</code> 退出）：</p>
+        <pre class="cmd">git diff main origin/answer/lab01</pre>
+        <p class="card-desc">或者直接问 Copilot：「对比我的 search_signals 和 origin/answer/lab01 上的版本，我的为什么跑不通？只回答，不要改文件。」</p>
+      </article>
+    </div>
+    <p class="warn">不要 <code>git checkout answer/…</code> 切过去整个分支：分支上没有你自己改的 focus.md、SKILL.md，后面的 Lab 会对不上。用上面的 <code>git restore</code> 只拿需要的文件。</p>
+  </section>
+
   <!-- ===== 课后 ===== -->
   <section class="section" id="after">
     <div class="section-head">
       <div class="az-eyebrow">课后清理</div>
-      <h2 class="az-title">走之前做三件事</h2>
+      <h2 class="az-title">走之前把公开的、花钱的、带权限的都收掉</h2>
       <div class="az-rule"></div>
     </div>
     <div class="grid grid-3">
       <article class="az-card has-accent">
-        <div class="card-no">1</div>
+        <div class="card-no">1 · 当天</div>
         <h3 class="card-title">端口改回 Private</h3>
         <p class="card-desc">Ports 面板右键 3000 → Port Visibility → Private。</p>
       </article>
       <article class="az-card has-accent">
-        <div class="card-no">2</div>
-        <h3 class="card-title">保存你的改动</h3>
-        <p class="card-desc">已推到 <code>student/&lt;名字&gt;</code> 分支的会保留；其他文件（如 PPT）在资源管理器里右键 Download。</p>
+        <div class="card-no">2 · 当天</div>
+        <h3 class="card-title">提交并推送你的改动</h3>
+        <p class="card-desc">终端里 <code>git add -A &amp;&amp; git commit -m "课堂练习" &amp;&amp; git push</code>，改动就保存在你的 fork 里。生成的 PPT 在 <code>output/</code> 下，不会被提交，要的话右键 Download。</p>
       </article>
       <article class="az-card has-accent">
-        <div class="card-no">3</div>
-        <h3 class="card-title">停掉 Codespace</h3>
-        <p class="card-desc">左下角「Codespaces」→ Stop Current Codespace。不用了可以在 <a href="https://github.com/codespaces">github.com/codespaces</a> 删除。</p>
+        <div class="card-no">3 · 当天</div>
+        <h3 class="card-title">停掉或删除 Codespace</h3>
+        <p class="card-desc">左下角「Codespaces」→ Stop Current Codespace。不再用就在 <a href="https://github.com/codespaces">github.com/codespaces</a> 删除：停止后仍按存储计费，删除才不再占你的免费额度。</p>
+      </article>
+      <article class="az-card has-accent">
+        <div class="card-no">4 · 当天</div>
+        <h3 class="card-title">删掉令牌和 Secret</h3>
+        <p class="card-desc">不打算课后接着玩：<a href="https://github.com/settings/personal-access-tokens">Fine-grained tokens</a> 里删除这次的令牌；<a href="https://github.com/settings/codespaces">Settings → Codespaces</a> 删 <code>COPILOT_GITHUB_TOKEN</code>；你 fork 的 Settings → Secrets and variables → Actions 也删掉同名 Secret。令牌设了 7 天过期，忘了也会自动失效。</p>
+      </article>
+      <article class="az-card has-accent">
+        <div class="card-no">5 · 当天</div>
+        <h3 class="card-title">删掉 Studio 里你建的东西</h3>
+        <p class="card-desc">Copilot Studio：Agents 里删「业务汇报助手」；Tools / 连接里删「Atlas Agent Labs · 你的名字」和它的连接。演示租户是共用的，留着会让下一批同学搜到一堆同名工具。</p>
+      </article>
+      <article class="az-card is-orchid">
+        <div class="card-no" style="color:#F3DDEE;">可选</div>
+        <h3 class="card-title">fork 留着还是删</h3>
+        <p class="card-desc" style="color:#fff;">fork 不花钱，可以留着回去接着改自己的行业和 Skill。想每周一自动收周报：fork 的 Actions 里把 Industry Insight Weekly 启用定时（fork 默认不跑定时任务），并换一个长期有效的令牌。不要了就 Settings → 最下面 Delete this repository。</p>
       </article>
     </div>
   </section>
 
   <footer class="az-footer">
     <span>埃知科技 · 上海埃知科技有限公司</span>
-    <span>阿特拉斯中国 Copilot 智能体工作坊 · 实操手册 v1 · 2026-10-17</span>
+    <span>阿特拉斯中国 Copilot 智能体工作坊 · 实操手册 v1.1（fork 版）· 2026-10-17</span>
   </footer>
 
 </div>

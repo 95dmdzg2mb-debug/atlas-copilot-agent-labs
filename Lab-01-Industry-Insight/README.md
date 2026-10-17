@@ -72,11 +72,41 @@ frontend/report.md + report.json ──▶ 周报网页（Codespace 预览 / Git
 > 💡 **试一试 · 让 Copilot 帮你写搜索词**：
 > `我负责食品饮料行业的空压机销售，参照 #file:Lab-01-Industry-Insight/focus.md 的格式帮我写一段「## 食品饮料」`
 
-## 第 4 步（讲师演示）：每周一早上自动出周报
+## 第 4 步：让 Copilot 加一个 MCP 工具「客户雷达」（10 分钟）
+
+新开 Chat 会话，输入：
+
+```text
+给 industry-insight MCP 服务器加一个工具「客户雷达」search_signals(keyword, limit=10)：在已抓取的信号 output/raw_signals.json 里按关键词（客户名或竞品名）搜标题和摘要，返回匹配的信号（id、行业、标题、来源、链接、日期）。逻辑写在 industry_tools.py，在 server.py 和 cli.py 里注册；参照 tests/test_industry_tools.py 的风格补一个单元测试并运行。
+```
+
+1. 看到单元测试全部通过后点 **Keep**。
+2. 打开 `.vscode/mcp.json`，点 `"industry-insight"` 上方的 **Restart**，确认变成「5 tools」。
+3. 新开会话问：`宁德时代（CATL）本周有什么动静？用客户雷达查，每条带链接。`
+
+**期望结果**：智能体调用 `search_signals`，回答里每条都有原文链接。卡住了可以拿参考答案：
+`git restore --source origin/answer/lab01 -- Lab-01-Industry-Insight/mcp_server Lab-01-Industry-Insight/tests`
+
+## 第 5 步：在自己的 fork 上用 gh-aw 跑云端版（10 分钟 + 等待 5 分钟）
 
 同一套工具也被 gh-aw（GitHub Agentic Workflows）调用：[.github/workflows/industry-insight.md](../.github/workflows/industry-insight.md)
-是用 Markdown 写的工作流，`gh aw compile` 编译成 Actions 工作流，每周一北京时间 08:00 运行，结果以 PR 提交，
-合并后自动发布到 GitHub Pages。讲师会现场展示一次运行记录。
+是用 Markdown 写的工作流，`gh aw compile` 编译成 Actions 真正运行的 `.lock.yml`。课程仓库每周一北京时间 08:00 定时运行；
+fork 上定时任务默认不跑，你用手动触发。
+
+1. 前提（课前准备里做过）：fork 的 Actions 已启用；fork 有 Actions secret `COPILOT_GITHUB_TOKEN`；
+   Settings → Actions → General 勾选了「Allow GitHub Actions to create and approve pull requests」。
+2. 把改动推到你的 fork：
+   ```bash
+   git add Lab-01-Industry-Insight/focus.md Lab-01-Industry-Insight/mcp_server Lab-01-Industry-Insight/tests
+   git commit -m "Lab-01: 加新行业 + 客户雷达工具"
+   git push
+   ```
+3. 你的 fork → **Actions → Industry Insight Weekly → Run workflow**（分支 `main`）。
+
+**期望结果**：约 5 分钟后你的 fork 里出现一个周报 PR，里面有你新加的行业。失败时 gh-aw 会自动开一个「[aw] …」Issue 写明原因。
+
+> 改了 `industry-insight.md` 本身要先 `gh aw compile industry-insight`；只改 focus.md 和工具代码不用编译。
+> 给 `input/sources.json` 加新的 RSS 源时，要同时把域名加到工作流的 `network.allowed` 再编译。
 
 ## 遇到问题
 
@@ -85,6 +115,9 @@ frontend/report.md + report.json ──▶ 周报网页（Codespace 预览 / Git
 | 工具列表里没有 industry-insight | 命令面板运行 `MCP: List Servers` → 选 industry-insight → Start；看 Output 面板的报错 |
 | MCP 服务器启动报 `No module named mcp` | 终端运行 `bash .devcontainer/on-create.sh` 重装依赖 |
 | 周报页头显示「兜底（未经智能体研判）」 | 智能体没把研判结果交给 `build_weekly_report`，在 Chat 里让它「按 warnings 修正后重新生成周报」 |
+| 新加的工具智能体不调用 | MCP 服务器没重启：`.vscode/mcp.json` 里点 Restart，确认「5 tools」 |
+| fork 的 Actions 里没有 Industry Insight Weekly | Actions 页签点「I understand my workflows, go ahead and enable them」 |
+| gh-aw 报 401 | fork 的 Actions secret `COPILOT_GITHUB_TOKEN` 没设或令牌过期 |
 | 某个行业 0 条 | 看周报最后的「数据覆盖与缺口」；搜索词太窄就放宽，或去掉过严的排除词 |
 
 不联网的自检：`python -m pytest Lab-01-Industry-Insight/tests -q`

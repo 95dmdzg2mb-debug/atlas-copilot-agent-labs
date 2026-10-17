@@ -7,20 +7,26 @@
 | 01 | 环境与智能体基础：开 Codespace、填令牌；智能体 = 模型 + 指令 + Skills + MCP 工具 | 30 分钟 |
 | 02 | Lab-01 行业洞察智能体 · MCP（讲师演示 gh-aw 每周定时版） | 50 分钟 |
 | 03 | Lab-02 知识总结智能体 · Skills（Chat 里用 Skill，改 SKILL.md） | 30 分钟 |
-| 04 | Lab-02 第 3 步：用 Copilot SDK 做成网页服务 | 20 分钟 |
+| 04 | Lab-02 第 4 步：用 Copilot SDK 做成网页服务 | 20 分钟 |
 | 05 | Lab-03 Copilot Studio 串起来 | 40 分钟 |
 | — | 休息与答疑 | 40 分钟 |
 
 ## T-7 天 · 只有你能推动的事
 
-1. **学员权限**：把学员加入 `atlascopco-Lab` 组织（或课程团队），给本仓库 **Read** 权限即可。学员的 Copilot 席位同样来自企业 `atlascopco-Lab`，策略统一在这里管。
-   学员在本仓库上开 Codespace，不需要写权限。
-2. **Codespaces 计费与策略**（组织 Settings → Codespaces）：
-   - 允许组织成员在本仓库创建 Codespace，费用由组织承担；
-   - **端口可见性策略必须允许 Public**，否则 Lab-03 做不了（Studio 在云端，只能访问公网地址）；
-   - 机型允许 4 核（`devcontainer.json` 里 `hostRequirements.cpus = 4`）。每人约 3.5 小时 × 4 核 = 14 核时；预算紧可改成 2 核，Lab-02 会慢一些。
-3. **开预构建**：仓库 Settings → Codespaces → **Set up prebuild**，分支 `main`，区域选离学员最近的。
-   没有预构建，每个学员开 Codespace 都要现装 Python/Node 依赖和 Chromium（5~8 分钟）。
+1. **仓库设为 Public，学员各自 fork**（2026-10-17 决定）。每人在自己的 fork 上开 Codespace、跑 gh-aw，
+   Codespaces / Actions / Copilot 额度都记在学员自己账号上，互不影响；学员也不需要本仓库的写权限。
+   - fork 时提醒**取消勾选**「Copy the `main` branch only」，`answer/*` 参考答案分支才会带过去；
+   - 学员课前要做：fork → 生成 Fine-grained PAT（Account → Copilot Requests: Read，7 天过期）→
+     存成个人 Codespaces secret 和 fork 的 Actions secret（都叫 `COPILOT_GITHUB_TOKEN`）→ fork 的 Actions 页签启用工作流 →
+     fork 的 Settings → Actions → General 勾选「Allow GitHub Actions to create and approve pull requests」→ 建一次 Codespace。
+     步骤见 [实操手册 · 课前准备](docs/manual/index.html#prep)；
+   - 如果学员是 Enterprise Managed Users（EMU）账号，不能 fork 到个人名下，要改回「组织内建仓库」的方式，T-7 先确认。
+2. **Codespaces 计费与策略**：学员 fork 在个人账号下，按**个人账号**计费和策略：
+   - 个人账号每月免费 120 核时 + 15 GB 存储；4 核机器（`hostRequirements.cpus = 4`）课前建一次加上课半天约 15~20 核时，在免费额度内；
+   - 个人账号默认允许端口设为 Public（Lab-03 必需）；
+   - 课后提醒删除 Codespace（停止后仍按存储计费）。
+3. **没有预构建**：预构建只对本仓库生效，fork 吃不到，每人第一次开 Codespace 要现装 Python / Node 依赖和 Chromium（5~8 分钟）。
+   所以要求学员 **T-1 天**建好 Codespace，上课直接打开。
 4. **Copilot 策略**（学员 Copilot 席位所在的组织或企业。学员用阿特拉斯的席位时，席位由企业 `atlascopco-Lab` 管理，
    只能由阿特拉斯的企业管理员改；每人可在 <https://github.com/settings/copilot/features> 自查以下各项是否为 Enabled）：
    - **Copilot Agent Mode in IDE Chat** 和 **MCP servers in Copilot**（Lab-01；2026-10-16 已在企业 AI Controls → MCP 设为 Enabled everywhere）；
@@ -40,20 +46,21 @@
 - 用一个学员账号从零开一次 Codespace，跑通三个 Lab，记下每步耗时。
 - 手动触发一次 gh-aw 周报：`gh workflow run industry-insight.lock.yml`，合并 PR，确认 Pages 上的周报是本周的。
   这份周报是学员 Lab-02 / Lab-03 的兜底素材（学员自己没跑出来 Lab-01 时也能继续）。
-- 学员回执：令牌已生成、Studio 账号能登录、Codespace 能打开。
+- 用一个学员账号走一遍 fork 流程：fork（不只复制 main）→ 两处 Secret → 启用 Actions → 在 fork 上手动触发 gh-aw，确认 fork 里出现周报 PR。
+- 学员回执（T-1）：fork 地址、Codespace 已建好、Actions 已启用、Studio 账号能登录。
 
-## gh-aw 每周定时（讲师演示用）
+## gh-aw 每周定时（本仓库定时 + 学员在各自 fork 上手动跑）
 
 - 工作流源文件：`.github/workflows/industry-insight.md`；改完必须 `gh aw compile industry-insight` 再提交 `.lock.yml`。
-- 需要仓库 Secret `COPILOT_GITHUB_TOKEN`（讲师的 Fine-grained PAT，Copilot Requests 权限）。
+- 本仓库需要 Secret `COPILOT_GITHUB_TOKEN`（讲师的 Fine-grained PAT，Copilot Requests 权限）；每个学员的 fork 用学员自己的同名 Secret。
+- fork 上 `schedule` 默认不触发，学员在 Lab-01 第 4 步用 Run workflow 手动跑；结果是学员 fork 里的 PR。
 - 仓库 Settings → Actions → General：勾选 **Allow GitHub Actions to create and approve pull requests**。
   atlascopco-Lab 企业在 Policies → Actions 里锁住了这一项（2026-10-16），没放开时 gh-aw 会把周报推到分支并建一个 Issue，
-  由人点 Issue 里的「Create the pull request」链接建 PR，合并即可。
+  由人点 Issue 里的「Create the pull request」链接建 PR，合并即可。学员的个人 fork 不受这条企业策略限制，自己勾选即可。
 - 模型固定为 `claude-sonnet-5.5`（frontmatter `engine.model`）。gh-aw 默认的 `claude-sonnet-4.6` 不在企业开放的模型里；
   gh-aw 太旧时会报「model is retired or unsupported」，先 `gh extension upgrade gh-aw` 再编译（2026-10-16 用 v0.92.0 跑通）。
-- 仓库 Settings → Pages → Source 选 **GitHub Actions**。注意：私有仓库的 Pages 默认是**公开**可访问的
-  （只有 Enterprise Cloud 能设为私有），周报内容里有面向阿特拉斯的业务分析，请确认可以公开，否则不要开 Pages，
-  Lab-03 直接用学员 Codespace 里的周报即可。
+- 仓库 Settings → Pages → Source 选 **GitHub Actions**。仓库公开后 Pages 也是公开的，发布 Lab-01 周报（根路径）和学员实操手册（`/manual/`）。
+  `deploy-pages.yml` 只在本仓库运行，学员 fork 推送 frontend 改动时会跳过。周报里有面向阿特拉斯的业务分析，公开前请确认可以对外。
 - 网络白名单：`focus.md` 加了新的行业媒体 RSS 时，要把域名同步加到 `network.allowed` 再编译。
 
 ## 当天 · 每个环节下课前的硬指标
@@ -70,7 +77,11 @@
 
 | 现象 | 原因 | 处理 |
 |---|---|---|
-| Codespace 开了很久还在装依赖 | 学员 fork 了再开，或预构建没好 | 关掉，回到课程仓库直接开；检查 Prebuilds 状态 |
+| Codespace 开了很久还在装依赖 | fork 没有预构建，第一次要现装 5~8 分钟 | 等它装完；以后打开同一个 Codespace 就快了。所以要求 T-1 建好 |
+| 学员 fork 的 Actions 里看不到 Industry Insight Weekly | fork 上工作流默认停用 | fork → Actions 页签 → I understand my workflows, go ahead and enable them |
+| 学员 gh-aw 报 401 | 学员 fork 没设 Actions secret 或令牌过期 | fork → Settings → Secrets and variables → Actions → `COPILOT_GITHUB_TOKEN` |
+| 学员 `git restore --source origin/answer/...` 报 invalid reference | fork 时只复制了 main | `git remote add upstream <本仓库地址> && git fetch upstream`，改用 `upstream/answer/...` |
+| Studio 里一堆同名「Atlas Agent Labs」 | 学员没改 openapi.yaml 的 title | 让学员把 title 改成「Atlas Agent Labs · 名字」重新导入，删掉自己旧的那个 |
 | Chat 没有 Agent 模式 / 工具图标 | Copilot 策略没开 Agent 或 MCP | 管理员开策略；临时让学员看讲师屏幕 |
 | 「无法列出模型」且令牌正确 | Copilot CLI 策略没开 | 管理员开策略；临时用讲师 Codespace 演示 |
 | 端口可见性没有 Public | 组织 Codespaces 策略限制 | 组织 Settings → Codespaces → 端口可见性放开 Public |
@@ -79,5 +90,6 @@
 
 ## 课后
 
-- 把 Pages、Secret、学员权限按需收回；提醒学员删除 Codespace 和 PAT。
-- 学员想带走自己的智能体：课后 fork 本仓库（fork 后在自己的仓库开 Codespace，会现装依赖）。
+- 提醒学员按 [实操手册 · 课后清理](docs/manual/index.html#after) 做：端口改回 Private、推送改动、删除 Codespace、删除 PAT 和两处 Secret、删 Studio 里自己的智能体和工具。
+- 讲师：清理 Studio 演示租户里残留的智能体和「Atlas Agent Labs · …」连接器；按需更新或删除本仓库的 `COPILOT_GITHUB_TOKEN`。
+- 学员想继续用：fork 留着即可，想每周一自动收周报就在 fork 的 Actions 里启用定时，并换一个长期令牌。

@@ -19,7 +19,7 @@
 - [knowledge2ppt/SKILL.md](../.github/skills/knowledge2ppt/SKILL.md)：**你要改的**，写着团队的汇报规范；
 - `pptx/`：通用的 PPT 生成能力（HTML → PPTX），不用改。
 
-同一份 Skill 有两种用法：在 VS Code Chat 里直接用（第 1 步），或者通过 Copilot SDK 做成网页服务（第 3 步）。
+同一份 Skill 有两种用法：在 VS Code Chat 里直接用（第 1 步），或者通过 Copilot SDK 做成网页服务（第 4 步）。
 
 ## 第 1 步：在 Chat 里用 Skill（10 分钟）
 
@@ -45,7 +45,20 @@
 > 💡 **试一试 · 让 Copilot 帮你改规范**：
 > `#file:.github/skills/knowledge2ppt/SKILL.md 我们给销售总监汇报时习惯先讲客户机会再讲竞品，帮我改「团队汇报规范」`
 
-## 第 3 步：用 Copilot SDK 把它做成网页服务（20 分钟）
+## 第 3 步：让 Copilot 给网页加「公司品牌风」（10 分钟）
+
+新开 Chat 会话，把配色换成你们公司的：
+
+```text
+给 Lab-02 网页加一种 PPT 风格「公司品牌风」：白底，主色深蓝 #003A70，强调色亮黄 #FFC20E，标题加粗，每页底部一条深蓝细条。只改 Lab-02-Knowledge-Summary/lib/styles.ts 和风格预览的 CSS，改完跑 npm run typecheck。
+```
+
+**期望结果**：改了 2 个文件，`npm run typecheck` 通过，点 **Keep**。下一步在网页上就能选「公司品牌风」。
+卡住了可以拿参考答案：`git restore --source origin/answer/lab02 -- Lab-02-Knowledge-Summary/lib/styles.ts Lab-02-Knowledge-Summary/app/globals.css`
+
+> 模型会按风格描述排版，但颜色不一定严格照搬。想要严格的品牌色，在风格描述里写「必须使用且只使用以下色值」。
+
+## 第 4 步：用 Copilot SDK 把它做成网页服务（20 分钟）
 
 1. 启动服务：
    ```bash

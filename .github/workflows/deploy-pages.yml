@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'Lab-01-Industry-Insight/frontend/**'
+      - 'docs/manual/**'
   workflow_dispatch:
 
 permissions:
@@ -18,6 +19,8 @@ concurrency:
 
 jobs:
   deploy:
+    # 只在课程原仓库发布；学员 fork 推送 frontend 改动时跳过，避免 fork 没开 Pages 报错
+    if: github.repository == 'atlascopco-Lab/atlas-copilot-agent-labs'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -37,6 +40,9 @@ jobs:
           mkdir -p _site
           # Lab-01 行业洞察周报（report.md 给网页渲染，report.json 给 Copilot Studio 等外部系统读取）
           cp -r Lab-01-Industry-Insight/frontend/. _site/
+          # 学员实操手册：<Pages 地址>/manual/
+          mkdir -p _site/manual
+          cp -r docs/manual/. _site/manual/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

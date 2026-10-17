@@ -7,8 +7,10 @@
 | 项目 | 要求 | 用于 |
 |---|---|---|
 | 浏览器 | 最新版 Edge / Chrome | 全部 |
-| GitHub 账号 | 已加入课程组织，有 **Copilot Business / Enterprise** 席位 | 全部 |
-| Fine-grained PAT | Resource owner 选个人账号，权限 **Account → Copilot Requests = Read**（步骤见 [docs/codespaces.md](docs/codespaces.md)） | Lab-02、Lab-03 |
+| GitHub 账号 | 有 **Copilot Business / Enterprise** 席位；个人账号能 fork 公开仓库（不是 EMU 账号） | 全部 |
+| 自己的 fork | Fork 课程仓库到个人账号，**不要只复制 main**；启用 fork 的 Actions，并允许 Actions 建 PR | 全部、Lab-01 云端版 |
+| Fine-grained PAT | Resource owner 选个人账号，权限 **Account → Copilot Requests = Read**；存成个人 Codespaces secret 和 fork 的 Actions secret `COPILOT_GITHUB_TOKEN`（步骤见 [docs/codespaces.md](docs/codespaces.md)） | Lab-01 云端版、Lab-02、Lab-03 |
+| 已建好的 Codespace | 在自己的 fork 上建一次（没有预构建，第一次 5~8 分钟），用个人账号的免费额度 | 全部 |
 | Copilot Studio 账号 | 讲师提供的演示租户账号，能登录 copilotstudio.microsoft.com | Lab-03 |
 
 ## 网络（需放通）
@@ -21,7 +23,7 @@
 
 ## 组织与租户（讲师 / 管理员）
 
-见 [INSTRUCTOR.md](INSTRUCTOR.md) 的「T-7 天」：Codespaces 计费与 Public 端口策略、预构建、Copilot 的 Agent / MCP / CLI 策略、
+见 [INSTRUCTOR.md](INSTRUCTOR.md) 的「T-7 天」：仓库公开与学员 fork、个人账号的 Codespaces 计费、Copilot 的 Agent / MCP / CLI 策略、
 Copilot Studio 授权与 DLP。
 
 ## Codespace 里已经装好的东西（无需学员操作）

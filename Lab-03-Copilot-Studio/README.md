@@ -50,7 +50,11 @@
 
 ## 第 2 步：改连接器定义（2 分钟）
 
-打开 [openapi.yaml](openapi.yaml)，把 `host:` 这一行换成自检脚本打印的 host（不带 `https://`），保存。
+打开 [openapi.yaml](openapi.yaml)，改两处，保存：
+
+- `host:` 换成自检脚本打印的 host（不带 `https://`）；
+- `info.title:` 改成 `Atlas Agent Labs · 你的名字`。全班在同一个 Trial 环境里各自导入，名字不改就会出现几十个同名连接器，分不清哪个是自己的。
+
 在资源管理器里右键 `openapi.yaml` → **下载**，第 3 步要上传它。
 
 ## 第 3 步：在 Copilot Studio 建智能体（20 分钟）
@@ -77,7 +81,7 @@
 
 1. **Tools → Add a tool → Create new 区域点 See all → REST API**。
 2. **Upload specification**：上传第 2 步改好的 `openapi.yaml` → Next。
-3. **API plugin details**：名称和描述会自动带出（Atlas Agent Labs）→ Next（第一次保存约 30 秒）。
+3. **API plugin details**：名称和描述会自动带出（应该是你改过的「Atlas Agent Labs · 你的名字」）→ Next（第一次保存约 30 秒）。
 4. **Authentication**：Studio 不会自动读 openapi 里的密钥配置，要手动设：
    - 认证方式选 **API key**；
    - Parameter label 随意（如 `API 密钥（LAB_API_KEY）`），**Parameter name 填 `x-api-key`**，Location 选 **Header**。
@@ -86,7 +90,7 @@
 
 ### 3.4 把工具挂到智能体上
 
-1. 点 **Create connection**，回到 Add tool 对话框，搜索 `Atlas`，找到「Atlas Agent Labs」下的 4 个操作。
+1. 点 **Create connection**，回到 Add tool 对话框，搜索 `Atlas`，找到**带你名字的**「Atlas Agent Labs · …」下的 4 个操作（别挂成同学的）。
 2. 点第一个「查询本周行业洞察」→ Connection 下拉 → **Create new connection** → 填 `LAB_API_KEY` → **Create** → **Add and configure**。
 3. 其余 3 个照做（连接会自动复用，直接 **Add and configure**）。
 4. 回到 **Tools** 页，确认 4 个工具都是 **On**、Trigger 是 **By agent**。
@@ -125,6 +129,8 @@
 | REST API 向导「Select tool parameters」页 Next 是灰的 | openapi 里有字段没写描述 | 用本目录的 openapi.yaml（已补全所有字段描述） |
 | 智能体反问一个不需要的参数 | 工具参数是「有条件才必填」 | 本目录的 openapi 已拆成意图明确的工具，参数都是必填 |
 | 回答里出现「cite」之类的乱码 | 模型自带的引用标记，Studio 不渲染 | 指令里已要求改用 Markdown 链接；仍出现可在 Overview 换一个模型试试 |
+| 拿到的是别人的周报，或调用 404 | 挂成了同学的工具，或 openapi.yaml 的 host 没改 | Tools 里删掉，重新导入 host 和 title 都改过的 openapi.yaml |
+| Codespace 重建后连不上 | 新 Codespace 名字变了，host 跟着变 | 改 `host:` 后在 Studio 里重新导入这个工具 |
 | 工具调用返回 401 | 连接里的 API 密钥和 `.env` 的 `LAB_API_KEY` 不一致 | 重新运行 `set-key.sh` 看当前值，重建连接 |
 | 进度页显示「无法列出模型」 | Codespace 里没有有效的 Copilot 令牌，或组织没开 Copilot CLI 策略 | 重新 `set-key.sh` 后重启 `npm run dev`；仍不行找讲师 |
 | Studio 调用超时、连不上 | Codespace 空闲超时被停了 | 回到 Codespace 让它恢复，`npm run dev` 重启服务、重新设 Public；把空闲超时调长 |

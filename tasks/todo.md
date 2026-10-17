@@ -5,7 +5,7 @@
 
 ## 已定决策
 
-- 仓库：`atlascopco-Lab/atlas-copilot-agent-labs`，私有（2026-10-16 由 ITD-NextDimension 转移过来）；学员**直接在本仓库开 Codespace，不 fork**（吃 prebuild）。
+- 仓库：`atlascopco-Lab/atlas-copilot-agent-labs`，2026-10-16 由 ITD-NextDimension 转移过来；~~学员直接在本仓库开 Codespace，不 fork~~ → 2026-10-17 改为**仓库公开、学员各自 fork**（见文末「fork 模式」）。
 - Lab-01 学员路线：Codespace 内 VS Code Agent 模式 + 标准 MCP 服务器 + `prompt.md`；gh-aw 每周定时出周报由讲师仓库演示，两边共用同一个 MCP 服务器。
 - Lab-03（Copilot Studio）：指南 + OpenAPI 2.0 连接器 + 异步 API；Codespace 3000 端口设 Public 供 Studio 调用；讲师提供演示租户账号。
 - 数据源：行业媒体 RSS + Google News RSS 关键词兜底，先实测再定，缺口如实标注。
@@ -93,18 +93,30 @@
 目标：按教学设计 v2 出一份埃知风格 HTML 单页实操手册，每一步都有真实截图和「复盘三问」。
 
 ### A. v2 落地（参考答案放在 answer/* 分支，main 保持题目状态）
-- [ ] 热身：周报网页「只看高影响」开关 → `answer/warmup`
-- [ ] Lab-01：MCP 工具「客户雷达」`search_signals` + 单测 → `answer/lab01`
-- [ ] Lab-02：网页新增「公司品牌风」 → `answer/lab02`
-- [ ] gh-aw 学员分支：确认在 `student/<名字>` 分支上手动触发能跑自己的 focus.md；规则保护 main
-- [ ] 各 Lab README 与 v2 对齐（题目、提示词、复盘三问）
+- [x] 热身：周报网页「只看高影响」开关 → `answer/warmup`
+- [x] Lab-01：MCP 工具「客户雷达」`search_signals` + 单测 → `answer/lab01`
+- [x] Lab-02：网页新增「公司品牌风」 → `answer/lab02`
+- [x] ~~gh-aw 学员分支~~ → 改为每人在自己 fork 上手动触发（2026-10-17）；`student/manual-demo` 已删除
+- [x] 各 Lab README 与 v2 对齐（题目、提示词、复盘三问）
 
 ### B. 真实走一遍并截图（Codespace + Chrome；敏感信息打码）
-- [ ] 开场：仓库页 → 创建 Codespace → 环境就绪 → set-key
-- [ ] 热身：@workspace / /explain / Agent 模式改网页 / 自定义指令
-- [ ] Lab-01：/industry-insight → 改 focus.md → 客户雷达 → 推分支 + Actions 触发 → Issue 结果
-- [ ] Lab-02：Chat 用 Skill → 改 SKILL.md → 品牌风 → 网页生成 PPT
+- [x] 开场：仓库页 → 创建 Codespace → 环境就绪 → set-key
+- [x] 热身：@workspace / /explain / Agent 模式改网页 / 自定义指令
+- [x] Lab-01：/industry-insight → 改 focus.md → 客户雷达 → 推分支 + Actions 触发 → Issue 结果
+- [x] Lab-02：Chat 用 Skill → 改 SKILL.md → 品牌风 → 网页生成 PPT
 - [x] Lab-03：端口 Public → smoke-test → Studio 建智能体 / 挂工具 / 测试（54/55 取自 Activity 页 10-16 的实测会话）；「改一处」未截图
 
 ### C. 写手册
-- [ ] docs/manual/index.html + docs/manual/img/，每步：做什么 → 截图 → 应该看到 → 复盘三问；附排障表
+- [x] docs/manual/index.html + docs/manual/img/，每步：做什么 → 截图 → 应该看到 → 复盘三问；附排障表
+
+## Review 后调整：fork 模式（2026-10-17）
+
+决定：仓库公开；每人 fork、用自己的 PAT / Codespaces / Actions / Copilot 额度；Lab-03 每人导入自己的连接器（title 带名字）。
+
+- [x] 实操手册：课前准备（fork + 两处 Secret + 启用 Actions）、开场 0.1、Lab-01 第 4 步（推 fork、在 fork 上跑 gh-aw）、
+      Lab-03 第 2 步（改 host + title、自己导入）、排障新增 5 行、新增「卡住了怎么办」、课后清理 6 项、截图来源说明
+- [x] README（fork 开始步骤、手册链接、参考答案表、v2 练习）、Lab-01/02/03 README、docs/codespaces.md、prerequirement.md、INSTRUCTOR.md
+- [x] openapi.yaml 头注释、smoke-test 提示改 title；deploy-pages 只在课程仓库运行，并发布手册到 `/manual/`
+- [ ] 👤 仓库设为 Public；按需开 Pages（Source = GitHub Actions）
+- [ ] 👤 按 fork 流程手动走一遍，补拍 fork / Actions secret / 自己导入连接器的截图（目前沿用旧图）
+- [ ] 👤 决定是否删除 Codespace `manual-shots-jjx4746j4pj2p47`（仍在运行，3000 端口 Public）
