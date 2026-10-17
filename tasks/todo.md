@@ -132,3 +132,17 @@
 - [ ] 👤 设 fork 的 Actions secret 后跑 gh-aw，确认 fork 出现 PR
 - [ ] 发现：answer/lab02 的品牌色（#0B3C5D/#1C8AD6）与手册提示词（#003A70/#FFC20E）不一致，需统一
 - [ ] 发现：连接对话框只显示 Display name，没看到 API key 输入框，需复核
+
+## 从头重跑（2026-10-17 晚，分支 docs/rerun-1017）
+
+前置：Studio（Ontology-trial）已清空（智能体、连接器、AIPlugin、连接、Solution）；旧 fork 与 Codespace 已删；PAT 与 Codespaces secret 保留。
+分工：🤖 = Claude 按手册操作并截图；👤 = 令牌 / API 密钥相关，Claude 停下来给步骤，等用户做完。文档边跑边改，截图换新。
+
+- [ ] 课前：🤖 fork（不只复制 main）→ 🤖 启用 Actions + 允许建 PR → 👤 Codespaces secret 加上新 fork、fork 的 Actions secret
+- [ ] 开场：🤖 建 Codespace → 信任文件夹 → 界面就绪 → set-key（回车跳过）
+- [ ] 热身 1~4
+- [ ] Lab-01 1~4（含 fork 上手动跑 gh-aw，看 PR）
+- [ ] Lab-02 1~4
+- [ ] Lab-03：端口 Public + smoke → 改 openapi → Studio 新建智能体（Solution、名字带名字）→ 指令 → 关 Web Search → 导入 REST API →
+      👤 建连接粘贴 LAB_API_KEY → 挂 4 个工具（逐个核对连接、试 Maker-provided credentials）→ 测试 1~5 → 改一处
+- [ ] 文档：手册 / Lab-03 README / codespaces.md / INSTRUCTOR.md 按实测改；Studio 截图全换新；课后清理补「Default Solution 里删 AIPlugin」

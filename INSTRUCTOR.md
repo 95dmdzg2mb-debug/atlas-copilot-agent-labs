@@ -17,7 +17,8 @@
    Codespaces / Actions / Copilot 额度都记在学员自己账号上，互不影响；学员也不需要本仓库的写权限。
    - fork 时提醒**取消勾选**「Copy the `main` branch only」，`answer/*` 参考答案分支才会带过去；
    - 学员课前要做：fork → 生成 Fine-grained PAT（Account → Copilot Requests: Read，7 天过期）→
-     存成个人 Codespaces secret 和 fork 的 Actions secret（都叫 `COPILOT_GITHUB_TOKEN`）→ fork 的 Actions 页签启用工作流 →
+     存成个人 Codespaces secret 和 fork 的 Actions secret（都叫 `COPILOT_GITHUB_TOKEN`）→ fork 的 Actions 页签启用工作流，
+     再单独 Enable 一次 Industry Insight Weekly（fork 上定时工作流默认 Disabled，不启用就没有 Run workflow）→
      fork 的 Settings → Actions → General 勾选「Allow GitHub Actions to create and approve pull requests」→ 建一次 Codespace。
      步骤见 [实操手册 · 课前准备](docs/manual/index.html#prep)；
    - 如果学员是 Enterprise Managed Users（EMU）账号，不能 fork 到个人名下，要改回「组织内建仓库」的方式，T-7 先确认。
@@ -53,7 +54,7 @@
 
 - 工作流源文件：`.github/workflows/industry-insight.md`；改完必须 `gh aw compile industry-insight` 再提交 `.lock.yml`。
 - 本仓库需要 Secret `COPILOT_GITHUB_TOKEN`（讲师的 Fine-grained PAT，Copilot Requests 权限）；每个学员的 fork 用学员自己的同名 Secret。
-- fork 上 `schedule` 默认不触发，学员在 Lab-01 第 4 步用 Run workflow 手动跑；结果是学员 fork 里的 PR。
+- fork 上定时工作流默认 Disabled，学员课前在 Actions 里点 Enable workflow（启用后每周一也会在学员 fork 上定时跑）；课上在 Lab-01 第 4 步用 Run workflow 手动跑，结果是学员 fork 里的 PR。
 - 仓库 Settings → Actions → General：勾选 **Allow GitHub Actions to create and approve pull requests**。
   atlascopco-Lab 企业在 Policies → Actions 里锁住了这一项（2026-10-16），没放开时 gh-aw 会把周报推到分支并建一个 Issue，
   由人点 Issue 里的「Create the pull request」链接建 PR，合并即可。学员的个人 fork 不受这条企业策略限制，自己勾选即可。
@@ -79,6 +80,7 @@
 |---|---|---|
 | Codespace 开了很久还在装依赖 | fork 没有预构建，第一次要现装 5~8 分钟 | 等它装完；以后打开同一个 Codespace 就快了。所以要求 T-1 建好 |
 | 学员 fork 的 Actions 里看不到 Industry Insight Weekly | fork 上工作流默认停用 | fork → Actions 页签 → I understand my workflows, go ahead and enable them |
+| 有 Industry Insight Weekly 但没有 Run workflow | 定时工作流在 fork 上要单独启用 | 点进去 → 黄条上的 Enable workflow |
 | 学员 gh-aw 报 401 | 学员 fork 没设 Actions secret 或令牌过期 | fork → Settings → Secrets and variables → Actions → `COPILOT_GITHUB_TOKEN` |
 | 学员 `git restore --source origin/answer/...` 报 invalid reference | fork 时只复制了 main | `git remote add upstream <本仓库地址> && git fetch upstream`，改用 `upstream/answer/...` |
 | Studio 里一堆同名「Atlas Agent Labs」 | 学员没改 openapi.yaml 的 title | 让学员把 title 改成「Atlas Agent Labs · 名字」重新导入，删掉自己旧的那个 |
@@ -92,4 +94,4 @@
 
 - 提醒学员按 [实操手册 · 课后清理](docs/manual/index.html#after) 做：端口改回 Private、推送改动、删除 Codespace、删除 PAT 和两处 Secret、删 Studio 里自己的智能体和工具。
 - 讲师：清理 Studio 演示租户里残留的智能体和「Atlas Agent Labs · …」连接器；按需更新或删除本仓库的 `COPILOT_GITHUB_TOKEN`。
-- 学员想继续用：fork 留着即可，想每周一自动收周报就在 fork 的 Actions 里启用定时，并换一个长期令牌。
+- 学员想继续用：fork 留着即可，课前启用的定时工作流每周一会自动跑，换一个长期令牌即可；不想要就在 fork 的 Actions → Industry Insight Weekly → ⋯ → Disable workflow。

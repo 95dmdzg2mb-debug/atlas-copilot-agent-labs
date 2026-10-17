@@ -452,14 +452,16 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
           <tr><td>3. Copilot 令牌（Fine-grained PAT）</td><td>在 <a href="https://github.com/settings/personal-access-tokens/new">个人设置 → Fine-grained tokens</a> 生成：Resource owner 选自己，过期时间选 7 天，权限只勾 Account permissions → <b>Copilot Requests: Read</b>。生成后复制 <code>github_pat_…</code>，<b>只显示一次</b>。</td></tr>
           <tr><td>4. 存成 Codespaces secret</td><td><a href="https://github.com/settings/codespaces">Settings → Codespaces</a> → New secret：Name <code>COPILOT_GITHUB_TOKEN</code>，Value 粘贴令牌，Repository access 选你 fork 的仓库。Codespace 启动时自动注入，令牌不落盘。</td></tr>
           <tr><td>5. 存成仓库 Actions secret（Lab-01 第 4 步用）</td><td>你的 fork → Settings → Secrets and variables → <b>Actions</b> → New repository secret：Name 同样是 <code>COPILOT_GITHUB_TOKEN</code>，Value 同一个令牌。云端的 gh-aw 智能体用它调用 Copilot。</td></tr>
-          <tr><td>6. 打开 fork 的 Actions</td><td>你的 fork → <b>Actions</b> 页签 → 点「I understand my workflows, go ahead and enable them」。再到 Settings → Actions → General → 最下面 Workflow permissions 勾选 <b>Allow GitHub Actions to create and approve pull requests</b> → Save。</td></tr>
+          <tr><td>6. 打开 fork 的 Actions</td><td>你的 fork → <b>Actions</b> 页签 → 点「I understand my workflows, go ahead and enable them」；接着点左侧 <b>Industry Insight Weekly</b>（标着 Disabled）→ 黄条右边 <b>Enable workflow</b>，出现绿色 <b>Run workflow</b> 按钮才算好（fork 上的定时工作流要单独启用，不启用就没有 Run workflow）。再到 Settings → Actions → General → 最下面 Workflow permissions 勾选 <b>Allow GitHub Actions to create and approve pull requests</b> → Save。</td></tr>
           <tr><td>7. 先建好 Codespace</td><td>按 <a href="#s0">开场 0.1</a> 在自己的 fork 上建一次，等到 VS Code 出现后可以关掉页面，上课时直接打开。</td></tr>
           <tr><td>8. Copilot Studio 演示账号</td><td>能登录 <a href="https://copilotstudio.microsoft.com">copilotstudio.microsoft.com</a>（Lab-03 用，讲师发账号）</td></tr>
         </tbody>
       </table>
     </div>
     <figure class="shot"><img src="img/00a-fork.jpg" alt="Create a new fork 页面" loading="lazy"><figcaption>第 2 项：Owner 选自己，取消勾选「Copy the main branch only」</figcaption></figure>
-    <figure class="shot"><img src="img/00c-fork-actions-pr.jpg" alt="fork 的 Workflow permissions" loading="lazy"><figcaption>第 6 项：fork 的 Settings → Actions → General 最下面，勾选 Allow GitHub Actions to create and approve pull requests</figcaption></figure>
+    <figure class="shot"><img src="img/00b-fork-enable-actions.jpg" alt="fork 的 Actions 页签" loading="lazy"><figcaption>第 6 项①：fork 的 Actions 页签，点 I understand my workflows, go ahead and enable them</figcaption></figure>
+    <figure class="shot"><img src="img/00b2-fork-enable-workflow.jpg" alt="启用 Industry Insight Weekly" loading="lazy"><figcaption>第 6 项②：左侧 Industry Insight Weekly 标着 Disabled，点黄条右边的 Enable workflow</figcaption></figure>
+    <figure class="shot"><img src="img/00c-fork-actions-pr.jpg" alt="fork 的 Workflow permissions" loading="lazy"><figcaption>第 6 项③：fork 的 Settings → Actions → General 最下面，勾选 Allow GitHub Actions to create and approve pull requests → Save</figcaption></figure>
     <p class="tip">费用：Codespace 和 Actions 记在你自己的账号上。GitHub 个人账号每月有 120 核时的免费 Codespaces 额度（相当于 2 核机器 60 小时），本课程用 4 核机器，课前建一次加上课半天约 15~20 核时，在免费额度内；课后记得停掉或删除 Codespace（见 <a href="#after">课后清理</a>）。Copilot 调用用的是你自己的 Copilot 额度。</p>
   </section>
 
@@ -691,7 +693,7 @@ git push</pre>
         <figure class="shot"><img src="img/32-gh-aw-run-dialog.jpg" alt="手动运行" loading="lazy"></figure>
         <figure class="shot"><img src="img/33-gh-aw-queued.jpg" alt="运行已排队" loading="lazy"></figure>
         <p class="see"><b>应该看到</b>：列表最上面出现你的运行。一次约 5 分钟，放在休息前触发，休息回来看结果：成功时你的 fork 里会多一个 <b>Pull request</b>，里面是带你新行业的周报，你自己审核后 Merge。</p>
-        <p class="warn">左侧找不到 Industry Insight Weekly、或者没有 Run workflow 按钮：fork 的 Actions 还没打开（课前准备第 6 项）。运行失败时 gh-aw 会自动在你的 fork 开一个「[aw] …」Issue 说明原因，<code>401 Authentication failed</code> 表示你 fork 的 Actions secret <code>COPILOT_GITHUB_TOKEN</code> 没设或令牌过期（课前准备第 5 项）。fork 上的定时任务默认不跑，所以本课程都用手动触发。</p>
+        <p class="warn">左侧找不到 Industry Insight Weekly：fork 的 Actions 还没打开；有它但没有 Run workflow 按钮、旁边标着 Disabled：这个工作流还没单独启用，点进去按黄条上的 <b>Enable workflow</b>（都是课前准备第 6 项）。运行失败时 gh-aw 会自动在你的 fork 开一个「[aw] …」Issue 说明原因，<code>401 Authentication failed</code> 表示你 fork 的 Actions secret <code>COPILOT_GITHUB_TOKEN</code> 没设或令牌过期（课前准备第 5 项）。启用后它也会每周一按时在你的 fork 上跑，不想要就在课后关掉（见 <a href="#after">课后清理</a>）。</p>
       </div>
     </div>
 
@@ -978,7 +980,7 @@ git fetch upstream</pre>
       <article class="az-card is-orchid">
         <div class="card-no" style="color:#F3DDEE;">可选</div>
         <h3 class="card-title">fork 留着还是删</h3>
-        <p class="card-desc" style="color:#fff;">fork 不花钱，可以留着回去接着改自己的行业和 Skill。想每周一自动收周报：fork 的 Actions 里把 Industry Insight Weekly 启用定时（fork 默认不跑定时任务），并换一个长期有效的令牌。不要了就 Settings → 最下面 Delete this repository。</p>
+        <p class="card-desc" style="color:#fff;">fork 不花钱，可以留着回去接着改自己的行业和 Skill。课前启用的 Industry Insight Weekly 会每周一在你的 fork 上自动跑：想继续收周报就换一个长期有效的令牌；不想要（或者已经删了令牌）就到 fork 的 Actions → Industry Insight Weekly → 右上角 <b>⋯</b> → <b>Disable workflow</b>，免得每周报 401。fork 不要了就 Settings → 最下面 Delete this repository。</p>
       </article>
     </div>
   </section>

@@ -91,9 +91,9 @@ frontend/report.md + report.json ──▶ 周报网页（Codespace 预览 / Git
 
 同一套工具也被 gh-aw（GitHub Agentic Workflows）调用：[.github/workflows/industry-insight.md](../.github/workflows/industry-insight.md)
 是用 Markdown 写的工作流，`gh aw compile` 编译成 Actions 真正运行的 `.lock.yml`。课程仓库每周一北京时间 08:00 定时运行；
-fork 上定时任务默认不跑，你用手动触发。
+fork 上的定时工作流默认是停用的（Disabled），课前准备里已经单独启用了它，课上用手动触发。
 
-1. 前提（课前准备里做过）：fork 的 Actions 已启用；fork 有 Actions secret `COPILOT_GITHUB_TOKEN`；
+1. 前提（课前准备里做过）：fork 的 Actions 已启用，Industry Insight Weekly 也点过 **Enable workflow**；fork 有 Actions secret `COPILOT_GITHUB_TOKEN`；
    Settings → Actions → General 勾选了「Allow GitHub Actions to create and approve pull requests」。
 2. 把改动推到你的 fork：
    ```bash
@@ -117,6 +117,7 @@ fork 上定时任务默认不跑，你用手动触发。
 | 周报页头显示「兜底（未经智能体研判）」 | 智能体没把研判结果交给 `build_weekly_report`，在 Chat 里让它「按 warnings 修正后重新生成周报」 |
 | 新加的工具智能体不调用 | MCP 服务器没重启：`.vscode/mcp.json` 里点 Restart，确认「5 tools」 |
 | fork 的 Actions 里没有 Industry Insight Weekly | Actions 页签点「I understand my workflows, go ahead and enable them」 |
+| 有 Industry Insight Weekly 但没有 Run workflow 按钮 | 它旁边标着 Disabled：点进去，按黄条上的 **Enable workflow** |
 | gh-aw 报 401 | fork 的 Actions secret `COPILOT_GITHUB_TOKEN` 没设或令牌过期 |
 | 某个行业 0 条 | 看周报最后的「数据覆盖与缺口」；搜索词太窄就放宽，或去掉过严的排除词 |
 

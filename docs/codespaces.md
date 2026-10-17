@@ -10,6 +10,7 @@
 - [ ] Fork 课程仓库：右上角 **Fork** → Owner 选自己 → **取消勾选**「Copy the `main` branch only」（卡住时要用 `answer/*` 参考答案分支）
 - [ ] 按下面「准备 Copilot 令牌」生成好 Fine-grained PAT，并存成两处 Secret（见第 6、7 步）
 - [ ] 你的 fork → **Actions** 页签 → 点「I understand my workflows, go ahead and enable them」；
+      再点左侧 **Industry Insight Weekly**（标着 Disabled）→ 黄条上的 **Enable workflow**，看到 **Run workflow** 按钮才算好；
       Settings → Actions → General → Workflow permissions 勾选 **Allow GitHub Actions to create and approve pull requests** → Save
 - [ ] 按第 1 节在你的 fork 上建好 Codespace（第一次要现装依赖，5~8 分钟）
 - [ ] 讲师发给你的 Copilot Studio 演示账号能登录 <https://copilotstudio.microsoft.com>（Lab-03 要用）
@@ -107,7 +108,8 @@ bash Lab-03-Copilot-Studio/smoke-test.sh
 4. 删除令牌和 Secret：<https://github.com/settings/personal-access-tokens> 删 PAT；
    <https://github.com/settings/codespaces> 删 `COPILOT_GITHUB_TOKEN`；fork 的 Settings → Secrets and variables → Actions 删同名 Secret。
 5. Copilot Studio：删掉你建的「业务汇报助手」和「Atlas Agent Labs · 你的名字」工具及连接。
-6. fork 可以留着课后继续改；不要了就 fork 的 Settings → 最下面 **Delete this repository**。
+6. fork 可以留着课后继续改；课前启用的 Industry Insight Weekly 每周一会自动跑，删了令牌或不想要就在 fork 的
+   Actions → Industry Insight Weekly → **⋯** → **Disable workflow**。fork 不要了就 Settings → 最下面 **Delete this repository**。
 
 ## 遇到问题
 
@@ -115,6 +117,7 @@ bash Lab-03-Copilot-Studio/smoke-test.sh
 |---|---|
 | Codespace 一直在装依赖，很久不好 | fork 没有预构建，第一次要 5~8 分钟，等它装完；以后打开同一个 Codespace 就快了 |
 | fork 的 Actions 里没有 Industry Insight Weekly | fork 上工作流默认停用：Actions 页签点「I understand my workflows, go ahead and enable them」 |
+| 有 Industry Insight Weekly 但没有 Run workflow 按钮 | 定时工作流在 fork 上要单独启用：点进去 → **Enable workflow** |
 | gh-aw 报 401 | fork 的 Actions secret `COPILOT_GITHUB_TOKEN` 没设或令牌过期 |
 | Codespace 打不开 / 白屏 | 公司网络访问不了 `*.github.dev`，换讲师提供的热点 |
 | Chat 里没有 Agent 模式或工具图标 | 组织的 Copilot 策略没开 Agent / MCP，找讲师 |
