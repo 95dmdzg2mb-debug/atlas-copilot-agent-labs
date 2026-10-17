@@ -458,6 +458,8 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
         </tbody>
       </table>
     </div>
+    <figure class="shot"><img src="img/00a-fork.jpg" alt="Create a new fork 页面" loading="lazy"><figcaption>第 2 项：Owner 选自己，取消勾选「Copy the main branch only」</figcaption></figure>
+    <figure class="shot"><img src="img/00c-fork-actions-pr.jpg" alt="fork 的 Workflow permissions" loading="lazy"><figcaption>第 6 项：fork 的 Settings → Actions → General 最下面，勾选 Allow GitHub Actions to create and approve pull requests</figcaption></figure>
     <p class="tip">费用：Codespace 和 Actions 记在你自己的账号上。GitHub 个人账号每月有 120 核时的免费 Codespaces 额度（相当于 2 核机器 60 小时），本课程用 4 核机器，课前建一次加上课半天约 15~20 核时，在免费额度内；课后记得停掉或删除 Codespace（见 <a href="#after">课后清理</a>）。Copilot 调用用的是你自己的 Copilot 额度。</p>
   </section>
 
@@ -476,7 +478,7 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
         <h3>在自己的 fork 上创建 Codespace</h3>
         <p class="do">打开<b>你自己的</b>仓库 <code>&lt;你的用户名&gt;/atlas-copilot-agent-labs</code>（不是 atlascopco-Lab 那个）→ 绿色 <b>Code</b> 按钮 → <b>Codespaces</b> 页签 → 点 <b>+</b>（Create codespace on main）。</p>
         <figure class="shot"><img src="img/01-create-codespace.jpg" alt="Code 下拉中的 Codespaces 页签" loading="lazy"></figure>
-        <p class="see"><b>应该看到</b>：面板底部写着「Codespace usage for this repository is paid for by <b>你的用户名</b>」（截图是旧的组织仓库，写的是 atlascopco-Lab）。第一次创建要现装 Python / Node 依赖和浏览器，约 5~8 分钟，所以建议课前做。创建过的 Codespace 会列在「On current branch」下面，下次直接点它继续。</p>
+        <p class="see"><b>应该看到</b>：面板底部写着「Codespace usage for this repository is paid for by <b>你的用户名</b>」（2026-10-17 实测：学员是 atlascopco-Lab 组织成员时，在自己 fork 上建的 Codespace 也显示「paid for by atlascopco-Lab」，由组织承担）。第一次创建要现装 Python / Node 依赖和浏览器，约 5~8 分钟，所以建议课前做。创建过的 Codespace 会列在「On current branch」下面，下次直接点它继续。</p>
       </div>
     </div>
 
@@ -613,6 +615,8 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
         <p class="do">智能体第一次调用 MCP 工具时会请求确认，点 <b>Allow in this Session</b>：</p>
         <figure class="shot"><img src="img/21-lab01-mcp-confirm.jpg" alt="MCP 工具确认" loading="lazy"></figure>
         <p class="see">卡片上写着工具来自「industry-insight (MCP Server)」，下面那段中文就是工具的描述（写在 <code>mcp_server/server.py</code> 里）。智能体正是读这段描述决定什么时候调用它。</p>
+        <p class="tip">嫌每个工具都要点一次？点 Allow 旁边的小箭头，选 <b>Allow Tools from industry-insight in this Session</b>，这个 MCP 服务器的工具本次会话都不再询问。</p>
+        <figure class="shot"><img src="img/21b-lab01-allow-server.jpg" alt="一次放行整个 MCP 服务器" loading="lazy"></figure>
         <figure class="shot"><img src="img/22-lab01-build-report.jpg" alt="build_weekly_report 调用" loading="lazy"></figure>
         <p class="see">依次调用 <code>read_focus</code> → <code>fetch_industry_signals</code> → <code>get_signals</code>（每个行业一次）→ <code>build_weekly_report</code>。最后一步把研判结果作为 <code>insights</code> 参数传进去，工具负责校验信号 ID、回填原文链接、渲染周报。</p>
         <figure class="shot"><img src="img/23-lab01-done.jpg" alt="周报生成完成" loading="lazy"></figure>
@@ -682,7 +686,7 @@ figure.shot figcaption { font-size: 13px; color: var(--az-ink-3); margin-top: 6p
         <pre class="cmd">git add Lab-01-Industry-Insight/focus.md Lab-01-Industry-Insight/mcp_server Lab-01-Industry-Insight/tests
 git commit -m "Lab-01: 加食品饮料行业 + 客户雷达工具"
 git push</pre>
-        <figure class="shot"><img src="img/31-lab01-push.jpg" alt="推送" loading="lazy"><figcaption>截图是旧版推送到 student 分支的样子；现在直接推到你 fork 的 main</figcaption></figure>
+        <figure class="shot"><img src="img/31-lab01-push.jpg" alt="推送" loading="lazy"><figcaption>推送成功：To https://github.com/&lt;你的用户名&gt;/atlas-copilot-agent-labs，main -&gt; main</figcaption></figure>
         <p class="do">打开<b>你 fork 的</b> <b>Actions</b> → 左侧 <b>Industry Insight Weekly</b> → <b>Run workflow</b> → 分支保持 <code>main</code> → <b>Run workflow</b>。</p>
         <figure class="shot"><img src="img/32-gh-aw-run-dialog.jpg" alt="手动运行" loading="lazy"></figure>
         <figure class="shot"><img src="img/33-gh-aw-queued.jpg" alt="运行已排队" loading="lazy"></figure>
@@ -805,7 +809,8 @@ git push</pre>
         <p class="do">用演示租户账号登录 <a href="https://copilotstudio.microsoft.com">Copilot Studio</a>，按 <a href="https://github.com/atlascopco-Lab/atlas-copilot-agent-labs/blob/main/Lab-03-Copilot-Studio/README.md">Lab-03 README</a> 第 3 步操作。要点：</p>
         <ol class="plain">
           <li>左下角切到讲师指定的 <b>Trial</b> 环境；<b>Agents → New agent 旁的下拉 → Agent（Standard）</b>，不要选带「GitHub Copilot」标记的。</li>
-          <li>名称 <code>业务汇报助手</code>；Agent settings 里 Language 选 Chinese (Simplified)，<b>Schema name 手动填英文</b>（如 <code>bizreport</code>）。</li>
+          <li>名称 <code>业务汇报助手 你的名字</code>；展开 Agent settings：Language 选 Chinese (Simplified)，Solution 保持 Default Solution，<b>Schema name 手动填英文</b>（如 <code>bizreportzhang</code>）。
+            <figure class="shot"><img src="img/56-studio-new-agent.jpg" alt="Name your agent 对话框" loading="lazy"></figure></li>
           <li>Overview → Instructions → Edit，粘贴 README 里的「智能体指令」整段；自己修改时<b>不要输入 <code>/</code></b>，斜杠会弹出插入菜单吞掉后面的字。</li>
           <li>Knowledge → <b>Web Search 关掉</b>，只按工具返回的内容回答。</li>
           <li>Tools → 导入<b>你自己的</b> REST API 工具（每人一份，避免几十个人的连接挤在一起）：
@@ -814,6 +819,8 @@ git push</pre>
               <li>Studio：Tools → Add a tool → Create new 区域 See all → <b>REST API</b> → 上传刚下载的 openapi.yaml → Next；Authentication 选 <b>API key</b>，Parameter name 填 <code>x-api-key</code>，Location 选 <b>Header</b>；4 个操作逐个点开 → Publish。</li>
               <li>Create connection 后搜 <code>Atlas</code>，在<b>带你名字</b>的「Atlas Agent Labs · …」下挂上 4 个工具；第一个工具新建连接时粘贴你的 API 密钥，其余 3 个复用。</li>
             </ol>
+            <figure class="shot"><img src="img/57-studio-import-own.jpg" alt="向导自动带出自己的工具名" loading="lazy"><figcaption>上传后 API plugin details 自动带出你改的 title</figcaption></figure>
+            <figure class="shot"><img src="img/58-studio-pick-own-tool.jpg" alt="搜索 Atlas 出现多组同类工具" loading="lazy"><figcaption>搜 Atlas 会出现多组同类工具（Studio 会去掉名字里的「·」），认准带你名字的那一组</figcaption></figure>
             详细步骤见 Lab-03 README 第 2、3 步。大家在同一个 Trial 环境里，搜出来会有很多同类工具，认准带你名字的那一个。</li>
         </ol>
         <p class="see"><b>验收</b>：Tools 页 4 个工具都是 <b>On</b>、Trigger 是 <b>By agent</b>。</p>
@@ -931,6 +938,7 @@ git fetch upstream</pre>
         <p class="card-desc">或者直接问 Copilot：「对比我的 search_signals 和 origin/answer/lab01 上的版本，我的为什么跑不通？只回答，不要改文件。」</p>
       </article>
     </div>
+    <figure class="shot"><img src="img/60-stuck-restore.jpg" alt="git restore 参考答案" loading="lazy"><figcaption>实测：恢复 Lab-02 参考答案后，git status 只显示这两个文件被改动</figcaption></figure>
     <p class="warn">不要 <code>git checkout answer/…</code> 切过去整个分支：分支上没有你自己改的 focus.md、SKILL.md，后面的 Lab 会对不上。用上面的 <code>git restore</code> 只拿需要的文件。</p>
   </section>
 

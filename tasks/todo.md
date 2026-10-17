@@ -120,3 +120,15 @@
 - [ ] 👤 仓库设为 Public；按需开 Pages（Source = GitHub Actions）
 - [ ] 👤 按 fork 流程手动走一遍，补拍 fork / Actions secret / 自己导入连接器的截图（目前沿用旧图）
 - [ ] 👤 决定是否删除 Codespace `manual-shots-jjx4746j4pj2p47`（仍在运行，3000 端口 Public）
+
+## fork 实跑（2026-10-17，tarrywang/atlas-copilot-agent-labs，Codespace fork-e2e）
+
+- [x] fork（含 answer/*）、Codespaces secret 范围加 fork、启用 Actions + 允许建 PR、Codespace 建好（显示 paid for by atlascopco-Lab）
+- [x] 热身问答；`git restore` 参考答案（warmup、lab02）验证可用
+- [x] Lab-01：/industry-insight（llm 模式）→ focus.md 加食品饮料 → Copilot 写客户雷达（4 测试过）→ Restart 5 tools → 重跑周报含食品饮料 → CATL 雷达查询带链接 → push 到 fork
+- [x] Lab-02：SKILL.md 加保密标识 → 品牌风（用参考答案）→ 网页按食品饮料 + 品牌风生成 6 页 PPT，每页有「仅供内部讨论」
+- [x] Lab-03：smoke-test 4 项过；新建「业务汇报助手 Tarry」（新版多了必填 Solution）；导入 host+title 改过的 openapi，工具组显示「Atlas Agent Labs Tarry」
+- [ ] 👤 Studio 建连接需粘贴 LAB_API_KEY，然后跑 4 句测试
+- [ ] 👤 设 fork 的 Actions secret 后跑 gh-aw，确认 fork 出现 PR
+- [ ] 发现：answer/lab02 的品牌色（#0B3C5D/#1C8AD6）与手册提示词（#003A70/#FFC20E）不一致，需统一
+- [ ] 发现：连接对话框只显示 Display name，没看到 API key 输入框，需复核
