@@ -16,19 +16,24 @@
   "type": "module",
   "dependencies": {
     "@github/copilot-sdk": "^0.2.2",
-    "next": "15.5.12",
+    "next": "15.5.28",
     "playwright": "^1.58.2",
     "pptxgenjs": "^4.0.1",
     "react": "19.1.1",
     "react-dom": "19.1.1",
-    "sharp": "^0.34.5"
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@types/node": "^24.4.0",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "eslint": "^9.35.0",
-    "eslint-config-next": "15.5.12",
+    "eslint-config-next": "15.5.28",
     "typescript": "^5.9.2"
+  },
+  "overrides": {
+    "@github/copilot": "1.0.43",
+    "image-size": "^2.0.3",
+    "postcss": "^8.5.23"
   }
 }
