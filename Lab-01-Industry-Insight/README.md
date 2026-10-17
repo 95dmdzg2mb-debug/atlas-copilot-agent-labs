@@ -57,7 +57,7 @@ frontend/report.md + report.json ──▶ 周报网页（Codespace 预览 / Git
 
 这是本 Lab 的重点：**不改任何代码**，只改 `focus.md`。
 
-1. 在 `focus.md` 里复制一段 `## 行业`，改成你关心的行业，例如：
+1. 在 `focus.md` 的「## 全局排除词」上面加一个行业：照着已有的行业段落（比如从 `## 半导体` 到下一个 `##` 之前的整段）复制一份，改成你关心的行业，例如：
    ```markdown
    ## 光伏
 
@@ -104,6 +104,7 @@ fork 上的定时工作流默认是停用的（Disabled），课前准备里已�
 3. 你的 fork → **Actions → Industry Insight Weekly → Run workflow**（分支 `main`）。
 
 **期望结果**：约 5 分钟后你的 fork 里出现一个 **Draft** 周报 PR，里面有你新加的行业；审核后点 **Ready for review** 再 Merge。
+合并后 fork 上的 main 比 Codespace 里的新，之后推送前要先同步（命令见 [docs/codespaces.md · 6. 课后清理](../docs/codespaces.md#6-课后清理) 第 2 步）。
 失败时在 Actions 里点开这次运行看日志（gh-aw 会想开「[aw] …」Issue 说明原因，但 fork 默认关了 Issues，看不到）。
 
 > 改了 `industry-insight.md` 本身要先 `gh aw compile industry-insight`；只改 focus.md 和工具代码不用编译。

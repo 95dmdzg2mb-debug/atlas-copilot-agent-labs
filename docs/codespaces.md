@@ -48,7 +48,7 @@
 4. 把空闲超时调长，免得 Lab-03 时 Codespace 自己停掉：打开 <https://github.com/settings/codespaces> →
    **Default idle timeout** 改成 **120** 分钟。
 
-## 2. Lab-01 · 行业洞察智能体（50 分钟）
+## 2. Lab-01 · 行业洞察智能体（45 分钟）
 
 按 [Lab-01 README](../Lab-01-Industry-Insight/README.md) 操作。核心几件事：
 
@@ -61,9 +61,9 @@
    **期望结果**：网页标题「行业洞察周报 · 20xx-Wxx」，页头写「模式：智能体研判」。
 3. 改 `Lab-01-Industry-Insight/focus.md`，加一个你关注的行业，再跑一次。
 4. 让 Copilot 加一个 MCP 工具「客户雷达」`search_signals`，重启 MCP 服务器后用它查客户动态。
-5. `git push` 到你的 fork，在 fork 的 **Actions → Industry Insight Weekly → Run workflow** 手动跑云端版，结果是你 fork 里的一个 PR。
+5. `git push` 到你的 fork，在 fork 的 **Actions → Industry Insight Weekly → Run workflow** 手动跑云端版，结果是你 fork 里的一个 PR（合并后 fork 比 Codespace 里的新，推送前要先同步，见「6. 课后清理」第 2 步）。
 
-## 3. Lab-02 · 知识总结智能体（50 分钟）
+## 3. Lab-02 · 知识总结智能体（45 分钟）
 
 按 [Lab-02 README](../Lab-02-Knowledge-Summary/README.md) 操作。核心几件事：
 
@@ -78,7 +78,7 @@
 
 > 下载 Codespace 里的文件：资源管理器里右键文件 → **下载**。
 
-## 4. Lab-03 · Copilot Studio 串起来（40 分钟）
+## 4. Lab-03 · Copilot Studio 串起来（45 分钟）
 
 按 [Lab-03 README](../Lab-03-Copilot-Studio/README.md) 操作。关键是把端口 3000 设为 **Public**、跑自检，再把 `openapi.yaml` 的 `host` 和 `title`（`Atlas Agent Labs · 你的名字`）改成你自己的，导入 Studio：
 
@@ -97,7 +97,7 @@ bash Lab-03-Copilot-Studio/smoke-test.sh
 
 | 卡在哪 | 命令 |
 |---|---|
-| 热身「只看高影响」开关 | `git restore --source origin/answer/warmup -- Lab-01-Industry-Insight/frontend` |
+| 热身「只看高影响」开关 | `git restore --source origin/answer/warmup -- Lab-01-Industry-Insight/frontend/index.html Lab-01-Industry-Insight/frontend/main.js Lab-01-Industry-Insight/frontend/styles.css` |
 | Lab-01 客户雷达 | `git restore --source origin/answer/lab01 -- Lab-01-Industry-Insight/mcp_server Lab-01-Industry-Insight/tests`（之后重启 MCP 服务器） |
 | Lab-02 公司品牌风 | `git restore --source origin/answer/lab02 -- Lab-02-Knowledge-Summary/lib/styles.ts Lab-02-Knowledge-Summary/app/globals.css` |
 
@@ -107,7 +107,14 @@ bash Lab-03-Copilot-Studio/smoke-test.sh
 ## 6. 课后清理
 
 1. 端口面板把 3000 改回 **Private**。
-2. 保存改动：`git add -A && git commit -m "课堂练习" && git push`，改动就留在你的 fork 里（生成的 PPT 不会提交，要的话右键下载）。
+2. 保存改动，依次运行：
+   ```bash
+   git restore Lab-01-Industry-Insight/frontend/report.md Lab-01-Industry-Insight/frontend/report.json
+   git pull
+   git add -A && git commit -m "课堂练习" && git push
+   ```
+   第 1 行丢掉本地生成的周报（周报经 gh-aw 的 PR 审核后才进主干）；第 2 行把你在 GitHub 上合并的 PR 同步下来，不然推送会被拒绝。
+   改动就留在你的 fork 里（生成的 PPT 不会提交，要的话右键下载）。
 3. 删除 Codespace：<https://github.com/codespaces> → 你的 Codespace → **Delete**（停止后仍按存储计费）。
 4. 删除令牌和 Secret：<https://github.com/settings/personal-access-tokens> 删 PAT；
    <https://github.com/settings/codespaces> 删 `COPILOT_GITHUB_TOKEN`；fork 的 Settings → Secrets and variables → Actions 删同名 Secret。

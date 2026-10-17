@@ -2,14 +2,16 @@
 
 ## 课程结构（半天约 3.5 小时）
 
+时长与[实操手册](docs/manual/index.html)一致：
+
 | 环节 | 内容 | 时长 |
 |---|---|---|
-| 01 | 环境与智能体基础：开 Codespace、填令牌；智能体 = 模型 + 指令 + Skills + MCP 工具 | 30 分钟 |
-| 02 | Lab-01 行业洞察智能体 · MCP（讲师演示 gh-aw 每周定时版） | 50 分钟 |
-| 03 | Lab-02 知识总结智能体 · Skills（Chat 里用 Skill，改 SKILL.md） | 30 分钟 |
-| 04 | Lab-02 第 4 步：用 Copilot SDK 做成网页服务 | 20 分钟 |
-| 05 | Lab-03 Copilot Studio 串起来 | 40 分钟 |
-| — | 休息与答疑 | 40 分钟 |
+| 01 | 开场：项目地图与功能地图、GitHub Copilot app 演示；打开 Codespace、信任文件夹、`set-key.sh` | 20 分钟 |
+| 02 | 热身 · Vibe coding：读懂项目、`/explain`、一句话给周报网页加开关、自定义指令 | 25 分钟 |
+| 03 | Lab-01 行业洞察智能体 · MCP + gh-aw：Prompt 文件 + MCP 工具、改 focus.md、加「客户雷达」工具、推到学员自己的 fork 手动跑 gh-aw | 45 分钟 |
+| 04 | Lab-02 知识总结智能体 · Skills + SDK：Chat 里用 Skill（实测约 20 分钟，建议讲师演示、学员边看边等）、改 SKILL.md、加「公司品牌风」、用 Copilot SDK 跑网页服务 | 45 分钟 |
+| 05 | Lab-03 Copilot Studio 串起来 | 45 分钟 |
+| — | 休息与答疑（建议放在 Lab-01 第 4 步触发 gh-aw 之后，回来正好看 PR） | 30 分钟 |
 
 ## T-7 天 · 只有你能推动的事
 

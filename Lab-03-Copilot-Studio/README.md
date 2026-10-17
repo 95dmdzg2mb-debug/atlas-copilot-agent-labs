@@ -153,11 +153,11 @@ Save 后点 **New test session** 重跑第 1 句。**期望结果**：回答最�
 | 智能体反问一个不需要的参数 | 工具参数是「有条件才必填」 | 本目录的 openapi 已拆成意图明确的工具，参数都是必填 |
 | 回答里出现「cite」之类的乱码 | 模型自带的引用标记，Studio 不渲染 | 指令里已要求改用 Markdown 链接；仍出现可在 Overview 换一个模型试试 |
 | 拿到的是别人的周报，或调用 404 | 挂成了同学的工具，或 openapi.yaml 的 host 没改 | Tools 里删掉，重新导入 host 和 title 都改过的 openapi.yaml |
-| Codespace 重建后连不上 | 新 Codespace 名字变了，host 和 API 密钥都跟着变 | 改 `host:` 后在 Studio 里重新导入这个工具；连接按下一行更新密钥 |
+| Codespace 重建后连不上 | 新 Codespace 名字变了，host 和 API 密钥都跟着变 | `host:` 改成新的，`title` 后面加个「2」免得和旧的重名 → Tools 里删掉旧的 4 个工具 → 按 3.3、3.4 重新导入、新建连接（粘贴新 Codespace 的密钥）、改 Maker-provided credentials。新导入的是新连接器，旧连接用不上 |
 | 工具卡片 Failed：`connectorAuthorizationError`（HTTP 401） | 连接里的密钥不是这个 Codespace 的（每个 Codespace 的 `LAB_API_KEY` 都不同） | `grep LAB_API_KEY Lab-02-Knowledge-Summary/.env` 看当前值 → Power Automate → Connections → 你的连接 ⋯ → Edit → 粘贴 → Update |
 | 测试时提示「先连接……打开连接管理器」 | 工具的凭据还是 End user credentials | 工具详情 → Additional details → Credentials to use 改成 Maker-provided credentials → Save |
 | 进度页显示「无法列出模型」 | Codespace 里没有有效的 Copilot 令牌，或组织没开 Copilot CLI 策略 | 重新 `set-key.sh` 后重启 `npm run dev`；仍不行找讲师 |
-| Studio 调用超时、连不上 | Codespace 空闲超时被停了 | 回到 Codespace 让它恢复，`npm run dev` 重启服务、重新设 Public；把空闲超时调长 |
+| Studio 调用超时、连不上 | Codespace 空闲超时被停了 | 回到 Codespace 让它恢复，`npm run dev` 重启服务、重新设 Public；到 <https://github.com/settings/codespaces> 把 Default idle timeout 调到 120 分钟 |
 
 ## 你学到了什么
 

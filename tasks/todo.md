@@ -175,3 +175,17 @@
       验证：新锁文件对 54 个告警的受影响版本范围逐条比对 0 命中；npm audit --omit=dev 为 0（剩 braces 5 条，开发依赖、上游无修复）；
       npm ci / typecheck / lint / build、next start 冒烟、html2pptx 出单页 PPTX、SDK 拉起 CLI 1.0.43 握手都通过。
 - [ ] 👤 手动全程重跑时确认 Lab-02 带令牌生成 PPT 正常（Copilot CLI 从 1.0.27 升到 1.0.43，这一步没测）
+
+## 手册终审（2026-10-17 晚，只看文档、不实跑）
+
+- [x] 对照仓库核对手册里的引用：main.js 行号、report.json 字段、focus.md 的行业、4 个 MCP 工具和 3 个测试、工作流配置、SKILL.md 段落与输出目录、
+      Lab-02 页面文案、skillDirectories、4 核机器与端口、smoke-test 输出、openapi 的 host / title / 4 个操作、68 张图、页内锚点；set-key.sh 重跑不换密钥；.env 和 output/ 都被忽略
+- [x] 修 · 课后推送陷阱：Lab-01 生成的 frontend/report.md、report.json 不提交，gh-aw 的 PR 改的也是这两个文件，合并 PR 后课后 `git push` 被拒、`git pull` 冲突
+      → 课后清理第 2 步改成「restore 两个周报 → git pull → 提交推送」，排障加「已经 commit 了」的恢复命令；Lab-01 第 4 步、Lab-01 README、docs/codespaces.md 同步
+- [x] 修 · Lab-03 测试补「把网页做成汇报 PPT」一句（与 Lab-03 README 一致，共 5 句；4 个工具都测到）
+- [x] 修 · 排障：「只有分支 + Issue」与 fork 关 Issues 矛盾；Actions 启用行补 Enable workflow；401 写法统一；新增「预览页打不开」「git push 被拒」两行；
+      Codespace 重建行改成删掉重导 + 新建连接（原「编辑工具重新上传」没实测过，且新连接器用不上旧连接）；空闲超时写明设置位置；「无法列出模型」注明重跑 set-key 不换密钥
+- [x] 修 · 热身参考答案只恢复 index.html / main.js / styles.css（原来恢复整个 frontend 会连周报一起覆盖）；页眉 v1.1、页脚 v1.2 统一为 v1.3；
+      focus.md 加行业的说法；时长注明含休息 30 分钟，INSTRUCTOR.md 和 docs/codespaces.md 的环节与时长对齐手册
+- 未改：docs/teaching-design.html 里还有 fork 之前的说法（student/<名字> 分支、Issue + 分支、讲师演示 gh-aw），它是课程设计稿，留着不动
+- [ ] 👤 手动全程重跑时顺带确认：课后清理第 2 步三行命令、Lab-03 第 4 句网页→PPT
