@@ -130,8 +130,8 @@
 - [x] Lab-03：smoke-test 4 项过；新建「业务汇报助手 Tarry」（新版多了必填 Solution）；导入 host+title 改过的 openapi，工具组显示「Atlas Agent Labs Tarry」
 - [ ] 👤 Studio 建连接需粘贴 LAB_API_KEY，然后跑 4 句测试
 - [ ] 👤 设 fork 的 Actions secret 后跑 gh-aw，确认 fork 出现 PR
-- [ ] 发现：answer/lab02 的品牌色（#0B3C5D/#1C8AD6）与手册提示词（#003A70/#FFC20E）不一致，需统一
-- [ ] 发现：连接对话框只显示 Display name，没看到 API key 输入框，需复核
+- [x] 发现：answer/lab02 的品牌色（#0B3C5D/#1C8AD6）与手册提示词（#003A70/#FFC20E）不一致 → 10-17 改 answer/lab02 与提示词一致
+- [x] 发现：连接对话框只显示 Display name，没看到 API key 输入框 → 10-17 重跑时有密钥输入框，未复现
 
 ## 从头重跑（2026-10-17 晚，分支 docs/rerun-1017）
 
@@ -164,4 +164,6 @@
 - 已验证：5 句 Studio 测试全过（洞察 1.6~1.8 秒、提交 PPT 1.2~1.5 秒、查进度 2.3 秒、网页→PPT 2.1 秒），Studio 发起的 PPT 约 4 分钟生成，每页都有 SKILL.md 加的保密标识。
 - 过程中的失误：给 api.ts 加调试日志时 shell 转义把 `\n` 变成真换行，导致语法错误约 1 分钟；已从备份恢复，改用 base64 传补丁；
   调试结束后 api.ts 已恢复（git diff 无变化），临时日志已删除。在 VS Code 里用 `code -g` 打开文件后焦点会跳到编辑器，接着打字会写进文件（已 Revert + 手动修复并 node --check 通过）。
-- 未做：本次没有推送 docs/rerun-1017 分支；Studio 的 Activity 回看、发布到渠道不在课程范围。
+- 收尾（10-17 晚）：PR #7 rebase 合并进 main；answer/warmup、lab01、lab02 rebase 到最新 main（各只比 main 多一个提交）并 force push；answer/lab02 品牌色改成与提示词一致（白底、#003A70、#FFC20E、底部深蓝细条）；手册「看答案」改用 `git show origin/answer/…`。
+- 遗留：Pages 没开，Deploy GitHub Pages 每次推送都失败（Create Pages site failed，Resource not accessible by integration），需要在仓库 Settings → Pages 选 GitHub Actions；仓库有 21 个 Dependabot 告警未处理。
+- [ ] 👤 删除测试资源（用户要自己从头再跑）：Studio 智能体「业务汇报助手 Tarry」、Codespace super-space-spoon、fork tarrywang/atlas-copilot-agent-labs；🤖 之后清理 Studio 连接「Atlas · Tarry」、连接器与 AIPlugin、自动生成的 Solution
